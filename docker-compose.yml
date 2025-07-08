@@ -1,6 +1,7 @@
 services:
 
   backend:
+    container_name: backend
     image: ghcr.io/get-convex/convex-backend:6efab6f2b6c182b90255774d747328cfc7b80dd9
     stop_grace_period: 10s
     stop_signal: SIGINT
@@ -43,6 +44,7 @@ services:
       start_period: 10s
 
   dashboard:
+    container_name: dashboard
     image: ghcr.io/get-convex/convex-dashboard:6efab6f2b6c182b90255774d747328cfc7b80dd9
     stop_grace_period: 10s
     stop_signal: SIGINT
@@ -88,9 +90,9 @@ services:
       - "3000:3000"
 
   nginx:
+    container_name: nginx
     build:
       context: nginx
-    container_name: nginx
     restart: always
     tty: true
     ports:

@@ -14,9 +14,10 @@ node_modules
 *.pem
 client.cert
 client.key
-/data
 /backups
+/convex
 /patches
+/postgres
 
 # debug
 npm-debug.log*

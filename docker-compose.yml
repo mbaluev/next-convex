@@ -1,7 +1,7 @@
 services:
 
   backend:
-    container_name: backend
+    container_name: convex-backend
     image: ghcr.io/get-convex/convex-backend:6efab6f2b6c182b90255774d747328cfc7b80dd9
     stop_grace_period: 10s
     stop_signal: SIGINT
@@ -9,7 +9,7 @@ services:
       - "${PORT:-3210}:3210"
       - "${SITE_PROXY_PORT:-3211}:3211"
     volumes:
-      - data:/convex/data
+      - ./convex:/convex/data
     environment:
       - INSTANCE_NAME=${INSTANCE_NAME:-}
       - INSTANCE_SECRET=${INSTANCE_SECRET:-}
@@ -37,14 +37,13 @@ services:
       - S3_ENDPOINT_URL=${S3_ENDPOINT_URL:-}
     networks:
       - node-network
-
     healthcheck:
       test: curl -f http://localhost:3210/version
       interval: 5s
       start_period: 10s
 
   dashboard:
-    container_name: dashboard
+    container_name: convex-dashboard
     image: ghcr.io/get-convex/convex-dashboard:6efab6f2b6c182b90255774d747328cfc7b80dd9
     stop_grace_period: 10s
     stop_signal: SIGINT
@@ -59,25 +58,25 @@ services:
       - node-network
 
   postgres:
-    container_name: postgres
+    container_name: convex-postgres
     image: postgres:16
     restart: always
     tty: true
     env_file:
       - ./.env.production.local
     expose:
-      - "5433"
+      - "5434"
     ports:
-      - "5433:5433"
+      - "5434:5434"
     volumes:
       - ./backups:/home/postgres
-      - ./data:/var/lib/postgresql/data
-    command: -p 5433
+      - ./postgres:/var/lib/postgresql/data
+    command: -p 5434
     networks:
       - node-network
 
   frontend:
-    container_name: frontend
+    container_name: convex-frontend
     platform: linux/x86_64
     build:
       context: ./
@@ -90,7 +89,7 @@ services:
       - "3000:3000"
 
   nginx:
-    container_name: nginx
+    container_name: convex-nginx
     build:
       context: nginx
     restart: always
@@ -108,6 +107,3 @@ services:
 networks:
   node-network:
     driver: bridge
-
-volumes:
-  data:

@@ -17,8 +17,8 @@ This is a [Next.js](https://nextjs.org/) project bootstrapped with [`create-next
 ## Docs
 
 ### docker compose
-1. `docker stop auth-client || true` - stop auth-client containers
-2. `docker rm auth-client || true` - remove auth-client image
+1. `docker stop convex-frontend || true` - stop convex-frontend containers
+2. `docker rm convex-frontend || true` - remove convex-frontend image
 3. `docker image prune -a --force` - clean up
 4. `docker compose pull` - pull containers
 5. `docker compose up --build -d` - up containers
@@ -36,7 +36,7 @@ This is a [Next.js](https://nextjs.org/) project bootstrapped with [`create-next
 
 ### psql
 1. `psql -h <REMOTE HOST> -p <REMOTE PORT> -U <DB_USER> <DB_NAME>` - connect to db example
-2. `psql -h localhost -p 5433 -d auth -U sa -W` - connect to db
+2. `psql -h localhost -p 5434 -d convex -U sa -W` - connect to db
 3. `SELECT * FROM pg_catalog.pg_tables WHERE schemaname = 'public';` - select table names
 
 ### prisma

@@ -66,7 +66,7 @@ services:
     expose:
       - "5433"
     ports:
-      - "5434:5433"
+      - "5433:5433"
     volumes:
       - ./backups:/home/postgres
       - ./data:/var/lib/postgresql/data

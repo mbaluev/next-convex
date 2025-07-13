@@ -179,11 +179,13 @@ export const FormSettings = () => {
             />
           )}
         </div>
-        <AlertError message={error} />
-        <AlertSuccess message={success} />
-        <Button type="submit" disabled={isPending}>
-          save
-        </Button>
+        <div className="flex space-x-4">
+          <Button type="submit" disabled={isPending}>
+            save
+          </Button>
+          <AlertError message={error} />
+          <AlertSuccess message={success} />
+        </div>
       </form>
     </Form>
   );

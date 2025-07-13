@@ -10,6 +10,7 @@ import { Spinner } from '@/components/ui/spinner';
 import { Layout } from '@/components/molecules/layout/layout';
 import { Check, Info, OctagonX, TriangleAlert } from 'lucide-react';
 import { CookiesProvider } from 'next-client-cookies/server';
+import { Dialogs } from '@/components/molecules/layout/dialogs';
 import './globals.css';
 
 const font = JetBrains_Mono({ subsets: ['latin'] });
@@ -41,6 +42,7 @@ export default async function RootLayout({ children }: { children: ReactNode }) 
           <body className={font.className}>
             <ThemeProvider attribute="class" defaultTheme="system" enableSystem>
               <Layout>{children}</Layout>
+              <Dialogs />
               <Toaster
                 visibleToasts={5}
                 position="bottom-right"

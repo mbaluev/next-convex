@@ -42,14 +42,15 @@ const DialogContent = React.forwardRef<
     <DialogPrimitive.Content
       ref={ref}
       className={cn(
-        'fixed top-24 z-50 left-[50%] translate-x-[-50%] duration-200',
-        'w-full max-w-lg grid gap-6 p-6',
-        'bg-background shadow-md rounded-lg',
+        'fixed top-16 z-50 left-[50%] translate-x-[-50%] duration-200',
+        'w-full max-w-lg grid gap-4 p-4',
+        'max-h-[calc(100%-4rem)] overflow-y-auto',
+        'bg-background rounded-lg',
         'data-[state=open]:animate-in data-[state=closed]:animate-out',
         'data-[state=closed]:fade-out-0 data-[state=open]:fade-in-0',
         'data-[state=closed]:zoom-out-95 data-[state=open]:zoom-in-95',
-        'data-[state=closed]:slide-out-to-left-1/2 data-[state=closed]:slide-out-to-top-[48%]',
-        'data-[state=open]:slide-in-from-left-1/2 data-[state=open]:slide-in-from-top-[48%]',
+        'data-[state=closed]:slide-out-to-left-1/2 data-[state=closed]:slide-out-to-bottom-[48%]',
+        'data-[state=open]:slide-in-from-left-1/2 data-[state=open]:slide-in-from-bottom-[48%]',
         className
       )}
       {...props}
@@ -68,7 +69,7 @@ const DialogContent = React.forwardRef<
 DialogContent.displayName = DialogPrimitive.Content.displayName;
 
 const DialogHeader = ({ className, ...props }: React.HTMLAttributes<HTMLDivElement>) => (
-  <div className={cn('flex flex-col space-y-2 text-left', className)} {...props} />
+  <div className={cn('flex flex-col space-y-4 text-left', className)} {...props} />
 );
 DialogHeader.displayName = 'DialogHeader';
 
@@ -107,17 +108,22 @@ DialogDescription.displayName = DialogPrimitive.Description.displayName;
 interface DialogToolbarProps extends React.HTMLAttributes<HTMLDivElement> {
   close?: boolean;
   buttons?: React.ReactElement;
+  icon?: React.ReactElement;
 }
 const DialogToolbar = ({
   className,
   title,
   close = true,
   buttons,
+  icon,
   ...props
 }: DialogToolbarProps) => (
   <DialogTitle>
-    <div className="flex gap-x-1 m-[-0.5rem]" {...props}>
-      <p className="flex-1 p-2 flex items-start leading-normal">{title}</p>
+    <div className="flex gap-x-1" {...props}>
+      <Button variant="static" size="flex-start" className="flex-1">
+        {icon}
+        <p>{title}</p>
+      </Button>
       {buttons}
       {close && (
         <DialogPrimitive.Close asChild>

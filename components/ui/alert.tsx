@@ -4,7 +4,7 @@ import { cn } from '@/lib/utils/cn';
 import { Check, Info, OctagonX, TriangleAlert } from 'lucide-react';
 import { Spinner } from '@/components/ui/spinner';
 
-const alertVariants = cva('relative flex space-x-4 w-full rounded-md border-2 px-4 py-3', {
+const alertVariants = cva('relative flex space-x-4 w-full rounded-md border-2 px-4 py-2', {
   variants: {
     variant: {
       default: 'bg-background text-foreground',

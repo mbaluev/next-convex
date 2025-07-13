@@ -23,6 +23,8 @@ import {
 } from '@/components/molecules/layout/sidebar-right';
 import { HeaderUserContent } from '@/components/molecules/layout/header';
 import { Separator } from '@/components/ui/separator';
+import { handleDialogClose, handleDialogOpen } from '@/components/molecules/layout/dialogs';
+import { usePathname, useRouter, useSearchParams } from 'next/navigation';
 
 const MENU_PADDING_ITEM = 15;
 const MENU_TRANSITION_DURATION = 100;
@@ -81,7 +83,32 @@ const MenuItemLeft = (props: IMenuItemProps<TRouteDTO>) => {
   const { node } = props;
   const { toggleNode } = useSidebarLeft();
   const _props = { node, toggleNode };
+
+  const searchParams = useSearchParams();
+  const pathname = usePathname();
+  const router = useRouter();
+
   if (!node.data) return null;
+
+  // item dialog
+  if (!IS_PATH(node.data.path) && Boolean(node.data.dialog)) {
+    const handleClick = () => {
+      const params = new URLSearchParams(searchParams.toString());
+      const _params = handleDialogOpen(params, 'd', ROUTES.PROFILE.name);
+      const _pathname = _params.size > 0 ? `${pathname}?${_params.toString()}` : pathname;
+      router.replace(_pathname);
+    };
+    return (
+      <SidebarLeftButton
+        variant={node.state.selected ? 'sidebar' : 'ghost'}
+        className="w-full"
+        onClick={handleClick}
+      >
+        <MenuItemPadding {..._props} />
+        <MenuItemContent {..._props} />
+      </SidebarLeftButton>
+    );
+  }
 
   // item toggle
   if (!IS_PATH(node.data.path)) return <MenuItemToggle {..._props} />;
@@ -106,7 +133,32 @@ const MenuItemRight = (props: IMenuItemProps<TRouteDTO>) => {
   const { node } = props;
   const { toggleNode } = useSidebarRight();
   const _props = { node, toggleNode };
+
+  const searchParams = useSearchParams();
+  const pathname = usePathname();
+  const router = useRouter();
+
   if (!node.data) return null;
+
+  // item dialog
+  if (!IS_PATH(node.data.path) && Boolean(node.data.dialog)) {
+    const handleClick = () => {
+      const params = new URLSearchParams(searchParams.toString());
+      const _params = handleDialogOpen(params, 'd', ROUTES.PROFILE.name);
+      const _pathname = _params.size > 0 ? `${pathname}?${_params.toString()}` : pathname;
+      router.replace(_pathname);
+    };
+    return (
+      <SidebarRightButton
+        variant={node.state.selected ? 'sidebar' : 'ghost'}
+        className="w-full"
+        onClick={handleClick}
+      >
+        <MenuItemPadding {..._props} />
+        <MenuItemContent {..._props} />
+      </SidebarRightButton>
+    );
+  }
 
   // item toggle
   if (!IS_PATH(node.data.path)) return <MenuItemToggle {..._props} />;

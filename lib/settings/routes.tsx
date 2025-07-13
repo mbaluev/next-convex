@@ -29,7 +29,7 @@ const ROUTES: Record<string, TRouteDTO> = {
   PROFILE: {
     name: 'profile',
     label: 'profile',
-    path: '/profile',
+    path: EMPTY_PATH,
     icon: <UserRoundCog />,
     dialog: true,
   },

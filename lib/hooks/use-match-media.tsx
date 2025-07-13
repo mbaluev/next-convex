@@ -5,6 +5,7 @@ export const MEDIA_SM = 640;
 export const MEDIA_MD = 768; // mobile
 export const MEDIA_LG = 1024;
 export const MEDIA_XL = 1280;
+export const MEDIA_2XL = 1400;
 
 export function useMatchMedia(px: number) {
   const [isMobile, setIsMobile] = useState<boolean | undefined>(undefined);

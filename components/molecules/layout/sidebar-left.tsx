@@ -15,7 +15,7 @@ import {
 import { cn } from '@/lib/utils/cn';
 import { MEDIA_MD, useMatchMedia } from '@/lib/hooks/use-match-media';
 import { Button } from '@/components/ui/button';
-import { ChevronsLeft, ChevronsRight } from 'lucide-react';
+import { ChevronsRight } from 'lucide-react';
 import { useCurrentUser } from '@/auth/hooks/use-current-user';
 import { useCookies } from 'next-client-cookies';
 import { CTree, TTreeDTO } from '@/lib/utils/tree';
@@ -168,9 +168,9 @@ type SidebarLeftTriggerProps = ComponentProps<typeof Button>;
 const SidebarLeftTrigger = forwardRef<ElementRef<typeof Button>, SidebarLeftTriggerProps>(
   (props, ref) => {
     const { onClick, ..._props } = props;
-    const { toggleSidebar, isMobile, openMobile, open } = useSidebarLeft();
+    const { toggleSidebar, open } = useSidebarLeft();
     const user = useCurrentUser();
-    if (!user) return null;
+    if (!user || open) return null;
     return (
       <Button
         ref={ref}
@@ -182,8 +182,9 @@ const SidebarLeftTrigger = forwardRef<ElementRef<typeof Button>, SidebarLeftTrig
         }}
         {..._props}
       >
-        {!(isMobile ? openMobile : open) && <ChevronsRight />}
-        {(isMobile ? openMobile : open) && <ChevronsLeft />}
+        <ChevronsRight />
+        {/*{!(isMobile ? openMobile : open) && <ChevronsRight />}*/}
+        {/*{(isMobile ? openMobile : open) && <ChevronsLeft />}*/}
       </Button>
     );
   }

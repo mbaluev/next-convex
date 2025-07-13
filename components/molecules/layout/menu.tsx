@@ -41,7 +41,7 @@ MenuItemPadding.displayName = 'MenuItemPadding';
 const MenuItemContent = (props: IMenuItemProps<TRouteDTO>) => {
   const { node } = props;
   const classNameChevron = cn(
-    `transition-all transform duration-${MENU_TRANSITION_DURATION}`,
+    `transition-transform transform duration-${MENU_TRANSITION_DURATION}`,
     !node.state.collapsed && 'rotate-90'
   );
   return (

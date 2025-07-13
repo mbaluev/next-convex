@@ -63,7 +63,7 @@ const HeaderUserContent = () => {
       <div className="flex space-x-4">
         <Avatar className="w-20 h-20 bg-secondary">
           <AvatarImage src={user?.image || ''} />
-          <AvatarFallback>
+          <AvatarFallback className="bg-secondary">
             <User className="text-2xl" />
           </AvatarFallback>
         </Avatar>

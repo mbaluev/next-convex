@@ -4,7 +4,7 @@ import Link from 'next/link';
 import { Button } from '@/components/ui/button';
 import { useCurrentUser } from '@/auth/hooks/use-current-user';
 import { SvgLogo } from '@/components/svg/components/logo';
-import { ChevronRight, Cog, X } from 'lucide-react';
+import { ChevronRight, Cog, Ellipsis, X } from 'lucide-react';
 import { TTreeDTO } from '@/lib/utils/tree';
 import { Fragment, ReactNode } from 'react';
 import { cn } from '@/lib/utils/cn';
@@ -29,6 +29,7 @@ const MENU_TRANSITION_DURATION = 100;
 
 interface IMenuItemProps<T> {
   node: TTreeDTO<T>;
+  toggleNode?: (node: TTreeDTO<TRouteDTO>) => void;
 }
 
 const MenuItemPadding = (props: IMenuItemProps<TRouteDTO>) => {
@@ -48,54 +49,85 @@ const MenuItemContent = (props: IMenuItemProps<TRouteDTO>) => {
     <Fragment>
       {node.data?.icon}
       <p className="flex-1 text-left">{node.data?.label}</p>
+      {Boolean(node.data?.dialog) && <Ellipsis />}
       {node.items.length > 0 && <ChevronRight className={classNameChevron} />}
     </Fragment>
   );
 };
 MenuItemContent.displayName = 'MenuItemContent';
 
-// menu-left
+const MenuItemToggle = (props: IMenuItemProps<TRouteDTO>) => {
+  const { node, toggleNode } = props;
+  const handleToggle = () => {
+    if (toggleNode) toggleNode(node);
+  };
+  return (
+    <Button
+      size="flex-start"
+      variant={node.state.selected ? 'sidebar' : 'ghost'}
+      onClick={handleToggle}
+      className="w-full"
+    >
+      <MenuItemPadding {...props} />
+      <MenuItemContent {...props} />
+    </Button>
+  );
+};
+MenuItemToggle.displayName = 'MenuItemToggle';
+
+// ---
+
 const MenuItemLeft = (props: IMenuItemProps<TRouteDTO>) => {
   const { node } = props;
   const { toggleNode } = useSidebarLeft();
-
+  const _props = { node, toggleNode };
   if (!node.data) return null;
 
   // item toggle
-  if (!IS_PATH(node.data.path)) {
-    const handleToggle = () => toggleNode(node);
-    return (
-      <div className="flex">
-        <MenuItemPadding node={node} />
-        <Button
-          size="flex-start"
-          variant={node.state.selected ? 'sidebar' : 'ghost'}
-          onClick={handleToggle}
-          className="flex-1"
-        >
-          <MenuItemContent node={node} />
-        </Button>
-      </div>
-    );
-  }
+  if (!IS_PATH(node.data.path)) return <MenuItemToggle {..._props} />;
 
   // item link
   return (
-    <div className="flex">
-      <MenuItemPadding node={node} />
-      <SidebarLeftButton
-        variant={node.state.selected ? 'sidebar' : 'ghost'}
-        className="flex-1"
-        asChild
-      >
-        <Link href={node.data.path}>
-          <MenuItemContent node={node} />
-        </Link>
-      </SidebarLeftButton>
-    </div>
+    <SidebarLeftButton
+      variant={node.state.selected ? 'sidebar' : 'ghost'}
+      className="w-full"
+      asChild
+    >
+      <Link href={node.data.path}>
+        <MenuItemPadding {..._props} />
+        <MenuItemContent {..._props} />
+      </Link>
+    </SidebarLeftButton>
   );
 };
 MenuItemLeft.displayName = 'MenuItemLeft';
+
+const MenuItemRight = (props: IMenuItemProps<TRouteDTO>) => {
+  const { node } = props;
+  const { toggleNode } = useSidebarRight();
+  const _props = { node, toggleNode };
+  if (!node.data) return null;
+
+  // item toggle
+  if (!IS_PATH(node.data.path)) return <MenuItemToggle {..._props} />;
+
+  // item link
+  return (
+    <SidebarRightButton
+      variant={node.state.selected ? 'sidebar' : 'ghost'}
+      className="w-full"
+      asChild
+    >
+      <Link href={node.data.path}>
+        <MenuItemPadding {..._props} />
+        <MenuItemContent {..._props} />
+      </Link>
+    </SidebarRightButton>
+  );
+};
+MenuItemRight.displayName = 'MenuItemRight';
+
+// --- menu-left
 
 interface IMenuProps {
   children: ReactNode;
@@ -145,48 +177,7 @@ const MenuLeftContent = () => {
 };
 MenuLeftContent.displayName = 'MenuLeftContent';
 
-// menu-right
-const MenuItemRight = (props: IMenuItemProps<TRouteDTO>) => {
-  const { node } = props;
-  const { toggleNode } = useSidebarRight();
-
-  if (!node.data) return null;
-
-  // item toggle
-  if (!IS_PATH(node.data.path)) {
-    const handleToggle = () => toggleNode(node);
-    return (
-      <div className="flex">
-        <Button
-          size="flex-start"
-          variant={node.state.selected ? 'sidebar' : 'ghost'}
-          onClick={handleToggle}
-          className="flex-1"
-        >
-          <MenuItemPadding node={node} />
-          <MenuItemContent node={node} />
-        </Button>
-      </div>
-    );
-  }
-
-  // item link
-  return (
-    <div className="flex">
-      <SidebarLeftButton
-        variant={node.state.selected ? 'sidebar' : 'ghost'}
-        className="flex-1"
-        asChild
-      >
-        <Link href={node.data.path}>
-          <MenuItemPadding node={node} />
-          <MenuItemContent node={node} />
-        </Link>
-      </SidebarLeftButton>
-    </div>
-  );
-};
-MenuItemRight.displayName = 'MenuItemRight';
+// --- menu-right
 
 const MenuRight = (props: IMenuProps) => {
   const { children } = props;

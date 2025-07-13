@@ -8,11 +8,12 @@ type TRouteDTO = {
   path: string;
   label?: string;
   icon?: ReactNode;
+  dialog?: boolean;
 };
 
 const ROUTES: Record<string, TRouteDTO> = {
   HOME: { name: 'home', label: 'home', path: '/' },
-  PROFILE: { name: 'profile', label: 'profile', path: '/profile' },
+  PROFILE: { name: 'profile', label: 'profile', path: '/profile', dialog: true },
   DASHBOARD: { name: 'dashboard', label: 'dashboard', path: '/dashboard' },
   DEPOSITORY: { name: 'depository', label: 'depository', path: '/depository' },
   FILES: { name: 'files', label: 'files', path: '/files' },

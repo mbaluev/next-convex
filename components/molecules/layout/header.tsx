@@ -60,7 +60,7 @@ const HeaderUserContent = () => {
   if (!user) return null;
   return (
     <div className="flex flex-col space-y-4 p-4">
-      <div className="flex space-x-4">
+      <div className="flex space-x-4 items-center">
         <Avatar className="w-20 h-20 bg-secondary">
           <AvatarImage src={user?.image || ''} />
           <AvatarFallback className="bg-secondary">

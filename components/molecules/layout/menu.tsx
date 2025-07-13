@@ -23,7 +23,7 @@ import {
 } from '@/components/molecules/layout/sidebar-right';
 import { HeaderUserContent } from '@/components/molecules/layout/header';
 import { Separator } from '@/components/ui/separator';
-import { handleDialogClose, handleDialogOpen } from '@/components/molecules/layout/dialogs';
+import { handleDialogOpen } from '@/components/molecules/layout/dialogs';
 import { usePathname, useRouter, useSearchParams } from 'next/navigation';
 
 const MENU_PADDING_ITEM = 15;

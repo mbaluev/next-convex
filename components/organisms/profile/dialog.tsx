@@ -29,7 +29,7 @@ export const ProfileDialog = () => {
 
   return (
     <Dialog open={_open} onOpenChange={handleClose}>
-      <DialogContent className="max-w-[1024px]" close={false}>
+      <DialogContent className="max-w-[1280px]" close={false}>
         <DialogHeader>
           <DialogToolbar title="profile" icon={<UserRoundCog />} close />
           <DialogDescription

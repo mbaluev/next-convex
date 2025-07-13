@@ -4,7 +4,7 @@ import Link from 'next/link';
 import { Button } from '@/components/ui/button';
 import { useCurrentUser } from '@/auth/hooks/use-current-user';
 import { SvgLogo } from '@/components/svg/components/logo';
-import { ChevronRight, Cog, LogOut, UserPen, X } from 'lucide-react';
+import { ChevronRight, Cog, X } from 'lucide-react';
 import { TTreeDTO } from '@/lib/utils/tree';
 import { Fragment, ReactNode } from 'react';
 import { cn } from '@/lib/utils/cn';
@@ -23,7 +23,6 @@ import {
 } from '@/components/molecules/layout/sidebar-right';
 import { HeaderUserContent } from '@/components/molecules/layout/header';
 import { Separator } from '@/components/ui/separator';
-import { ButtonLogout } from '@/components/auth/button-logout';
 
 const MENU_PADDING_ITEM = 15;
 const MENU_TRANSITION_DURATION = 100;
@@ -147,6 +146,48 @@ const MenuLeftContent = () => {
 MenuLeftContent.displayName = 'MenuLeftContent';
 
 // menu-right
+const MenuItemRight = (props: IMenuItemProps<TRouteDTO>) => {
+  const { node } = props;
+  const { toggleNode } = useSidebarRight();
+
+  if (!node.data) return null;
+
+  // item toggle
+  if (!IS_PATH(node.data.path)) {
+    const handleToggle = () => toggleNode(node);
+    return (
+      <div className="flex">
+        <Button
+          size="flex-start"
+          variant={node.state.selected ? 'sidebar' : 'ghost'}
+          onClick={handleToggle}
+          className="flex-1"
+        >
+          <MenuItemPadding node={node} />
+          <MenuItemContent node={node} />
+        </Button>
+      </div>
+    );
+  }
+
+  // item link
+  return (
+    <div className="flex">
+      <SidebarLeftButton
+        variant={node.state.selected ? 'sidebar' : 'ghost'}
+        className="flex-1"
+        asChild
+      >
+        <Link href={node.data.path}>
+          <MenuItemPadding node={node} />
+          <MenuItemContent node={node} />
+        </Link>
+      </SidebarLeftButton>
+    </div>
+  );
+};
+MenuItemRight.displayName = 'MenuItemRight';
+
 const MenuRight = (props: IMenuProps) => {
   const { children } = props;
   const user = useCurrentUser();
@@ -165,7 +206,7 @@ MenuRight.displayName = 'MenuRight';
 
 const MenuRightContent = () => {
   const user = useCurrentUser();
-  const { toggleSidebar } = useSidebarRight();
+  const { toggleSidebar, data } = useSidebarRight();
   if (!user) return null;
   return (
     <div className="flex flex-col">
@@ -182,16 +223,10 @@ const MenuRightContent = () => {
       <HeaderUserContent />
       <Separator />
       <div className="flex flex-col gap-4 p-4">
-        <SidebarRightButton variant="ghost" size="flex-start" className="w-full" asChild>
-          <Link href={ROUTES.PROFILE.path}>
-            <UserPen />
-            profile
-          </Link>
-        </SidebarRightButton>
-        <ButtonLogout variant="ghost" size="flex-start" className="w-full">
-          <LogOut />
-          logout
-        </ButtonLogout>
+        {data
+          ?.flat()
+          ?.filter((d) => !d.state.hidden)
+          .map((node, index) => <MenuItemRight key={index} node={node} />)}
       </div>
     </div>
   );

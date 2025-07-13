@@ -15,13 +15,13 @@ const Separator = React.forwardRef<
     orientation={orientation}
     className={cn(
       'shrink-0',
-      'bg-border',
-      // orientation === 'horizontal' &&
-      //   'bg-[repeating-linear-gradient(to_right,hsl(_var(--border))_0,hsl(_var(--border))_1px,transparent_1px,transparent_6px)]',
-      // orientation === 'vertical' &&
-      //   'bg-[repeating-linear-gradient(to_bottom,hsl(_var(--border))_0,hsl(_var(--border))_1px,transparent_1px,transparent_6px)]',
-      orientation === 'horizontal' && 'h-[1px]',
-      orientation === 'vertical' && 'w-[1px]',
+      // 'bg-border',
+      orientation === 'horizontal' &&
+        'bg-[repeating-linear-gradient(to_right,hsl(_var(--border))_0,hsl(_var(--border))_2px,transparent_2px,transparent_6px)]',
+      orientation === 'vertical' &&
+        'bg-[repeating-linear-gradient(to_bottom,hsl(_var(--border))_0,hsl(_var(--border))_2px,transparent_2px,transparent_6px)]',
+      orientation === 'horizontal' && 'h-[2px]',
+      orientation === 'vertical' && 'w-[2px]',
       className
     )}
     {...props}

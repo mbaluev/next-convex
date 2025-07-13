@@ -19,7 +19,7 @@ import { ChevronsLeft, ChevronsRight } from 'lucide-react';
 import { useCurrentUser } from '@/auth/hooks/use-current-user';
 import { useCookies } from 'next-client-cookies';
 import { CTree, TTreeDTO } from '@/lib/utils/tree';
-import { menuTree } from '@/lib/settings/menu';
+import { menuLeft } from '@/lib/settings/menu';
 import { usePathname } from 'next/navigation';
 import { TRouteDTO } from '@/lib/settings/routes';
 
@@ -38,8 +38,8 @@ interface SidebarLeftContext<T> {
   setOpenMobile: (open: boolean) => void;
   isMobile: boolean;
   toggleSidebar: () => void;
-  data?: CTree<T>;
   toggleNode: (node: TTreeDTO<T>) => void;
+  data?: CTree<T>;
 }
 const SidebarLeftContext = createContext<SidebarLeftContext<TRouteDTO> | null>(null);
 function useSidebarLeft() {
@@ -110,7 +110,7 @@ const SidebarLeftProvider = forwardRef<HTMLDivElement, SidebarLeftProviderProps>
   }, [toggleSidebar]);
 
   // init data
-  const [data, setData] = useState<CTree<TRouteDTO>>(menuTree);
+  const [data, setData] = useState<CTree<TRouteDTO>>(menuLeft);
   const toggleNodeCallback = (node: TTreeDTO<TRouteDTO>) => {
     const _data = data.clone();
     _data.toggle(node.id);
@@ -139,8 +139,8 @@ const SidebarLeftProvider = forwardRef<HTMLDivElement, SidebarLeftProviderProps>
     openMobile,
     setOpenMobile,
     toggleSidebar,
-    data,
     toggleNode,
+    data,
   });
   const contextValue = useMemo<SidebarLeftContext<TRouteDTO>>(contextValueMemo, [
     name,
@@ -218,8 +218,8 @@ const SidebarLeft = forwardRef<HTMLDivElement, SidebarLeftProps>((props, ref) =>
   if (!user) return null;
 
   const classNavDesktop = cn(
-    'w-[260px] h-full flex-grow-0 flex-shrink-0 flex-basis-auto',
-    !open && 'ml-[-260px]'
+    'w-[280px] h-full flex-grow-0 flex-shrink-0 flex-basis-auto',
+    !open && 'ml-[-280px]'
   );
   const classNavMobile = cn(
     'w-[calc(100%-12px)] max-w-[300px] fixed top-0 bottom-0 z-[10]',
@@ -233,7 +233,7 @@ const SidebarLeft = forwardRef<HTMLDivElement, SidebarLeftProps>((props, ref) =>
   );
 
   const classDivMobile = cn('h-full shadow-md', 'rounded-r-lg');
-  const classDivDesktop = cn('fixed w-[260px] h-full');
+  const classDivDesktop = cn('fixed w-[280px] h-full');
   const classDiv = cn(
     'bg-sidebar text-sidebar-foreground',
     isMobile ? classDivMobile : classDivDesktop

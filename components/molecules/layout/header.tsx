@@ -6,7 +6,7 @@ import { SidebarRightTrigger } from '@/components/molecules/layout/sidebar-right
 import { Button } from '@/components/ui/button';
 import { useTheme } from 'next-themes';
 import { TooltipText } from '@/components/ui/tooltip';
-import { Moon, Sun, User } from 'lucide-react';
+import { LogOut, Moon, Sun, User } from 'lucide-react';
 import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar';
 import {
   DropdownMenu,
@@ -18,6 +18,7 @@ import { BREAD_CRUMBS } from '@/lib/settings/bread-crumbs';
 import { BreadCrumbs } from '@/components/molecules/layout/bread-crumbs';
 import { Badge } from '@/components/ui/badge';
 import { UserRole } from '@prisma/client';
+import { ButtonLogout } from '@/components/auth/button-logout';
 
 const HeaderThemeBtn = () => {
   const { setTheme, theme } = useTheme();
@@ -58,16 +59,16 @@ const HeaderUserContent = () => {
   const user = useCurrentUser();
   if (!user) return null;
   return (
-    <div className="flex flex-col space-y-6 p-4">
+    <div className="flex flex-col space-y-4 p-4">
       <div className="flex space-x-4">
-        <Avatar className="w-16 h-16">
+        <Avatar className="w-20 h-20 bg-secondary">
           <AvatarImage src={user?.image || ''} />
-          <AvatarFallback className="bg-transparent hover:bg-secondary">
+          <AvatarFallback>
             <User className="text-2xl" />
           </AvatarFallback>
         </Avatar>
-        <div className="space-y-3">
-          <p>{user?.email}</p>
+        <div className="space-y-3 overflow-hidden">
+          <p className="overflow-hidden text-ellipsis">{user?.email}</p>
           <div className="flex space-x-4">
             {user.role === UserRole.USER && <Badge variant="default">user</Badge>}
             {user.role === UserRole.ADMIN && <Badge variant="success">admin</Badge>}
@@ -75,6 +76,10 @@ const HeaderUserContent = () => {
           </div>
         </div>
       </div>
+      <ButtonLogout variant="ghost" size="flex-start" className="w-full">
+        <LogOut />
+        logout
+      </ButtonLogout>
     </div>
   );
 };
@@ -102,10 +107,14 @@ const HeaderBreadCrumbs = () => {
 
 const Header = () => {
   // const scrolled = useScrollTop();
+  // const user = useCurrentUser();
   return (
-    <header className="flex gap-4 justify-end items-start p-4 w-full z-[8] sticky top-0 bg-background">
-      <HeaderBreadCrumbs />
-      <HeaderRight />
+    <header className="flex flex-col w-full z-[8] sticky top-0">
+      <div className="flex gap-4 justify-end items-start p-4 w-full bg-background">
+        <HeaderBreadCrumbs />
+        <HeaderRight />
+      </div>
+      {/*{user && <Separator />}*/}
     </header>
   );
 };

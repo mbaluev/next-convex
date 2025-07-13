@@ -20,6 +20,9 @@ import { useCurrentUser } from '@/auth/hooks/use-current-user';
 import { useCookies } from 'next-client-cookies';
 import { TRouteDTO } from '@/lib/settings/routes';
 import { useWindowResize } from '@/lib/hooks/use-window-resize';
+import { CTree, TTreeDTO } from '@/lib/utils/tree';
+import { menuRight } from '@/lib/settings/menu';
+import { usePathname } from 'next/navigation';
 
 const SIDEBAR_STORAGE_NAME = 'sidebar-right';
 const SIDEBAR_KEYBOARD_SHORTCUT = 'h';
@@ -36,6 +39,8 @@ interface SidebarRightContext<T> {
   setOpenMobile: (open: boolean) => void;
   isMobile: boolean;
   toggleSidebar: () => void;
+  toggleNode: (node: TTreeDTO<T>) => void;
+  data?: CTree<T>;
 }
 const SidebarRightContext = createContext<SidebarRightContext<TRouteDTO> | null>(null);
 function useSidebarRight() {
@@ -70,6 +75,7 @@ const SidebarRightProvider = forwardRef<HTMLDivElement, SidebarRightProviderProp
   } = props;
   const isMobile = useMatchMedia(MEDIA_MD);
   const [openMobile, setOpenMobile] = useState(false);
+  const pathname = usePathname();
 
   // internal state of the sidebar.
   const [_open, _setOpen] = useState(defaultOpen);
@@ -104,6 +110,27 @@ const SidebarRightProvider = forwardRef<HTMLDivElement, SidebarRightProviderProp
     return () => window.removeEventListener('keydown', handleKeyDown);
   }, [toggleSidebar]);
 
+  // init data
+  const [data, setData] = useState<CTree<TRouteDTO>>(menuRight);
+  const toggleNodeCallback = (node: TTreeDTO<TRouteDTO>) => {
+    const _data = data.clone();
+    _data.toggle(node.id);
+    setData(_data);
+  };
+  const toggleNode = useCallback(toggleNodeCallback, []);
+  useEffect(() => {
+    const _data = data.clone();
+    if (collapsed) _data.collapseTo(1);
+    setData(_data);
+  }, [collapsed]);
+  useEffect(() => {
+    const _data = data.clone();
+    const node = _data.find((d) => d.data?.path === pathname);
+    if (node) _data.select(node.id, true);
+    else _data.deselect();
+    setData(_data);
+  }, [pathname]);
+
   // context value
   const contextValueMemo = (): SidebarRightContext<TRouteDTO> => ({
     name,
@@ -113,6 +140,8 @@ const SidebarRightProvider = forwardRef<HTMLDivElement, SidebarRightProviderProp
     openMobile,
     setOpenMobile,
     toggleSidebar,
+    toggleNode,
+    data,
   });
   const contextValue = useMemo<SidebarRightContext<TRouteDTO>>(contextValueMemo, [
     name,
@@ -122,6 +151,8 @@ const SidebarRightProvider = forwardRef<HTMLDivElement, SidebarRightProviderProp
     openMobile,
     setOpenMobile,
     toggleSidebar,
+    toggleNode,
+    data,
   ]);
 
   return (
@@ -190,8 +221,8 @@ const SidebarRight = forwardRef<HTMLDivElement, SidebarRightProps>((props, ref) 
   if (!user) return null;
 
   const classNavDesktop = cn(
-    'w-[260px] h-full flex-grow-0 flex-shrink-0 flex-basis-auto',
-    !open && 'mr-[-260px]'
+    'w-[280px] h-full flex-grow-0 flex-shrink-0 flex-basis-auto',
+    !open && 'mr-[-280px]'
   );
   const classNavMobile = cn(
     'w-[calc(100%-12px)] max-w-[300px] fixed top-0 bottom-0 z-[10]',
@@ -206,7 +237,7 @@ const SidebarRight = forwardRef<HTMLDivElement, SidebarRightProps>((props, ref) 
   );
 
   const classDivMobile = cn('h-full shadow-md', 'rounded-l-lg');
-  const classDivDesktop = cn('fixed w-[260px] h-full');
+  const classDivDesktop = cn('fixed w-[280px] h-full');
   const classDiv = cn(
     'bg-sidebar text-sidebar-foreground',
     isMobile ? classDivMobile : classDivDesktop

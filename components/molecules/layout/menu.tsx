@@ -4,7 +4,7 @@ import Link from 'next/link';
 import { Button } from '@/components/ui/button';
 import { useCurrentUser } from '@/auth/hooks/use-current-user';
 import { SvgLogo } from '@/components/svg/components/logo';
-import { ChevronRight, Cog, Ellipsis, X } from 'lucide-react';
+import { ChevronRight, Cog, X, BookOpen } from 'lucide-react';
 import { TTreeDTO } from '@/lib/utils/tree';
 import { Fragment, ReactNode } from 'react';
 import { cn } from '@/lib/utils/cn';
@@ -49,7 +49,7 @@ const MenuItemContent = (props: IMenuItemProps<TRouteDTO>) => {
     <Fragment>
       {node.data?.icon}
       <p className="flex-1 text-left">{node.data?.label}</p>
-      {Boolean(node.data?.dialog) && <Ellipsis />}
+      {Boolean(node.data?.dialog) && <BookOpen />}
       {node.items.length > 0 && <ChevronRight className={classNameChevron} />}
     </Fragment>
   );
@@ -202,7 +202,7 @@ const MenuRightContent = () => {
   return (
     <div className="flex flex-col">
       <div className="flex gap-4 justify-between items-center p-4">
-        <SidebarRightButton variant="ghost" className="flex-1">
+        <SidebarRightButton variant="static" className="flex-1">
           <Cog />
           <p>settings</p>
         </SidebarRightButton>

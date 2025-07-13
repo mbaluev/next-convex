@@ -17,6 +17,7 @@ const buttonVariants = cva(
         ghost: 'hover:bg-secondary hover:text-secondary-foreground',
         link: 'text-primary underline-offset-4 hover:underline',
         sidebar: 'bg-secondary text-primary',
+        static: 'text-foreground cursor-default',
       },
       size: {
         default: 'h-11 px-3',

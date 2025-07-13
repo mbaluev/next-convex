@@ -3,7 +3,6 @@
 import { useIsAuth } from '@/auth/hooks/use-is-auth';
 import { SvgLogo } from '@/components/svg/components/logo';
 import { ButtonLogin } from '@/components/auth/button-login';
-import { Button } from '@/components/ui/button';
 import { Dot } from 'lucide-react';
 
 export default function Home() {
@@ -32,15 +31,11 @@ export default function Home() {
       </div>
       {!auth && (
         <div className="flex gap-6 justify-center">
-          <ButtonLogin mode="redirect" asChild>
-            <Button variant="default" size="lg">
-              sign in
-            </Button>
+          <ButtonLogin variant="default" size="lg" mode="redirect">
+            sign in
           </ButtonLogin>
-          <ButtonLogin mode="modal" asChild>
-            <Button variant="outline" size="lg">
-              sign in dialog
-            </Button>
+          <ButtonLogin variant="outline" size="lg" mode="modal">
+            sign in dialog
           </ButtonLogin>
         </div>
       )}

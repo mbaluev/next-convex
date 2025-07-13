@@ -6,13 +6,11 @@ import { SidebarRightTrigger } from '@/components/molecules/layout/sidebar-right
 import { Button } from '@/components/ui/button';
 import { useTheme } from 'next-themes';
 import { TooltipText } from '@/components/ui/tooltip';
-import { LogOut, Moon, Sun, User, UserPen } from 'lucide-react';
+import { Moon, Sun, User } from 'lucide-react';
 import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar';
-import { ButtonLogout } from '@/components/auth/button-logout';
 import {
   DropdownMenu,
   DropdownMenuContent,
-  DropdownMenuItem,
   DropdownMenuTrigger,
 } from '@/components/ui/dropdown-menu';
 import { usePathname } from 'next/navigation';
@@ -20,11 +18,8 @@ import { BREAD_CRUMBS } from '@/lib/settings/bread-crumbs';
 import { BreadCrumbs } from '@/components/molecules/layout/bread-crumbs';
 import { Badge } from '@/components/ui/badge';
 import { UserRole } from '@prisma/client';
-import { Separator } from '@/components/ui/separator';
-import { ROUTES } from '@/lib/settings/routes';
-import Link from 'next/link';
 
-const HeaderRightThemeBtn = () => {
+const HeaderThemeBtn = () => {
   const { setTheme, theme } = useTheme();
   const handleChangeTheme = () => setTheme(theme === 'dark' ? 'light' : 'dark');
   return (
@@ -37,7 +32,7 @@ const HeaderRightThemeBtn = () => {
   );
 };
 
-const HeaderRightUserBtn = () => {
+const HeaderUserBtn = () => {
   const user = useCurrentUser();
   if (!user) return null;
   return (
@@ -53,49 +48,42 @@ const HeaderRightUserBtn = () => {
         </Button>
       </DropdownMenuTrigger>
       <DropdownMenuContent align="end" className="min-w-[300px] p-0 space-y-0">
-        <div className="flex p-4 pb-0 space-x-4 items-center">
-          <Avatar className="w-32 h-32">
-            <AvatarImage src={user?.image || ''} />
-            <AvatarFallback className="text-5xl bg-transparent hover:bg-secondary">
-              <User />
-            </AvatarFallback>
-          </Avatar>
-          <div className="space-y-4">
-            <div className="space-y-2">
-              <p>{user?.name}</p>
-              <p>{user?.email}</p>
-            </div>
-            {user.role === UserRole.USER && <Badge variant="default">user</Badge>}
-            {user.role === UserRole.ADMIN && <Badge variant="success">admin</Badge>}
-          </div>
-        </div>
-        <div className="p-4">
-          <Link href={ROUTES.PROFILE.path}>
-            <DropdownMenuItem>
-              <UserPen className="mr-4" />
-              profile
-            </DropdownMenuItem>
-          </Link>
-        </div>
-        <Separator />
-        <div className="p-4">
-          <ButtonLogout>
-            <DropdownMenuItem>
-              <LogOut className="mr-4" />
-              logout
-            </DropdownMenuItem>
-          </ButtonLogout>
-        </div>
+        <HeaderUserContent />
       </DropdownMenuContent>
     </DropdownMenu>
   );
 };
 
-const HeaderRightBar = () => {
+const HeaderUserContent = () => {
+  const user = useCurrentUser();
+  if (!user) return null;
+  return (
+    <div className="flex flex-col space-y-6 p-4">
+      <div className="flex space-x-4">
+        <Avatar className="w-16 h-16">
+          <AvatarImage src={user?.image || ''} />
+          <AvatarFallback className="bg-transparent hover:bg-secondary">
+            <User className="text-2xl" />
+          </AvatarFallback>
+        </Avatar>
+        <div className="space-y-3">
+          <p>{user?.email}</p>
+          <div className="flex space-x-4">
+            {user.role === UserRole.USER && <Badge variant="default">user</Badge>}
+            {user.role === UserRole.ADMIN && <Badge variant="success">admin</Badge>}
+            <p>{user?.name}</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  );
+};
+
+const HeaderRight = () => {
   return (
     <nav className="flex-grow-0 flex gap-4">
-      <HeaderRightThemeBtn />
-      <HeaderRightUserBtn />
+      <HeaderThemeBtn />
+      {/*<HeaderUserBtn />*/}
       <SidebarRightTrigger />
     </nav>
   );
@@ -117,9 +105,9 @@ const Header = () => {
   return (
     <header className="flex gap-4 justify-end items-start p-4 w-full z-[8] sticky top-0 bg-background">
       <HeaderBreadCrumbs />
-      <HeaderRightBar />
+      <HeaderRight />
     </header>
   );
 };
 
-export { Header };
+export { Header, HeaderUserContent };

@@ -15,14 +15,13 @@ import {
 import { cn } from '@/lib/utils/cn';
 import { MEDIA_MD, useMatchMedia } from '@/lib/hooks/use-match-media';
 import { Button } from '@/components/ui/button';
-import { ChevronsLeft, ChevronsRight, SlidersHorizontal } from 'lucide-react';
+import { ChevronsLeft, ChevronsRight } from 'lucide-react';
 import { useCurrentUser } from '@/auth/hooks/use-current-user';
 import { useCookies } from 'next-client-cookies';
 import { CTree, TTreeDTO } from '@/lib/utils/tree';
 import { menuTree } from '@/lib/settings/menu';
 import { usePathname } from 'next/navigation';
 import { TRouteDTO } from '@/lib/settings/routes';
-import { useWindowResize } from '@/lib/hooks/use-window-resize';
 
 const SIDEBAR_STORAGE_NAME = 'sidebar-left';
 const SIDEBAR_KEYBOARD_SHORTCUT = 'h';
@@ -214,14 +213,13 @@ type SidebarLeftProps = ComponentProps<'nav'> & SidebarLeftBaseProps;
 const SidebarLeft = forwardRef<HTMLDivElement, SidebarLeftProps>((props, ref) => {
   const { className, children, ..._props } = props;
   const { isMobile, open, openMobile, toggleSidebar } = useSidebarLeft();
-  const { width } = useWindowResize();
 
   const user = useCurrentUser();
   if (!user) return null;
 
   const classNavDesktop = cn(
-    'w-[240px] h-full flex-grow-0 flex-shrink-0 flex-basis-auto',
-    !open && 'ml-[-240px]'
+    'w-[260px] h-full flex-grow-0 flex-shrink-0 flex-basis-auto',
+    !open && 'ml-[-260px]'
   );
   const classNavMobile = cn(
     'w-[calc(100%-12px)] max-w-[300px] fixed top-0 bottom-0 z-[10]',
@@ -235,7 +233,7 @@ const SidebarLeft = forwardRef<HTMLDivElement, SidebarLeftProps>((props, ref) =>
   );
 
   const classDivMobile = cn('h-full shadow-md', 'rounded-r-lg');
-  const classDivDesktop = cn('fixed w-[240px] h-full');
+  const classDivDesktop = cn('fixed w-[260px] h-full');
   const classDiv = cn(
     'bg-sidebar text-sidebar-foreground',
     isMobile ? classDivMobile : classDivDesktop

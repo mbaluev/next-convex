@@ -15,10 +15,9 @@ import {
 import { cn } from '@/lib/utils/cn';
 import { MEDIA_MD, useMatchMedia } from '@/lib/hooks/use-match-media';
 import { Button } from '@/components/ui/button';
-import { SlidersHorizontal } from 'lucide-react';
+import { Cog } from 'lucide-react';
 import { useCurrentUser } from '@/auth/hooks/use-current-user';
 import { useCookies } from 'next-client-cookies';
-import { usePathname } from 'next/navigation';
 import { TRouteDTO } from '@/lib/settings/routes';
 import { useWindowResize } from '@/lib/hooks/use-window-resize';
 
@@ -71,7 +70,6 @@ const SidebarRightProvider = forwardRef<HTMLDivElement, SidebarRightProviderProp
   } = props;
   const isMobile = useMatchMedia(MEDIA_MD);
   const [openMobile, setOpenMobile] = useState(false);
-  const pathname = usePathname();
 
   // internal state of the sidebar.
   const [_open, _setOpen] = useState(defaultOpen);
@@ -154,12 +152,32 @@ const SidebarRightTrigger = forwardRef<ElementRef<typeof Button>, SidebarRightTr
         }}
         {..._props}
       >
-        <SlidersHorizontal />
+        <Cog />
+        {/*{!(isMobile ? openMobile : open) && <ChevronsLeft />}*/}
+        {/*{(isMobile ? openMobile : open) && <ChevronsRight />}*/}
       </Button>
     );
   }
 );
 SidebarRightTrigger.displayName = 'SidebarRightTrigger';
+
+type SidebarRightButtonProps = ComponentProps<typeof Button>;
+const SidebarRightButton = forwardRef<ElementRef<typeof Button>, SidebarRightButtonProps>(
+  (props, ref) => {
+    const { onClick, children, ..._props } = props;
+    const { toggleSidebar, isMobile } = useSidebarRight();
+    const handleClick = (e: any) => {
+      if (onClick) onClick(e);
+      if (isMobile) toggleSidebar();
+    };
+    return (
+      <Button ref={ref} size="flex-start" onClick={handleClick} {..._props}>
+        {children}
+      </Button>
+    );
+  }
+);
+SidebarRightButton.displayName = 'SidebarRightButton';
 
 type SidebarRightBaseProps = {};
 type SidebarRightProps = ComponentProps<'nav'> & SidebarRightBaseProps;
@@ -172,8 +190,8 @@ const SidebarRight = forwardRef<HTMLDivElement, SidebarRightProps>((props, ref) 
   if (!user) return null;
 
   const classNavDesktop = cn(
-    'w-[240px] h-full flex-grow-0 flex-shrink-0 flex-basis-auto',
-    !open && 'mr-[-240px]'
+    'w-[260px] h-full flex-grow-0 flex-shrink-0 flex-basis-auto',
+    !open && 'mr-[-260px]'
   );
   const classNavMobile = cn(
     'w-[calc(100%-12px)] max-w-[300px] fixed top-0 bottom-0 z-[10]',
@@ -188,7 +206,7 @@ const SidebarRight = forwardRef<HTMLDivElement, SidebarRightProps>((props, ref) 
   );
 
   const classDivMobile = cn('h-full shadow-md', 'rounded-l-lg');
-  const classDivDesktop = cn('fixed w-[240px] h-full');
+  const classDivDesktop = cn('fixed w-[260px] h-full');
   const classDiv = cn(
     'bg-sidebar text-sidebar-foreground',
     isMobile ? classDivMobile : classDivDesktop
@@ -215,6 +233,7 @@ export {
   SidebarRightProvider,
   SidebarRight,
   SidebarRightTrigger,
+  SidebarRightButton,
   useSidebarRight,
   SIDEBAR_EVENT_START,
   SIDEBAR_EVENT_END,

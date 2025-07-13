@@ -1,22 +1,24 @@
 'use client';
 
-import { ReactNode } from 'react';
+import { forwardRef } from 'react';
 import { logout } from '@/auth/actions/logout';
 import { signOut } from 'next-auth/react';
+import { Button, ButtonProps } from '@/components/ui/button';
 
-interface LogoutButtonProps {
-  children?: ReactNode;
-}
+const ButtonLogout = forwardRef<HTMLButtonElement, ButtonProps>((props, ref) => {
+  const { children, ...rest } = props;
 
-export const ButtonLogout = ({ children }: LogoutButtonProps) => {
   const onClick = async () => {
     await logout();
     await signOut();
   };
 
   return (
-    <span onClick={onClick} className="cursor-pointer">
+    <Button ref={ref} onClick={onClick} className="cursor-pointer" {...rest}>
       {children}
-    </span>
+    </Button>
   );
-};
+});
+ButtonLogout.displayName = 'ButtonLogout';
+
+export { ButtonLogout };

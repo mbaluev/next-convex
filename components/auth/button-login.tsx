@@ -1,6 +1,5 @@
 'use client';
 
-import { ReactNode } from 'react';
 import { useRouter } from 'next/navigation';
 import { FormLogin } from '@/components/auth/form-login';
 import {
@@ -12,14 +11,14 @@ import {
   DialogTrigger,
 } from '@/components/ui/dialog';
 import { VisuallyHidden } from '@radix-ui/react-visually-hidden';
+import { Button, ButtonProps } from '@/components/ui/button';
 
-interface LoginButtonProps {
-  children?: ReactNode;
+interface LoginButtonProps extends ButtonProps {
   mode?: 'modal' | 'redirect';
-  asChild?: boolean;
 }
 
-export const ButtonLogin = ({ children, mode = 'redirect', asChild }: LoginButtonProps) => {
+export const ButtonLogin = (props: LoginButtonProps) => {
+  const { children, mode = 'redirect', asChild, ...rest } = props;
   const router = useRouter();
 
   const onClick = () => {
@@ -29,7 +28,9 @@ export const ButtonLogin = ({ children, mode = 'redirect', asChild }: LoginButto
   if (mode === 'modal') {
     return (
       <Dialog>
-        <DialogTrigger asChild={asChild}>{children}</DialogTrigger>
+        <DialogTrigger asChild>
+          <Button {...rest}>{children}</Button>
+        </DialogTrigger>
         <DialogContent className="max-w-lg" close>
           <VisuallyHidden>
             <DialogHeader>
@@ -44,8 +45,8 @@ export const ButtonLogin = ({ children, mode = 'redirect', asChild }: LoginButto
   }
 
   return (
-    <span onClick={onClick} className="cursor-pointer">
+    <Button onClick={onClick} className="cursor-pointer" {...rest}>
       {children}
-    </span>
+    </Button>
   );
 };

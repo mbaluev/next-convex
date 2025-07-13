@@ -4,7 +4,7 @@ import Link from 'next/link';
 import { Button } from '@/components/ui/button';
 import { useCurrentUser } from '@/auth/hooks/use-current-user';
 import { SvgLogo } from '@/components/svg/components/logo';
-import { ChevronRight, X } from 'lucide-react';
+import { ChevronRight, Cog, LogOut, UserPen, X } from 'lucide-react';
 import { TTreeDTO } from '@/lib/utils/tree';
 import { Fragment, ReactNode } from 'react';
 import { cn } from '@/lib/utils/cn';
@@ -17,9 +17,13 @@ import {
 } from '@/components/molecules/layout/sidebar-left';
 import {
   SidebarRight,
+  SidebarRightButton,
   SidebarRightProvider,
   useSidebarRight,
 } from '@/components/molecules/layout/sidebar-right';
+import { HeaderUserContent } from '@/components/molecules/layout/header';
+import { Separator } from '@/components/ui/separator';
+import { ButtonLogout } from '@/components/auth/button-logout';
 
 const MENU_PADDING_ITEM = 15;
 const MENU_TRANSITION_DURATION = 100;
@@ -67,8 +71,8 @@ const MenuItemLeft = (props: IMenuItemProps<TRouteDTO>) => {
         <Button
           size="flex-start"
           variant={node.state.selected ? 'sidebar' : 'ghost'}
-          className="flex-1"
           onClick={handleToggle}
+          className="flex-1"
         >
           <MenuItemContent node={node} />
         </Button>
@@ -118,8 +122,8 @@ const MenuLeftContent = () => {
   const { toggleSidebar, data } = useSidebarLeft();
   if (!user) return null;
   return (
-    <div className="flex flex-col gap-4 p-4">
-      <div className="flex gap-4 justify-between">
+    <div className="flex flex-col">
+      <div className="flex gap-4 p-4 justify-between">
         <SidebarLeftButton asChild variant="ghost" className="flex-1">
           <Link href={ROUTES.HOME.path}>
             <SvgLogo className="w-6 h-6" />
@@ -130,10 +134,13 @@ const MenuLeftContent = () => {
           <X />
         </Button>
       </div>
-      {data
-        ?.flat()
-        ?.filter((d) => !d.state.hidden)
-        .map((node, index) => <MenuItemLeft key={index} node={node} />)}
+      <Separator />
+      <div className="flex flex-col gap-4 p-4">
+        {data
+          ?.flat()
+          ?.filter((d) => !d.state.hidden)
+          .map((node, index) => <MenuItemLeft key={index} node={node} />)}
+      </div>
     </div>
   );
 };
@@ -161,12 +168,30 @@ const MenuRightContent = () => {
   const { toggleSidebar } = useSidebarRight();
   if (!user) return null;
   return (
-    <div className="flex flex-col gap-4 p-4">
-      <div className="flex gap-4 justify-between items-center">
-        <p className="pl-4">settings</p>
+    <div className="flex flex-col">
+      <div className="flex gap-4 justify-between items-center p-4">
+        <SidebarRightButton variant="ghost" className="flex-1">
+          <Cog />
+          <p>settings</p>
+        </SidebarRightButton>
         <Button variant="ghost" size="icon" onClick={toggleSidebar}>
           <X />
         </Button>
+      </div>
+      <Separator />
+      <HeaderUserContent />
+      <Separator />
+      <div className="flex flex-col gap-4 p-4">
+        <SidebarRightButton variant="ghost" size="flex-start" className="w-full" asChild>
+          <Link href={ROUTES.PROFILE.path}>
+            <UserPen />
+            profile
+          </Link>
+        </SidebarRightButton>
+        <ButtonLogout variant="ghost" size="flex-start" className="w-full">
+          <LogOut />
+          logout
+        </ButtonLogout>
       </div>
     </div>
   );

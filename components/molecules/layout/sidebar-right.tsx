@@ -169,9 +169,9 @@ type SidebarRightTriggerProps = ComponentProps<typeof Button>;
 const SidebarRightTrigger = forwardRef<ElementRef<typeof Button>, SidebarRightTriggerProps>(
   (props, ref) => {
     const { onClick, ..._props } = props;
-    const { toggleSidebar, open } = useSidebarRight();
+    const { toggleSidebar, open, isMobile } = useSidebarRight();
     const user = useCurrentUser();
-    if (!user || open) return null;
+    if (!user || (!isMobile && open)) return null;
     return (
       <Button
         ref={ref}

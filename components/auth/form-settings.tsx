@@ -5,7 +5,7 @@ import { useForm } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { Button } from '@/components/ui/button';
 import { settings } from '@/auth/actions/settings';
-import { Fragment, useState, useTransition } from 'react';
+import { Fragment, useTransition } from 'react';
 import { useSession } from 'next-auth/react';
 import { settingsSchema } from '@/auth/schemas';
 import {
@@ -18,7 +18,6 @@ import {
 } from '@/components/ui/form';
 import { Input } from '@/components/ui/input';
 import { useCurrentUser } from '@/auth/hooks/use-current-user';
-import { AlertSuccess, AlertError } from '@/components/ui/alert';
 import {
   Select,
   SelectContent,
@@ -29,13 +28,12 @@ import {
 import { UserRole } from '@prisma/client';
 import { Switch } from '@/components/ui/switch';
 import { InputPassword } from '@/components/ui/input-password';
+import { toast } from 'sonner';
 
 export const FormSettings = () => {
   const user = useCurrentUser();
   const { update } = useSession();
 
-  const [error, setError] = useState<string | undefined>();
-  const [success, setSuccess] = useState<string | undefined>();
   const [isPending, startTransition] = useTransition();
 
   const form = useForm<z.infer<typeof settingsSchema>>({
@@ -54,10 +52,10 @@ export const FormSettings = () => {
     startTransition(() => {
       settings(values)
         .then((data) => {
-          if (data.error) setError(data.error);
-          if (data.success) update().then(() => setSuccess(data.success));
+          if (data.error) toast.error(data.error);
+          if (data.success) update().then(() => toast.success(data.success));
         })
-        .catch(() => setError('something went wrong'));
+        .catch(() => toast.error('something went wrong'));
     });
   };
 
@@ -65,13 +63,20 @@ export const FormSettings = () => {
     <Form {...form}>
       <form className="space-y-6" onSubmit={form.handleSubmit(onSubmit)}>
         <div className="space-y-6">
+          <FormItem orientation="horizontal">
+            <FormLabel>id</FormLabel>
+            <FormControl className="col-span-2">
+              <p>{user?.id}</p>
+            </FormControl>
+            <FormMessage />
+          </FormItem>
           <FormField
             control={form.control}
             name="name"
             render={({ field }) => (
-              <FormItem>
+              <FormItem orientation="horizontal">
                 <FormLabel>name</FormLabel>
-                <FormControl>
+                <FormControl className="col-span-2">
                   <Input {...field} placeholder="name" disabled={isPending} />
                 </FormControl>
                 <FormMessage />
@@ -84,9 +89,9 @@ export const FormSettings = () => {
                 control={form.control}
                 name="email"
                 render={({ field }) => (
-                  <FormItem>
+                  <FormItem orientation="horizontal">
                     <FormLabel>email</FormLabel>
-                    <FormControl>
+                    <FormControl className="col-span-2">
                       <Input {...field} placeholder="email" type="email" disabled={isPending} />
                     </FormControl>
                     <FormMessage />
@@ -97,9 +102,9 @@ export const FormSettings = () => {
                 control={form.control}
                 name="password"
                 render={({ field }) => (
-                  <FormItem>
+                  <FormItem orientation="horizontal">
                     <FormLabel>password</FormLabel>
-                    <FormControl>
+                    <FormControl className="col-span-2">
                       <InputPassword
                         {...field}
                         placeholder="password"
@@ -115,9 +120,9 @@ export const FormSettings = () => {
                 control={form.control}
                 name="newPassword"
                 render={({ field }) => (
-                  <FormItem>
+                  <FormItem orientation="horizontal">
                     <FormLabel>new password</FormLabel>
-                    <FormControl>
+                    <FormControl className="col-span-2">
                       <InputPassword
                         {...field}
                         placeholder="new password"
@@ -135,14 +140,14 @@ export const FormSettings = () => {
             control={form.control}
             name="role"
             render={({ field }) => (
-              <FormItem>
+              <FormItem orientation="horizontal">
                 <FormLabel>role</FormLabel>
                 <Select
                   disabled={isPending}
                   onValueChange={field.onChange}
                   defaultValue={field.value}
                 >
-                  <FormControl>
+                  <FormControl className="col-span-2">
                     <SelectTrigger>
                       <SelectValue placeholder="select a role" />
                     </SelectTrigger>
@@ -161,30 +166,26 @@ export const FormSettings = () => {
               control={form.control}
               name="isTwoFactorEnabled"
               render={({ field }) => (
-                <FormItem>
+                <FormItem orientation="horizontal">
                   <FormLabel>two factor authentication</FormLabel>
-                  <div className="flex gap-4">
-                    <FormControl>
-                      <Switch
-                        disabled={isPending}
-                        checked={field.value}
-                        onCheckedChange={field.onChange}
-                      />
-                    </FormControl>
-                    {/*<FormLabel>enable two factor authentication</FormLabel>*/}
-                  </div>
+                  <FormControl className="col-span-2">
+                    <Switch
+                      disabled={isPending}
+                      checked={field.value}
+                      onCheckedChange={field.onChange}
+                    />
+                  </FormControl>
                   <FormMessage />
                 </FormItem>
               )}
             />
           )}
         </div>
-        <div className="flex space-x-4">
+        <div className="grid gap-4 grid-cols-3">
+          <div className="col-span-2" />
           <Button type="submit" disabled={isPending}>
             save
           </Button>
-          <AlertError message={error} />
-          <AlertSuccess message={success} />
         </div>
       </form>
     </Form>

@@ -66,17 +66,27 @@ type FormItemContextValue = {
 
 const FormItemContext = React.createContext<FormItemContextValue>({} as FormItemContextValue);
 
-const FormItem = React.forwardRef<HTMLDivElement, React.HTMLAttributes<HTMLDivElement>>(
-  ({ className, ...props }, ref) => {
-    const id = React.useId();
-
-    return (
-      <FormItemContext.Provider value={{ id }}>
-        <div ref={ref} className={cn('space-y-4', className)} {...props} />
-      </FormItemContext.Provider>
-    );
+interface FormItemProps extends React.HTMLAttributes<HTMLDivElement> {
+  orientation?: 'horizontal' | 'vertical';
+}
+const FormItem = React.forwardRef<HTMLDivElement, FormItemProps>((props, ref) => {
+  const { className, orientation = 'vertical', ...rest } = props;
+  const id = React.useId();
+  let _className;
+  switch (orientation) {
+    case 'horizontal':
+      _className = 'grid gap-4 grid-cols-1 md:grid-cols-3';
+      break;
+    case 'vertical':
+      _className = 'space-y-4';
+      break;
   }
-);
+  return (
+    <FormItemContext.Provider value={{ id }}>
+      <div ref={ref} className={cn(_className, className)} {...rest} />
+    </FormItemContext.Provider>
+  );
+});
 FormItem.displayName = 'FormItem';
 
 const FormLabel = React.forwardRef<

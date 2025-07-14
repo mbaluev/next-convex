@@ -29,16 +29,15 @@ export const ProfileDialog = () => {
 
   return (
     <Dialog open={_open} onOpenChange={handleClose}>
-      <DialogContent className="max-w-[1280px]" close={false}>
+      <DialogContent className="max-w-[768px]" close={false}>
         <DialogHeader>
           <DialogToolbar title="profile" icon={<UserRoundCog />} close />
-          <DialogDescription
-            dangerouslySetInnerHTML={{
-              __html:
-                'view and manage your personal information, account settings, and preferences. ' +
-                'keep your details up to date to ensure a seamless experience across the platform.',
-            }}
-          />
+          <DialogDescription>
+            <span className="block">
+              view and manage your personal information, account settings, and preferences,
+            </span>
+            <span className="block">keep your details up to date.</span>
+          </DialogDescription>
         </DialogHeader>
         <ProfileContent />
       </DialogContent>

@@ -3,9 +3,10 @@ import { Button } from '@/components/ui/button';
 import { cn } from '@/lib/utils/cn';
 import { Eye, EyeOff } from 'lucide-react';
 import { forwardRef, useState } from 'react';
+import { className } from 'postcss-selector-parser';
 
 const InputPassword = forwardRef<HTMLInputElement, InputProps>((props, ref) => {
-  const { ...inputProps } = props;
+  const { className, ...inputProps } = props;
 
   const [visible, setVisible] = useState<boolean>(false);
   const handleVisible = (e: any) => {
@@ -14,12 +15,12 @@ const InputPassword = forwardRef<HTMLInputElement, InputProps>((props, ref) => {
   };
 
   return (
-    <div className="relative">
+    <div className={cn('relative', className)}>
       <Input
         {...inputProps}
         ref={ref}
         type={visible ? 'text' : 'password'}
-        className={cn('relative pr-9', inputProps.className)}
+        className={cn('relative pr-9', className)}
       />
       <Button size="adornment" variant="ghost" onClick={handleVisible}>
         {visible ? <Eye /> : <EyeOff />}

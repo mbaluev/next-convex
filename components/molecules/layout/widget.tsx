@@ -6,7 +6,7 @@ const widgetVariants = cva('flex flex-col flex-grow max-h-full rounded-lg overfl
   variants: {
     variant: {
       default: '',
-      space: 'space-y-6',
+      space: 'space-y-4',
       border: 'border shadow-sm',
       background: 'bg-sidebar text-sidebar-foreground',
     },
@@ -80,8 +80,8 @@ const widgetContentVariants = cva('flex-1', {
   variants: {
     variant: {
       default: '',
-      padding: 'p-6',
-      background: 'p-6 bg-sidebar',
+      padding: 'p-3',
+      background: 'p-3 bg-sidebar',
     },
   },
   defaultVariants: {

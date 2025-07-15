@@ -1,16 +1,20 @@
 'use client';
 
-import { WidgetWrapper } from '@/components/auth/widget-wrapper';
 import { AlertError } from '@/components/ui/alert';
+import { Widget, WidgetContent, WidgetHeader } from '@/components/molecules/layout/widget';
+import { WidgetHeaderContent } from '@/components/auth/widget-header-content';
+import { ButtonBack } from '@/components/auth/button-back';
 
 export const WidgetError = () => {
   return (
-    <WidgetWrapper
-      headerLabel="authentication service"
-      backButtonLabel="back to login"
-      backButtonHref="/auth/login"
-    >
-      <AlertError message="oops! something went wrong" />
-    </WidgetWrapper>
+    <Widget className="space-y-6">
+      <WidgetHeader>
+        <WidgetHeaderContent label="error" />
+      </WidgetHeader>
+      <WidgetContent className="space-y-6">
+        <AlertError message="oops! something went wrong" />
+        <ButtonBack href="/auth/login" label="back to login" />
+      </WidgetContent>
+    </Widget>
   );
 };

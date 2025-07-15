@@ -1,7 +1,7 @@
-import { FormReset } from '@/components/auth/form-reset';
+import { WidgetReset } from '@/components/auth/widget-reset';
 
 const NewVerificationPage = () => {
-  return <FormReset />;
+  return <WidgetReset />;
 };
 
 export default NewVerificationPage;

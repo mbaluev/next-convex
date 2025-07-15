@@ -6,6 +6,7 @@ import { X } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { cn } from '@/lib/utils/cn';
 import { DialogContentProps } from '@radix-ui/react-dialog';
+import { Separator } from '@/components/ui/separator';
 
 const Dialog = DialogPrimitive.Root;
 
@@ -22,7 +23,7 @@ const DialogOverlay = React.forwardRef<
   <DialogPrimitive.Overlay
     ref={ref}
     className={cn(
-      'fixed inset-0 z-50 bg-black/25 dark:bg-black/50',
+      'fixed inset-0 z-50 bg-black/25 dark:bg-black/75',
       'data-[state=open]:animate-in data-[state=closed]:animate-out data-[state=closed]:fade-out-0 data-[state=open]:fade-in-0',
       className
     )}
@@ -37,29 +38,28 @@ interface DialogContentCustomProps extends DialogContentProps {
 const DialogContent = React.forwardRef<
   React.ElementRef<typeof DialogPrimitive.Content>,
   DialogContentCustomProps
->(({ className, children, close = true, ...props }, ref) => (
+>(({ className, children, close, ...props }, ref) => (
   <DialogPortal>
     <DialogOverlay />
     <DialogPrimitive.Content
       ref={ref}
       className={cn(
         'fixed top-16 z-50 left-[50%] translate-x-[-50%] duration-200',
-        'w-full max-w-lg grid gap-4 p-4',
+        'w-full max-w-lg grid',
         'max-h-[calc(100%-4rem)] overflow-y-auto',
-        'bg-background rounded-lg',
+        'bg-background rounded-lg space-y-4',
         'data-[state=open]:animate-in data-[state=closed]:animate-out',
         'data-[state=closed]:fade-out-0 data-[state=open]:fade-in-0',
-        // 'data-[state=closed]:zoom-out-95 data-[state=open]:zoom-in-95',
         'data-[state=closed]:slide-out-to-left-1/2 data-[state=open]:slide-in-from-left-1/2',
-        // 'data-[state=closed]:slide-out-to-bottom-[48%] data-[state=open]:slide-in-from-bottom-[48%]',
-        'md:data-[state=closed]:slide-out-to-top-[48%] md:data-[state=open]:slide-in-from-top-[48%]',
+        'data-[state=closed]:slide-out-to-top-[48%] data-[state=open]:slide-in-from-top-[48%]',
+        // 'data-[state=closed]:zoom-out-95 data-[state=open]:zoom-in-95',
         className
       )}
       {...props}
     >
       {children}
       {close && (
-        <DialogPrimitive.Close className="absolute right-4 top-4 z-50" asChild>
+        <DialogPrimitive.Close className="absolute right-3 top-3 z-50" asChild>
           <Button variant="ghost" size="icon">
             <X />
           </Button>
@@ -70,9 +70,18 @@ const DialogContent = React.forwardRef<
 ));
 DialogContent.displayName = DialogPrimitive.Content.displayName;
 
-const DialogHeader = ({ className, ...props }: React.HTMLAttributes<HTMLDivElement>) => (
-  <div className={cn('flex flex-col space-y-4 text-left', className)} {...props} />
-);
+interface DialogHeaderProps extends React.HTMLAttributes<HTMLDivElement> {
+  separator?: boolean;
+}
+const DialogHeader = (props: DialogHeaderProps) => {
+  const { children, className, separator, ...rest } = props;
+  return (
+    <div className={cn('flex flex-col text-left pt-4', className)} {...rest}>
+      {children}
+      {separator && <Separator className="mt-3" />}
+    </div>
+  );
+};
 DialogHeader.displayName = 'DialogHeader';
 
 const DialogFooter = ({ className, ...props }: React.HTMLAttributes<HTMLDivElement>) => (
@@ -89,7 +98,7 @@ const DialogTitle = React.forwardRef<
 >(({ className, ...props }, ref) => (
   <DialogPrimitive.Title
     ref={ref}
-    className={cn('text-lg font-semibold leading-none tracking-tight', className)}
+    className={cn('text-lg font-semibold leading-none tracking-tight px-3', className)}
     {...props}
   />
 ));
@@ -101,7 +110,7 @@ const DialogDescription = React.forwardRef<
 >(({ className, ...props }, ref) => (
   <DialogPrimitive.Description
     ref={ref}
-    className={cn('text-muted-foreground leading-normal px-3', className)}
+    className={cn('text-muted-foreground leading-normal px-6 my-2', className)}
     {...props}
   />
 ));
@@ -115,14 +124,14 @@ interface DialogToolbarProps extends React.HTMLAttributes<HTMLDivElement> {
 const DialogToolbar = ({
   className,
   title,
-  close = true,
+  close,
   buttons,
   icon,
   ...props
 }: DialogToolbarProps) => (
   <DialogTitle>
     <div className="flex gap-x-1" {...props}>
-      <Button variant="static" size="flex-start" className="flex-1">
+      <Button variant="static" className="flex-1 justify-start">
         {icon}
         <p>{title}</p>
       </Button>

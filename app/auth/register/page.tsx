@@ -1,7 +1,7 @@
-import { FormRegister } from '@/components/auth/form-register';
+import { WidgetRegister } from '@/components/auth/widget-register';
 
 const RegisterPage = () => {
-  return <FormRegister />;
+  return <WidgetRegister />;
 };
 
 export default RegisterPage;

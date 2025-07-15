@@ -1,7 +1,7 @@
-import { FormLogin } from '@/components/auth/form-login';
+import { WidgetLogin } from '@/components/auth/widget-login';
 
 const LoginPage = () => {
-  return <FormLogin />;
+  return <WidgetLogin />;
 };
 
 export default LoginPage;

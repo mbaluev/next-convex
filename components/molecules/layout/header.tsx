@@ -76,7 +76,7 @@ const HeaderUserContent = () => {
           </div>
         </div>
       </div>
-      <ButtonLogout variant="ghost" size="flex-start" className="w-full">
+      <ButtonLogout variant="ghost" className="w-full justify-start">
         <LogOut />
         logout
       </ButtonLogout>

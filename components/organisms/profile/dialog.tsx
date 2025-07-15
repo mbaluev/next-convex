@@ -7,12 +7,13 @@ import {
   DialogHeader,
   DialogToolbar,
 } from '@/components/ui/dialog';
-import { ProfileContent } from '@/components/organisms/profile/content';
 import { UserRoundCog } from 'lucide-react';
 import { useSearchParams, useRouter, usePathname } from 'next/navigation';
 import { ROUTES } from '@/lib/settings/routes';
 import { handleDialogClose } from '@/components/molecules/layout/dialogs';
 import { useMemo } from 'react';
+import { WidgetContent } from '@/components/molecules/layout/widget';
+import { FormSettings } from '@/components/auth/form-settings';
 
 export const ProfileDialog = () => {
   const searchParams = useSearchParams();
@@ -30,16 +31,18 @@ export const ProfileDialog = () => {
   return (
     <Dialog open={_open} onOpenChange={handleClose}>
       <DialogContent className="max-w-[768px]" close={false}>
-        <DialogHeader>
+        <DialogHeader separator>
           <DialogToolbar title="profile" icon={<UserRoundCog />} close />
           <DialogDescription>
             <span className="block">
-              view and manage your personal information, account settings, and preferences,
+              view and manage your personal information, account settings, and preferences.
             </span>
             <span className="block">keep your details up to date.</span>
           </DialogDescription>
         </DialogHeader>
-        <ProfileContent />
+        <WidgetContent variant="dialog">
+          <FormSettings />
+        </WidgetContent>
       </DialogContent>
     </Dialog>
   );

@@ -33,7 +33,6 @@ import { toast } from 'sonner';
 export const FormSettings = () => {
   const user = useCurrentUser();
   const { update } = useSession();
-
   const [isPending, startTransition] = useTransition();
 
   const form = useForm<z.infer<typeof settingsSchema>>({
@@ -47,7 +46,6 @@ export const FormSettings = () => {
       isTwoFactorEnabled: user?.isTwoFactorEnabled || undefined,
     },
   });
-
   const onSubmit = (values: z.infer<typeof settingsSchema>) => {
     startTransition(() => {
       settings(values)
@@ -181,9 +179,9 @@ export const FormSettings = () => {
             />
           )}
         </div>
-        <div className="grid gap-4 grid-cols-3">
+        <div className="pt-6 grid gap-4 grid-cols-3">
           <div className="col-span-2" />
-          <Button type="submit" disabled={isPending}>
+          <Button size="lg" type="submit" disabled={isPending}>
             save
           </Button>
         </div>

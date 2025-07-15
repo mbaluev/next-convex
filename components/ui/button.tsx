@@ -4,7 +4,12 @@ import { cva, type VariantProps } from 'class-variance-authority';
 import { cn } from '@/lib/utils/cn';
 
 const buttonVariants = cva(
-  'inline-flex items-center justify-center whitespace-nowrap rounded-md font-medium focus-visible:outline-none disabled:pointer-events-none disabled:opacity-50 cursor-pointer',
+  cn(
+    'inline-flex items-center justify-center gap-4',
+    'whitespace-nowrap rounded-md font-medium cursor-pointer',
+    'focus-visible:outline-none',
+    'disabled:pointer-events-none disabled:opacity-50'
+  ),
   {
     variants: {
       variant: {
@@ -24,12 +29,12 @@ const buttonVariants = cva(
         sm: 'h-8 px-2',
         md: 'h-11 px-3',
         lg: 'h-14 px-6',
+        xl: 'h-14 px-6 text-2xl',
+        icon: 'h-11 w-11 rounded-full',
+        'icon-sm': 'h-8 w-8 rounded-full',
+        'icon-lg': 'h-14 w-14 rounded-full',
+        'icon-xl': 'h-14 w-14 rounded-full text-2xl',
         adornment: 'h-8 w-8 p-1.5 absolute right-1.5 top-1/2 -translate-y-1/2 rounded-full',
-        icon: 'h-11 w-11 p-2 rounded-full',
-        'flex-start': 'h-11 px-3 flex gap-4 justify-start',
-        'flex-end': 'h-11 px-3 flex gap-4 justify-end',
-        'flex-between': 'h-11 px-3 flex gap-4 justify-between',
-        'bread-crumb': 'h-11 px-2 flex gap-4 justify-between',
       },
     },
     defaultVariants: {

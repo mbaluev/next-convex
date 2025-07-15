@@ -2,7 +2,6 @@
 
 import * as z from 'zod';
 import { useForm } from 'react-hook-form';
-import { WidgetWrapper } from '@/components/auth/widget-wrapper';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { resetSchema } from '@/auth/schemas';
 import { Input } from '@/components/ui/input';
@@ -11,6 +10,7 @@ import { Button } from '@/components/ui/button';
 import { AlertSuccess, AlertError } from '@/components/ui/alert';
 import { useState, useTransition } from 'react';
 import { reset } from '@/auth/actions/reset';
+import { ButtonBack } from '@/components/auth/button-back';
 
 export const FormReset = () => {
   const [error, setError] = useState<string | undefined>();
@@ -23,7 +23,6 @@ export const FormReset = () => {
       email: '',
     },
   });
-
   const onSubmit = async (values: z.infer<typeof resetSchema>) => {
     setError(undefined);
     setSuccess(undefined);
@@ -36,41 +35,35 @@ export const FormReset = () => {
   };
 
   return (
-    <WidgetWrapper
-      loading={isPending}
-      headerLabel="forgot your password?"
-      backButtonLabel="back to login"
-      backButtonHref="/auth/login"
-    >
-      <Form {...form}>
-        <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-6">
-          <div className="space-y-6">
-            <FormField
-              control={form.control}
-              name="email"
-              render={({ field }) => (
-                <FormItem className="space-y-4">
-                  <FormControl>
-                    <Input
-                      {...field}
-                      disabled={isPending}
-                      placeholder="enter email"
-                      type="email"
-                      autoComplete="new-password"
-                    />
-                  </FormControl>
-                  <FormMessage />
-                </FormItem>
-              )}
-            />
-          </div>
-          <AlertError message={error} />
-          <AlertSuccess message={success} />
-          <Button type="submit" className="w-full" disabled={isPending}>
-            send reset email
-          </Button>
-        </form>
-      </Form>
-    </WidgetWrapper>
+    <Form {...form}>
+      <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-6">
+        <div className="space-y-6">
+          <FormField
+            control={form.control}
+            name="email"
+            render={({ field }) => (
+              <FormItem className="space-y-4">
+                <FormControl>
+                  <Input
+                    {...field}
+                    disabled={isPending}
+                    placeholder="enter email"
+                    type="email"
+                    autoComplete="new-password"
+                  />
+                </FormControl>
+                <FormMessage />
+              </FormItem>
+            )}
+          />
+        </div>
+        <AlertError message={error} />
+        <AlertSuccess message={success} />
+        <Button type="submit" className="w-full" disabled={isPending}>
+          send reset email
+        </Button>
+        <ButtonBack href="/auth/login" label="back to login" />
+      </form>
+    </Form>
   );
 };

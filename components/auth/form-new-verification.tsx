@@ -1,11 +1,11 @@
 'use client';
 
-import { WidgetWrapper } from '@/components/auth/widget-wrapper';
 import { useSearchParams } from 'next/navigation';
 import { useCallback, useEffect, useState } from 'react';
 import { newVerification } from '@/auth/actions/new-verification';
 import { AlertSuccess, AlertError, AlertInfo } from '@/components/ui/alert';
 import { router } from 'next/client';
+import { ButtonBack } from '@/components/auth/button-back';
 
 export const FormNewVerification = () => {
   const searchParams = useSearchParams();
@@ -33,22 +33,16 @@ export const FormNewVerification = () => {
         setError('something went wrong');
       });
   }, [token]);
-
   useEffect(() => {
     onSubmit();
   }, [onSubmit]);
 
   return (
-    <WidgetWrapper
-      headerLabel="confirming you verification"
-      backButtonLabel="back to login"
-      backButtonHref="/auth/login"
-    >
-      <div className="flex flex-col space-y-6 items-center w-full justify-center">
-        {!success && !error && <AlertInfo message="verificatoin in progress..." loading />}
-        <AlertSuccess message={success} />
-        {!success && <AlertError message={error} />}
-      </div>
-    </WidgetWrapper>
+    <div className="flex flex-col space-y-6 items-center w-full justify-center">
+      {!success && !error && <AlertInfo message="verificatoin in progress..." loading />}
+      <AlertSuccess message={success} />
+      {!success && <AlertError message={error} />}
+      <ButtonBack href="/auth/login" label="back to login" />
+    </div>
   );
 };

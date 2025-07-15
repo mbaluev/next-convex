@@ -194,14 +194,14 @@ SidebarLeftTrigger.displayName = 'SidebarLeftTrigger';
 type SidebarLeftButtonProps = ComponentProps<typeof Button>;
 const SidebarLeftButton = forwardRef<ElementRef<typeof Button>, SidebarLeftButtonProps>(
   (props, ref) => {
-    const { onClick, children, ..._props } = props;
+    const { onClick, children, className, ...rest } = props;
     const { toggleSidebar, isMobile } = useSidebarLeft();
     const handleClick = (e: any) => {
       if (onClick) onClick(e);
       if (isMobile) toggleSidebar();
     };
     return (
-      <Button ref={ref} size="flex-start" onClick={handleClick} {..._props}>
+      <Button ref={ref} onClick={handleClick} className={cn('justify-start', className)} {...rest}>
         {children}
       </Button>
     );

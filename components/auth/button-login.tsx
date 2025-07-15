@@ -10,8 +10,9 @@ import {
   DialogToolbar,
   DialogTrigger,
 } from '@/components/ui/dialog';
-import { VisuallyHidden } from '@radix-ui/react-visually-hidden';
 import { Button, ButtonProps } from '@/components/ui/button';
+import { SvgLogo } from '@/components/svg/components/logo';
+import { WidgetContent } from '@/components/molecules/layout/widget';
 
 interface LoginButtonProps extends ButtonProps {
   mode?: 'modal' | 'redirect';
@@ -31,14 +32,14 @@ export const ButtonLogin = (props: LoginButtonProps) => {
         <DialogTrigger asChild>
           <Button {...rest}>{children}</Button>
         </DialogTrigger>
-        <DialogContent className="max-w-lg" close>
-          <VisuallyHidden>
-            <DialogHeader>
-              <DialogToolbar title="login to application" />
-              <DialogDescription>welcome back</DialogDescription>
-            </DialogHeader>
-          </VisuallyHidden>
-          <FormLogin />
+        <DialogContent className="max-w-lg">
+          <DialogHeader separator>
+            <DialogToolbar title={process.env.APP_NAME} icon={<SvgLogo />} close />
+            <DialogDescription>welcome back</DialogDescription>
+          </DialogHeader>
+          <WidgetContent variant="dialog">
+            <FormLogin />
+          </WidgetContent>
         </DialogContent>
       </Dialog>
     );

@@ -9,7 +9,6 @@ menuLeft.insert(ROUTES.DEPOSITORY.name, menuLeft.root.id, { ...ROUTES.DEPOSITORY
 const menuRight = new CTree<TRouteDTO>();
 menuRight.insert(ROUTES.PROFILE.name, menuRight.root.id, { ...ROUTES.PROFILE });
 menuRight.insert(ROUTES.DEBUG.name, menuRight.root.id, { ...ROUTES.DEBUG });
-menuRight.insert(ROUTES.SAMPLE_CLIENT.name, ROUTES.DEBUG.name, { ...ROUTES.SAMPLE_CLIENT });
-menuRight.insert(ROUTES.SAMPLE_SERVER.name, ROUTES.DEBUG.name, { ...ROUTES.SAMPLE_SERVER });
+// menuRight.insert(ROUTES.DEBUG_CLIENT.name, ROUTES.DEBUG.name, { ...ROUTES.DEBUG_CLIENT });
 
 export { menuLeft, menuRight };

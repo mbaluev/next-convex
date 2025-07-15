@@ -11,14 +11,10 @@ interface HeaderProps {
 
 export const WidgetHeaderContent = ({ label, loading }: HeaderProps) => {
   return (
-    <div className="w-full flex flex-col gap-y-4 items-center justify-center">
-      <Button variant="ghost" size="flex-start" className="text-3xl font-semibold" asChild>
+    <div className="w-full flex flex-col space-y-2 items-center justify-center">
+      <Button variant="ghost" size="xl" asChild>
         <Link href={ROUTES.HOME.path}>
-          {loading ? (
-            <Spinner className="text-2xl animate-spin" />
-          ) : (
-            <SvgLogo className="text-2xl" />
-          )}
+          {loading ? <Spinner className="animate-spin" /> : <SvgLogo />}
           {process.env.APP_NAME}
         </Link>
       </Button>

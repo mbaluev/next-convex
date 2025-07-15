@@ -47,7 +47,7 @@ const BreadCrumbLabel = (props: IBreadCrumbProps) => {
   if (!label) return null;
   return (
     <BreadCrumbWrapper divider={divider}>
-      <Button variant="ghost" size="bread-crumb" disabled>
+      <Button variant="ghost" disabled>
         {icon}
         <p className="flex-1 text-left">{label}</p>
       </Button>
@@ -72,7 +72,7 @@ const BreadCrumbLabelLink = (props: IBreadCrumbProps) => {
   if (!path || !label) return null;
   return (
     <BreadCrumbWrapper divider={divider}>
-      <Button variant="ghost" size="bread-crumb" asChild>
+      <Button variant="ghost" asChild>
         <Link href={path}>
           {icon}
           <p className="flex-1 text-left">{label}</p>

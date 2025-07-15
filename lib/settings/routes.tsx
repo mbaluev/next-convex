@@ -1,13 +1,5 @@
 import { ReactNode } from 'react';
-import {
-  Banknote,
-  Code,
-  FolderClosed,
-  HardDrive,
-  Laptop,
-  LayoutDashboard,
-  UserRoundCog,
-} from 'lucide-react';
+import { Banknote, Code, FolderClosed, Laptop, LayoutDashboard, UserRoundCog } from 'lucide-react';
 
 const EMPTY_PATH = '#';
 const IS_PATH = (path?: string) => path !== EMPTY_PATH;
@@ -54,20 +46,8 @@ const ROUTES: Record<string, TRouteDTO> = {
   DEBUG: {
     name: 'debug',
     label: 'debug',
-    path: EMPTY_PATH,
+    path: '/debug',
     icon: <Code />,
-  },
-  SAMPLE_CLIENT: {
-    name: 'sample-client',
-    label: 'client component',
-    path: '/client',
-    icon: <Laptop />,
-  },
-  SAMPLE_SERVER: {
-    name: 'sample-server',
-    label: 'server component',
-    path: '/server',
-    icon: <HardDrive />,
   },
 };
 

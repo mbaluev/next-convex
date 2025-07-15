@@ -65,10 +65,9 @@ const MenuItemToggle = (props: IMenuItemProps<TRouteDTO>) => {
   };
   return (
     <Button
-      size="flex-start"
       variant={node.state.selected ? 'sidebar' : 'ghost'}
       onClick={handleToggle}
-      className="w-full"
+      className="w-full justify-start"
     >
       <MenuItemPadding {...props} />
       <MenuItemContent {...props} />

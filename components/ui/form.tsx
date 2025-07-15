@@ -72,14 +72,9 @@ interface FormItemProps extends React.HTMLAttributes<HTMLDivElement> {
 const FormItem = React.forwardRef<HTMLDivElement, FormItemProps>((props, ref) => {
   const { className, orientation = 'vertical', ...rest } = props;
   const id = React.useId();
-  let _className;
-  switch (orientation) {
-    case 'horizontal':
-      _className = 'grid gap-4 grid-cols-1 md:grid-cols-3';
-      break;
-    case 'vertical':
-      _className = 'space-y-4';
-      break;
+  let _className = 'space-y-4';
+  if (orientation === 'horizontal') {
+    _className = 'grid gap-4 grid-cols-1 sm:grid-cols-2 md:grid-cols-3';
   }
   return (
     <FormItemContext.Provider value={{ id }}>
@@ -106,23 +101,27 @@ const FormLabel = React.forwardRef<
 });
 FormLabel.displayName = 'FormLabel';
 
-const FormControl = React.forwardRef<
-  React.ElementRef<typeof Slot>,
-  React.ComponentPropsWithoutRef<typeof Slot>
->(({ className, ...props }, ref) => {
-  const { error, formItemId, formDescriptionId, formMessageId } = useFormField();
-
-  return (
-    <Slot
-      ref={ref}
-      id={formItemId}
-      aria-describedby={!error ? `${formDescriptionId}` : `${formDescriptionId} ${formMessageId}`}
-      aria-invalid={!!error}
-      className={cn(error && 'border-destructive', className)}
-      {...props}
-    />
-  );
-});
+interface FormControlProps extends React.ComponentPropsWithoutRef<typeof Slot> {
+  orientation?: 'horizontal' | 'vertical';
+}
+const FormControl = React.forwardRef<React.ElementRef<typeof Slot>, FormControlProps>(
+  (props, ref) => {
+    const { className, orientation, ...rest } = props;
+    const { error, formItemId, formDescriptionId, formMessageId } = useFormField();
+    let _className = '';
+    if (orientation === 'horizontal') _className = 'md:col-span-2';
+    return (
+      <Slot
+        ref={ref}
+        id={formItemId}
+        aria-describedby={!error ? `${formDescriptionId}` : `${formDescriptionId} ${formMessageId}`}
+        aria-invalid={!!error}
+        className={cn(error && 'border-destructive', _className, className)}
+        {...rest}
+      />
+    );
+  }
+);
 FormControl.displayName = 'FormControl';
 
 const FormDescription = React.forwardRef<

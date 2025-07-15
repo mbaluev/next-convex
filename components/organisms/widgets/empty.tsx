@@ -1,6 +1,6 @@
 'use client';
 
-import { LayoutDashboard } from 'lucide-react';
+import { CircleOff } from 'lucide-react';
 import {
   Widget,
   WidgetContent,
@@ -15,7 +15,7 @@ export const WidgetEmpty = (props: WidgetProps) => {
     <Widget variant="background" {...props}>
       <WidgetHeader variant="padding">
         <WidgetIcon>
-          <LayoutDashboard />
+          <CircleOff />
         </WidgetIcon>
         <WidgetTitle>empty</WidgetTitle>
       </WidgetHeader>

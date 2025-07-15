@@ -63,7 +63,7 @@ export const FormSettings = () => {
         <div className="space-y-6">
           <FormItem orientation="horizontal">
             <FormLabel>id</FormLabel>
-            <FormControl className="col-span-2">
+            <FormControl orientation="horizontal">
               <p>{user?.id}</p>
             </FormControl>
             <FormMessage />
@@ -74,7 +74,7 @@ export const FormSettings = () => {
             render={({ field }) => (
               <FormItem orientation="horizontal">
                 <FormLabel>name</FormLabel>
-                <FormControl className="col-span-2">
+                <FormControl orientation="horizontal">
                   <Input {...field} placeholder="name" disabled={isPending} />
                 </FormControl>
                 <FormMessage />
@@ -89,7 +89,7 @@ export const FormSettings = () => {
                 render={({ field }) => (
                   <FormItem orientation="horizontal">
                     <FormLabel>email</FormLabel>
-                    <FormControl className="col-span-2">
+                    <FormControl orientation="horizontal">
                       <Input {...field} placeholder="email" type="email" disabled={isPending} />
                     </FormControl>
                     <FormMessage />
@@ -102,7 +102,7 @@ export const FormSettings = () => {
                 render={({ field }) => (
                   <FormItem orientation="horizontal">
                     <FormLabel>password</FormLabel>
-                    <FormControl className="col-span-2">
+                    <FormControl orientation="horizontal">
                       <InputPassword
                         {...field}
                         placeholder="password"
@@ -120,7 +120,7 @@ export const FormSettings = () => {
                 render={({ field }) => (
                   <FormItem orientation="horizontal">
                     <FormLabel>new password</FormLabel>
-                    <FormControl className="col-span-2">
+                    <FormControl orientation="horizontal">
                       <InputPassword
                         {...field}
                         placeholder="new password"
@@ -145,7 +145,7 @@ export const FormSettings = () => {
                   onValueChange={field.onChange}
                   defaultValue={field.value}
                 >
-                  <FormControl className="col-span-2">
+                  <FormControl orientation="horizontal">
                     <SelectTrigger>
                       <SelectValue placeholder="select a role" />
                     </SelectTrigger>
@@ -166,7 +166,7 @@ export const FormSettings = () => {
               render={({ field }) => (
                 <FormItem orientation="horizontal">
                   <FormLabel>two factor authentication</FormLabel>
-                  <FormControl className="col-span-2">
+                  <FormControl orientation="horizontal">
                     <Switch
                       disabled={isPending}
                       checked={field.value}
@@ -179,8 +179,8 @@ export const FormSettings = () => {
             />
           )}
         </div>
-        <div className="pt-6 grid gap-4 grid-cols-3">
-          <div className="col-span-2" />
+        <div className="pt-6 grid gap-4 grid-cols-1 sm:grid-cols-2 md:grid-cols-3">
+          <div className="md:col-span-2" />
           <Button size="lg" type="submit" disabled={isPending}>
             save
           </Button>

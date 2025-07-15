@@ -57,95 +57,48 @@ export const FormSettings = () => {
     });
   };
 
+  const _formItem = 'grid gap-x-6 gap-y-4 grid-cols-1 sm:grid-cols-2 md:grid-cols-3 space-y-0';
+  const _formLabel = 'flex items-center';
+  const _formControl = 'md:col-span-2';
+  const _formMessage = 'sm:col-start-2 md:col-span-2 md:col-start-2';
+  const _buttonSubmit = 'sm:col-start-2 md:col-start-3';
+
   return (
     <Form {...form}>
-      <form className="space-y-6" onSubmit={form.handleSubmit(onSubmit)}>
+      <form className="space-y-12" onSubmit={form.handleSubmit(onSubmit)}>
         <div className="space-y-6">
-          <FormItem orientation="horizontal">
-            <FormLabel>id</FormLabel>
-            <FormControl orientation="horizontal">
+          <FormItem className={_formItem}>
+            <FormLabel className={_formLabel}>id</FormLabel>
+            <FormControl className={_formControl}>
               <p>{user?.id}</p>
             </FormControl>
-            <FormMessage />
+            <FormMessage className={_formMessage} />
           </FormItem>
           <FormField
             control={form.control}
             name="name"
             render={({ field }) => (
-              <FormItem orientation="horizontal">
-                <FormLabel>name</FormLabel>
-                <FormControl orientation="horizontal">
+              <FormItem className={_formItem}>
+                <FormLabel className={_formLabel}>name</FormLabel>
+                <FormControl className={_formControl}>
                   <Input {...field} placeholder="name" disabled={isPending} />
                 </FormControl>
-                <FormMessage />
+                <FormMessage className={_formMessage} />
               </FormItem>
             )}
           />
-          {!user?.isOAuth && (
-            <Fragment>
-              <FormField
-                control={form.control}
-                name="email"
-                render={({ field }) => (
-                  <FormItem orientation="horizontal">
-                    <FormLabel>email</FormLabel>
-                    <FormControl orientation="horizontal">
-                      <Input {...field} placeholder="email" type="email" disabled={isPending} />
-                    </FormControl>
-                    <FormMessage />
-                  </FormItem>
-                )}
-              />
-              <FormField
-                control={form.control}
-                name="password"
-                render={({ field }) => (
-                  <FormItem orientation="horizontal">
-                    <FormLabel>password</FormLabel>
-                    <FormControl orientation="horizontal">
-                      <InputPassword
-                        {...field}
-                        placeholder="password"
-                        autoComplete="new-password"
-                        disabled={isPending}
-                      />
-                    </FormControl>
-                    <FormMessage />
-                  </FormItem>
-                )}
-              />
-              <FormField
-                control={form.control}
-                name="newPassword"
-                render={({ field }) => (
-                  <FormItem orientation="horizontal">
-                    <FormLabel>new password</FormLabel>
-                    <FormControl orientation="horizontal">
-                      <InputPassword
-                        {...field}
-                        placeholder="new password"
-                        autoComplete="new-password"
-                        disabled={isPending}
-                      />
-                    </FormControl>
-                    <FormMessage />
-                  </FormItem>
-                )}
-              />
-            </Fragment>
-          )}
           <FormField
             control={form.control}
             name="role"
             render={({ field }) => (
-              <FormItem orientation="horizontal">
-                <FormLabel>role</FormLabel>
+              <FormItem className={_formItem}>
+                <FormLabel className={_formLabel}>role</FormLabel>
                 <Select
                   disabled={isPending}
                   onValueChange={field.onChange}
                   defaultValue={field.value}
                 >
-                  <FormControl orientation="horizontal">
+                  <FormControl className={_formControl}>
                     <SelectTrigger>
                       <SelectValue placeholder="select a role" />
                     </SelectTrigger>
@@ -155,33 +108,83 @@ export const FormSettings = () => {
                     <SelectItem value={UserRole.USER}>user</SelectItem>
                   </SelectContent>
                 </Select>
-                <FormMessage />
+                <FormMessage className={_formMessage} />
               </FormItem>
             )}
           />
           {!user?.isOAuth && (
-            <FormField
-              control={form.control}
-              name="isTwoFactorEnabled"
-              render={({ field }) => (
-                <FormItem orientation="horizontal">
-                  <FormLabel>two factor authentication</FormLabel>
-                  <FormControl orientation="horizontal">
-                    <Switch
-                      disabled={isPending}
-                      checked={field.value}
-                      onCheckedChange={field.onChange}
-                    />
-                  </FormControl>
-                  <FormMessage />
-                </FormItem>
-              )}
-            />
+            <Fragment>
+              <FormField
+                control={form.control}
+                name="email"
+                render={({ field }) => (
+                  <FormItem className={_formItem}>
+                    <FormLabel className={_formLabel}>email</FormLabel>
+                    <FormControl className={_formControl}>
+                      <Input {...field} placeholder="email" type="email" disabled={isPending} />
+                    </FormControl>
+                    <FormMessage className={_formMessage} />
+                  </FormItem>
+                )}
+              />
+              <FormField
+                control={form.control}
+                name="password"
+                render={({ field }) => (
+                  <FormItem className={_formItem}>
+                    <FormLabel className={_formLabel}>password</FormLabel>
+                    <FormControl className={_formControl}>
+                      <InputPassword
+                        {...field}
+                        placeholder="password"
+                        autoComplete="new-password"
+                        disabled={isPending}
+                      />
+                    </FormControl>
+                    <FormMessage className={_formMessage} />
+                  </FormItem>
+                )}
+              />
+              <FormField
+                control={form.control}
+                name="newPassword"
+                render={({ field }) => (
+                  <FormItem className={_formItem}>
+                    <FormLabel className={_formLabel}>new password</FormLabel>
+                    <FormControl className={_formControl}>
+                      <InputPassword
+                        {...field}
+                        placeholder="new password"
+                        autoComplete="new-password"
+                        disabled={isPending}
+                      />
+                    </FormControl>
+                    <FormMessage className={_formMessage} />
+                  </FormItem>
+                )}
+              />
+              <FormField
+                control={form.control}
+                name="isTwoFactorEnabled"
+                render={({ field }) => (
+                  <FormItem className={_formItem}>
+                    <FormLabel className={_formLabel}>two factor authentication</FormLabel>
+                    <FormControl className={_formControl}>
+                      <Switch
+                        disabled={isPending}
+                        checked={field.value}
+                        onCheckedChange={field.onChange}
+                      />
+                    </FormControl>
+                    <FormMessage className={_formMessage} />
+                  </FormItem>
+                )}
+              />
+            </Fragment>
           )}
         </div>
-        <div className="pt-6 grid gap-4 grid-cols-1 sm:grid-cols-2 md:grid-cols-3">
-          <div className="md:col-span-2" />
-          <Button size="lg" type="submit" disabled={isPending}>
+        <div className={_formItem}>
+          <Button type="submit" className={_buttonSubmit} disabled={isPending}>
             save
           </Button>
         </div>

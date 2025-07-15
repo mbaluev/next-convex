@@ -4,7 +4,7 @@ import { RoleGate } from '@/components/auth/role-gate';
 import { UserRole } from '@prisma/client';
 import { AlertSuccess } from '@/components/ui/alert';
 import { Button } from '@/components/ui/button';
-import { Ellipsis, Shield } from 'lucide-react';
+import { Code, Ellipsis } from 'lucide-react';
 import { TooltipText } from '@/components/ui/tooltip';
 import {
   Widget,
@@ -43,9 +43,9 @@ export const WidgetDebug = (props: WidgetProps) => {
     <Widget {...props}>
       <WidgetHeader variant="background">
         <WidgetIcon>
-          <Shield />
+          <Code />
         </WidgetIcon>
-        <WidgetTitle>admin</WidgetTitle>
+        <WidgetTitle>debug</WidgetTitle>
       </WidgetHeader>
       <WidgetContent variant="background" className="space-y-6">
         <RoleGate allowedRole={UserRole.ADMIN}>

@@ -4,21 +4,27 @@ import { cn } from '@/lib/utils/cn';
 import { Check, Info, OctagonX, TriangleAlert } from 'lucide-react';
 import { Spinner } from '@/components/ui/spinner';
 
-const alertVariants = cva('relative flex space-x-4 w-full rounded-md border px-4 py-2', {
-  variants: {
-    variant: {
-      default: 'bg-background text-foreground',
-      destructive:
-        'border-destructive/50 text-destructive dark:border-destructive [&>svg]:text-destructive',
-      success: 'border-success/50 text-success dark:border-success [&>svg]:text-success',
-      info: 'border-primary/50 text-primary dark:border-primary [&>svg]:text-primary',
-      warning: 'border-warning/50 text-warning dark:border-warning [&>svg]:text-warning',
+const alertVariants = cva(
+  cn(
+    'relative flex space-x-4 w-full rounded-md border px-4 py-4 border-2',
+    '[&>svg]:grow-0 [&>svg]:shrink-0'
+  ),
+  {
+    variants: {
+      variant: {
+        default: 'bg-background text-foreground',
+        destructive:
+          'border-destructive/50 text-destructive dark:border-destructive [&>svg]:text-destructive',
+        success: 'border-success/50 text-success dark:border-success [&>svg]:text-success',
+        info: 'border-primary/50 text-primary dark:border-primary [&>svg]:text-primary',
+        warning: 'border-warning/50 text-warning dark:border-warning [&>svg]:text-warning',
+      },
     },
-  },
-  defaultVariants: {
-    variant: 'default',
-  },
-});
+    defaultVariants: {
+      variant: 'default',
+    },
+  }
+);
 
 const Alert = React.forwardRef<
   HTMLDivElement,

@@ -66,22 +66,17 @@ type FormItemContextValue = {
 
 const FormItemContext = React.createContext<FormItemContextValue>({} as FormItemContextValue);
 
-interface FormItemProps extends React.HTMLAttributes<HTMLDivElement> {
-  orientation?: 'horizontal' | 'vertical';
-}
-const FormItem = React.forwardRef<HTMLDivElement, FormItemProps>((props, ref) => {
-  const { className, orientation = 'vertical', ...rest } = props;
-  const id = React.useId();
-  let _className = 'space-y-4';
-  if (orientation === 'horizontal') {
-    _className = 'grid gap-4 grid-cols-1 sm:grid-cols-2 md:grid-cols-3';
+const FormItem = React.forwardRef<HTMLDivElement, React.HTMLAttributes<HTMLDivElement>>(
+  (props, ref) => {
+    const { className, ...rest } = props;
+    const id = React.useId();
+    return (
+      <FormItemContext.Provider value={{ id }}>
+        <div ref={ref} className={cn('space-y-6', className)} {...rest} />
+      </FormItemContext.Provider>
+    );
   }
-  return (
-    <FormItemContext.Provider value={{ id }}>
-      <div ref={ref} className={cn(_className, className)} {...rest} />
-    </FormItemContext.Provider>
-  );
-});
+);
 FormItem.displayName = 'FormItem';
 
 const FormLabel = React.forwardRef<
@@ -101,27 +96,23 @@ const FormLabel = React.forwardRef<
 });
 FormLabel.displayName = 'FormLabel';
 
-interface FormControlProps extends React.ComponentPropsWithoutRef<typeof Slot> {
-  orientation?: 'horizontal' | 'vertical';
-}
-const FormControl = React.forwardRef<React.ElementRef<typeof Slot>, FormControlProps>(
-  (props, ref) => {
-    const { className, orientation, ...rest } = props;
-    const { error, formItemId, formDescriptionId, formMessageId } = useFormField();
-    let _className = '';
-    if (orientation === 'horizontal') _className = 'md:col-span-2';
-    return (
-      <Slot
-        ref={ref}
-        id={formItemId}
-        aria-describedby={!error ? `${formDescriptionId}` : `${formDescriptionId} ${formMessageId}`}
-        aria-invalid={!!error}
-        className={cn(error && 'border-destructive', _className, className)}
-        {...rest}
-      />
-    );
-  }
-);
+const FormControl = React.forwardRef<
+  React.ElementRef<typeof Slot>,
+  React.ComponentPropsWithoutRef<typeof Slot>
+>((props, ref) => {
+  const { className, ...rest } = props;
+  const { error, formItemId, formDescriptionId, formMessageId } = useFormField();
+  return (
+    <Slot
+      ref={ref}
+      id={formItemId}
+      aria-describedby={!error ? `${formDescriptionId}` : `${formDescriptionId} ${formMessageId}`}
+      aria-invalid={!!error}
+      className={cn(error && 'border-destructive', className)}
+      {...rest}
+    />
+  );
+});
 FormControl.displayName = 'FormControl';
 
 const FormDescription = React.forwardRef<

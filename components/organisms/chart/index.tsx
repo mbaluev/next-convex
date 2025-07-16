@@ -85,7 +85,7 @@ export const Chart = (props: WidgetProps) => {
         <WidgetButtons>
           <TooltipText title="stacked bar chart" side="top">
             <Button
-              variant={!type || type === EChartType.stackedBarChart ? 'sidebar' : 'ghost'}
+              variant={!type || type === EChartType.stackedBarChart ? 'default' : 'ghost'}
               size="icon"
               onClick={() => handleChange(EChartType.stackedBarChart)}
             >
@@ -94,7 +94,7 @@ export const Chart = (props: WidgetProps) => {
           </TooltipText>
           <TooltipText title="grouped bar chart" side="top">
             <Button
-              variant={type === EChartType.groupedBarChart ? 'sidebar' : 'ghost'}
+              variant={type === EChartType.groupedBarChart ? 'default' : 'ghost'}
               size="icon"
               onClick={() => handleChange(EChartType.groupedBarChart)}
             >
@@ -103,7 +103,7 @@ export const Chart = (props: WidgetProps) => {
           </TooltipText>
           <TooltipText title="area bar chart" side="top">
             <Button
-              variant={type === EChartType.areaChart ? 'sidebar' : 'ghost'}
+              variant={type === EChartType.areaChart ? 'default' : 'ghost'}
               size="icon"
               onClick={() => handleChange(EChartType.areaChart)}
             >
@@ -112,7 +112,7 @@ export const Chart = (props: WidgetProps) => {
           </TooltipText>
           <TooltipText title="stacked area chart" side="top">
             <Button
-              variant={type === EChartType.stackedAreaChart ? 'sidebar' : 'ghost'}
+              variant={type === EChartType.stackedAreaChart ? 'default' : 'ghost'}
               size="icon"
               onClick={() => handleChange(EChartType.stackedAreaChart)}
             >

@@ -46,14 +46,14 @@ export const MOCK_CHART_DATA: IChartItem[] = Array.from({ length }).map((_, i) =
 export const MOCK_CHART_LEGEND: IChartLegendItem[] = [
   {
     key: 'a',
-    color: 'hsla(240, 100%, 75%, 1)',
+    color: 'chart-1',
   },
   {
     key: 'b',
-    color: 'hsla(4, 100%, 80%, 1)',
+    color: 'chart-2',
   },
   {
     key: 'c',
-    color: 'hsla(210, 100%, 75%, 1)',
+    color: 'chart-3',
   },
 ];

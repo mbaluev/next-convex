@@ -3,6 +3,7 @@ import moment from 'moment/moment';
 import { MutableRefObject } from 'react';
 import { EChartType, IChartItem, IChartLegendItem } from '@/components/organisms/chart/mock';
 import { JetBrains_Mono } from 'next/font/google';
+import { getFillColor, getStrokeColor } from '@/components/organisms/chart/colors';
 
 const font = JetBrains_Mono({ subsets: ['latin'] });
 
@@ -246,8 +247,7 @@ export const ChartCreate = (
       .selectAll('g')
       .data(_stacked)
       .join('g')
-      .attr('class', 'group')
-      .attr('fill', (d: any) => z(d.key));
+      .attr('class', (d: any) => `group ${getFillColor(z(d.key))}`);
   }
   function updateGroups() {
     group.data(_stacked);
@@ -371,14 +371,14 @@ export const ChartCreate = (
         .selectAll('path')
         .data(_area_1)
         .join('path')
-        .attr('fill', (d: any) => z(d.key))
+        .attr('class', (d: any) => getFillColor(z(d.key)))
         .attr('opacity', 1e-6)
         .attr('d', areaFunc);
       areaPaths2 = areas2
         .selectAll('path')
         .data(_area_2)
         .join('path')
-        .attr('fill', (d: any) => z(d.key))
+        .attr('class', (d: any) => getFillColor(z(d.key)))
         .attr('opacity', 1e-6)
         .attr('d', areaFunc);
       areaPaths1.transition().duration(duration).attr('opacity', opacityArea);
@@ -420,7 +420,7 @@ export const ChartCreate = (
       .selectAll('path')
       .data(_line)
       .join('path')
-      .attr('stroke', (d: any) => z(d.key))
+      .attr('class', (d: any) => getStrokeColor(z(d.key)))
       .attr('stroke-width', strokeWidth)
       .attr('fill', 'none')
       .attr('opacity', 1e-6)
@@ -471,7 +471,7 @@ export const ChartCreate = (
       .selectAll('circle')
       .data(_dots)
       .join('circle')
-      .attr('fill', (d: any) => z(d.key))
+      .attr('class', (d: any) => `fill-${z(d.key)}`)
       .attr('stroke', '#fff')
       .attr('stroke-width', 1)
       .attr('r', 3)
@@ -662,7 +662,7 @@ export const ChartCreate = (
           const color = legend.find((d) => d.key === _key)?.color;
           return `<div class="flex justify-between">
                     <div class="flex items-center gap-3">
-                      <div class="w-3 h-3 rounded-full" style="background-color: ${color}"></div>
+                      <div class="w-3 h-3 rounded-full bg-${color}"></div>
                       <div class="">${_key}</div>
                     </div>
                     <div class="">${formatValue(item[_key])}</div>

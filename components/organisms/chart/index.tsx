@@ -33,7 +33,7 @@ import { useResizeObserver } from '@/lib/hooks/use-resize-observer';
 import { v4 } from 'uuid';
 import { TooltipText } from '@/components/ui/tooltip';
 import { ROUTES } from '@/lib/settings/routes';
-import { h } from 'preact';
+import { ChartColors } from '@/components/organisms/chart/colors';
 
 export const Chart = (props: WidgetProps) => {
   const ref = useRef<any>(null);
@@ -85,7 +85,7 @@ export const Chart = (props: WidgetProps) => {
         <WidgetButtons>
           <TooltipText title="stacked bar chart" side="top">
             <Button
-              variant={!type || type === EChartType.stackedBarChart ? 'default' : 'ghost'}
+              variant={!type || type === EChartType.stackedBarChart ? 'sidebar' : 'ghost'}
               size="icon"
               onClick={() => handleChange(EChartType.stackedBarChart)}
             >
@@ -94,7 +94,7 @@ export const Chart = (props: WidgetProps) => {
           </TooltipText>
           <TooltipText title="grouped bar chart" side="top">
             <Button
-              variant={type === EChartType.groupedBarChart ? 'default' : 'ghost'}
+              variant={type === EChartType.groupedBarChart ? 'sidebar' : 'ghost'}
               size="icon"
               onClick={() => handleChange(EChartType.groupedBarChart)}
             >
@@ -103,7 +103,7 @@ export const Chart = (props: WidgetProps) => {
           </TooltipText>
           <TooltipText title="area bar chart" side="top">
             <Button
-              variant={type === EChartType.areaChart ? 'default' : 'ghost'}
+              variant={type === EChartType.areaChart ? 'sidebar' : 'ghost'}
               size="icon"
               onClick={() => handleChange(EChartType.areaChart)}
             >
@@ -112,7 +112,7 @@ export const Chart = (props: WidgetProps) => {
           </TooltipText>
           <TooltipText title="stacked area chart" side="top">
             <Button
-              variant={type === EChartType.stackedAreaChart ? 'default' : 'ghost'}
+              variant={type === EChartType.stackedAreaChart ? 'sidebar' : 'ghost'}
               size="icon"
               onClick={() => handleChange(EChartType.stackedAreaChart)}
             >
@@ -135,6 +135,7 @@ export const Chart = (props: WidgetProps) => {
           )}
         </div>
       </WidgetContent>
+      <ChartColors />
     </Widget>
   );
 };

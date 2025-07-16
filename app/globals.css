@@ -56,6 +56,10 @@ svg.lucide {
     --ring: 60 4% 88%;
 
     --radius: 0.5rem;
+
+    --chart-1: 240 100% 75%;
+    --chart-2: 4 100% 80%;
+    --chart-3: 210 100% 75%;
   }
   .dark {
     --background: 0 0% 12%;
@@ -96,6 +100,10 @@ svg.lucide {
     --ring: 0 0% 22%;
 
     --radius: 0.5rem;
+
+    --chart-1: 240 100% 75%;
+    --chart-2: 4 100% 80%;
+    --chart-3: 210 100% 75%;
   }
 }
 

@@ -93,7 +93,7 @@ const MenuItemLeft = (props: IMenuItemProps<TRouteDTO>) => {
   if (!IS_PATH(node.data.path) && Boolean(node.data.dialog)) {
     const handleClick = () => {
       const params = new URLSearchParams(searchParams.toString());
-      const _params = handleDialogOpen(params, 'd', ROUTES.PROFILE.name);
+      const _params = handleDialogOpen(params, ROUTES.PROFILE.name);
       const _pathname = _params.size > 0 ? `${pathname}?${_params.toString()}` : pathname;
       router.replace(_pathname);
     };
@@ -143,7 +143,7 @@ const MenuItemRight = (props: IMenuItemProps<TRouteDTO>) => {
   if (!IS_PATH(node.data.path) && Boolean(node.data.dialog)) {
     const handleClick = () => {
       const params = new URLSearchParams(searchParams.toString());
-      const _params = handleDialogOpen(params, 'd', ROUTES.PROFILE.name);
+      const _params = handleDialogOpen(params, ROUTES.PROFILE.name);
       const _pathname = _params.size > 0 ? `${pathname}?${_params.toString()}` : pathname;
       router.replace(_pathname);
     };

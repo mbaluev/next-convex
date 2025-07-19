@@ -44,10 +44,8 @@ const DialogContent = React.forwardRef<
     <DialogPrimitive.Content
       ref={ref}
       className={cn(
-        'fixed top-16 z-50 left-[50%] translate-x-[-50%] duration-200',
-        'w-full max-w-lg grid',
-        'max-h-[calc(100%-4rem)] overflow-y-auto',
-        'bg-background rounded-lg space-y-4',
+        'fixed top-0 z-50 left-[50%] translate-x-[-50%] duration-200',
+        'p-4 md:py-16 w-full h-full max-w-lg max-h-full overflow-hidden rounded-lg',
         'data-[state=open]:animate-in data-[state=closed]:animate-out',
         'data-[state=closed]:fade-out-0 data-[state=open]:fade-in-0',
         'data-[state=closed]:slide-out-to-left-1/2 data-[state=open]:slide-in-from-left-1/2',
@@ -57,14 +55,21 @@ const DialogContent = React.forwardRef<
       )}
       {...props}
     >
-      {children}
-      {close && (
-        <DialogPrimitive.Close className="absolute right-3 top-3 z-50" asChild>
-          <Button variant="ghost" size="icon">
-            <X />
-          </Button>
-        </DialogPrimitive.Close>
-      )}
+      <div
+        className={cn(
+          'bg-background rounded-lg space-y-4',
+          'flex flex-col overflow-hidden max-h-full'
+        )}
+      >
+        {close && (
+          <DialogPrimitive.Close className="absolute right-3 top-3 z-50" asChild>
+            <Button variant="ghost" size="icon">
+              <X />
+            </Button>
+          </DialogPrimitive.Close>
+        )}
+        {children}
+      </div>
     </DialogPrimitive.Content>
   </DialogPortal>
 ));

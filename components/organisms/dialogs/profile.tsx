@@ -44,7 +44,7 @@ export const ProfileDialog = () => {
             <span className="block">keep your details up to date.</span>
           </DialogDescription>
         </DialogHeader>
-        <WidgetContent variant="dialog">
+        <WidgetContent variant="dialog" className="overflow-y-auto">
           <FormSettings />
         </WidgetContent>
       </DialogContent>

@@ -75,7 +75,7 @@ const WidgetButtons = React.forwardRef<HTMLParagraphElement, React.HTMLAttribute
 );
 WidgetButtons.displayName = 'WidgetButtons';
 
-const widgetContentVariants = cva('flex-1', {
+const widgetContentVariants = cva('flex-auto', {
   variants: {
     variant: {
       default: '',

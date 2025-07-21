@@ -22,6 +22,7 @@ import { CTree, TTreeDTO } from '@/lib/utils/tree';
 import { menuLeft } from '@/lib/settings/menu';
 import { usePathname } from 'next/navigation';
 import { TRouteDTO } from '@/lib/settings/routes';
+import { useSidebarResize } from '@/components/layout/sidebar-resize';
 
 const SIDEBAR_STORAGE_NAME = 'sidebar-left';
 const SIDEBAR_KEYBOARD_SHORTCUT = 'g';
@@ -229,13 +230,16 @@ type SidebarLeftProps = ComponentProps<'nav'> & SidebarLeftBaseProps;
 const SidebarLeft = forwardRef<HTMLDivElement, SidebarLeftProps>((props, ref) => {
   const { className, children, ..._props } = props;
   const { isMobile, open, openMobile, toggleSidebar } = useSidebarLeft();
+  const { width, resizing } = useSidebarResize();
+  const isDesktop = useMemo(() => !isMobile, [isMobile]);
 
   const user = useCurrentUser();
   if (!user) return null;
 
   const classNavDesktop = cn(
-    'w-[280px] h-full flex-grow-0 flex-shrink-0 flex-basis-auto',
-    !open && 'ml-[-280px]'
+    'h-full flex-grow-0 flex-shrink-0 flex-basis-auto'
+    // 'w-[280px]',
+    // !open && 'ml-[-280px]'
   );
   const classNavMobile = cn(
     'w-[calc(100%-12px)] max-w-[300px] fixed top-0 bottom-0 z-[10]',
@@ -243,30 +247,39 @@ const SidebarLeft = forwardRef<HTMLDivElement, SidebarLeftProps>((props, ref) =>
     !openMobile && 'left-[-100%] right-[100%]'
   );
   const classNav = cn(
-    `transition-all duration-${SIDEBAR_TRANSITION_DURATION}`,
+    !resizing && `transition-all duration-${SIDEBAR_TRANSITION_DURATION}`,
     isMobile ? classNavMobile : classNavDesktop,
     className
   );
 
   const classDivMobile = cn('h-full shadow-md', 'rounded-r-lg');
-  const classDivDesktop = cn('fixed w-[280px] h-full');
+  const classDivDesktop = cn(
+    'fixed h-full'
+    // 'w-[280px]'
+  );
   const classDiv = cn(
     'bg-sidebar text-sidebar-foreground',
     isMobile ? classDivMobile : classDivDesktop
   );
 
-  const classMobile = cn(
-    'absolute top-0 left-0 w-full h-full z-[9] bg-black/25',
-    'left-0',
-    classDivMobile
-  );
+  const classBackdrop = cn('absolute top-0 left-0 w-full h-full z-[9] bg-black/25');
 
   return (
     <Fragment>
-      <nav className={classNav} ref={ref} {..._props}>
-        <div className={classDiv}>{children}</div>
+      <nav
+        className={classNav}
+        ref={ref}
+        style={{
+          width: isDesktop ? width : undefined,
+          marginLeft: isDesktop && !open ? -width : undefined,
+        }}
+        {..._props}
+      >
+        <div className={classDiv} style={{ width: isDesktop ? width : undefined }}>
+          {children}
+        </div>
       </nav>
-      {isMobile && openMobile && <div className={classMobile} onClick={toggleSidebar} />}
+      {isMobile && openMobile && <div className={classBackdrop} onClick={toggleSidebar} />}
     </Fragment>
   );
 });

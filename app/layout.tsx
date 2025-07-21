@@ -5,12 +5,12 @@ import { ReactNode } from 'react';
 import { SessionProvider } from 'next-auth/react';
 import { auth } from '@/auth/auth';
 import { Toaster } from '@/components/ui/sonner';
-import { ThemeProvider } from '@/components/molecules/layout/theme';
+import { ThemeProvider } from '@/components/layout/theme';
 import { Spinner } from '@/components/ui/spinner';
-import { Layout } from '@/components/molecules/layout/layout';
+import { Layout } from '@/components/layout/layout';
 import { Check, Info, OctagonX, TriangleAlert } from 'lucide-react';
 import { CookiesProvider } from 'next-client-cookies/server';
-import { Dialogs } from '@/components/molecules/layout/dialogs';
+import { Dialogs } from '@/components/layout/dialogs';
 import './globals.css';
 
 const font = JetBrains_Mono({ subsets: ['latin'] });

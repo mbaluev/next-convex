@@ -12,7 +12,7 @@ import {
 } from '@/components/ui/dialog';
 import { Button, ButtonProps } from '@/components/ui/button';
 import { SvgLogo } from '@/components/svg/components/logo';
-import { WidgetContent } from '@/components/molecules/layout/widget';
+import { WidgetContent } from '@/components/layout/widget';
 
 interface LoginButtonProps extends ButtonProps {
   mode?: 'modal' | 'redirect';

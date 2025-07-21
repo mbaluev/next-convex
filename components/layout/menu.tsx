@@ -14,16 +14,16 @@ import {
   SidebarLeftButton,
   SidebarLeftProvider,
   useSidebarLeft,
-} from '@/components/molecules/layout/sidebar-left';
+} from '@/components/layout/sidebar-left';
 import {
   SidebarRight,
   SidebarRightButton,
   SidebarRightProvider,
   useSidebarRight,
-} from '@/components/molecules/layout/sidebar-right';
-import { HeaderUserContent } from '@/components/molecules/layout/header';
+} from '@/components/layout/sidebar-right';
+import { HeaderUserContent } from '@/components/layout/header';
 import { Separator } from '@/components/ui/separator';
-import { handleDialogOpen } from '@/components/molecules/layout/dialogs';
+import { handleDialogOpen } from '@/components/layout/dialogs';
 import { usePathname, useRouter, useSearchParams } from 'next/navigation';
 
 const MENU_PADDING_ITEM = 15;

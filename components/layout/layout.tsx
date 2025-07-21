@@ -1,9 +1,9 @@
 'use client';
 
 import { ReactNode } from 'react';
-import { Footer } from '@/components/molecules/layout/footer';
-import { Header } from '@/components/molecules/layout/header';
-import { MenuLeft, MenuRight } from '@/components/molecules/layout/menu';
+import { Footer } from '@/components/layout/footer';
+import { Header } from '@/components/layout/header';
+import { MenuLeft, MenuRight } from '@/components/layout/menu';
 
 export const Layout = ({ children }: { children: ReactNode }) => {
   return (

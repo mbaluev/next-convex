@@ -1,8 +1,8 @@
 'use client';
 
 import { useCurrentUser } from '@/auth/hooks/use-current-user';
-import { SidebarLeftTrigger } from '@/components/molecules/layout/sidebar-left';
-import { SidebarRightTrigger } from '@/components/molecules/layout/sidebar-right';
+import { SidebarLeftTrigger } from '@/components/layout/sidebar-left';
+import { SidebarRightTrigger } from '@/components/layout/sidebar-right';
 import { Button } from '@/components/ui/button';
 import { useTheme } from 'next-themes';
 import { TooltipText } from '@/components/ui/tooltip';
@@ -15,7 +15,7 @@ import {
 } from '@/components/ui/dropdown-menu';
 import { usePathname } from 'next/navigation';
 import { BREAD_CRUMBS } from '@/lib/settings/bread-crumbs';
-import { BreadCrumbs } from '@/components/molecules/layout/bread-crumbs';
+import { BreadCrumbs } from '@/components/layout/bread-crumbs';
 import { Badge } from '@/components/ui/badge';
 import { UserRole } from '@prisma/client';
 import { ButtonLogout } from '@/components/auth/button-logout';

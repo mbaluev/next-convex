@@ -14,9 +14,9 @@ import {
   DIALOG_SEARCH_PARAM_NAME,
   handleDialogClose,
   isDialogOpen,
-} from '@/components/molecules/layout/dialogs';
+} from '@/components/layout/dialogs';
 import { useMemo } from 'react';
-import { WidgetContent } from '@/components/molecules/layout/widget';
+import { WidgetContent } from '@/components/layout/widget';
 import { FormSettings } from '@/components/auth/form-settings';
 
 export const ProfileDialog = () => {

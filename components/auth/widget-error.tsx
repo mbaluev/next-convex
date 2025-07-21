@@ -1,7 +1,7 @@
 'use client';
 
 import { AlertError } from '@/components/ui/alert';
-import { Widget, WidgetContent, WidgetHeader } from '@/components/molecules/layout/widget';
+import { Widget, WidgetContent, WidgetHeader } from '@/components/layout/widget';
 import { WidgetHeaderContent } from '@/components/auth/widget-header-content';
 import { ButtonBack } from '@/components/auth/button-back';
 

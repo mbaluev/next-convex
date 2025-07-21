@@ -1,5 +1,5 @@
 import { FormLogin } from '@/components/auth/form-login';
-import { Widget, WidgetContent, WidgetHeader } from '@/components/molecules/layout/widget';
+import { Widget, WidgetContent, WidgetHeader } from '@/components/layout/widget';
 import { WidgetHeaderContent } from '@/components/auth/widget-header-content';
 
 export const WidgetLogin = () => {

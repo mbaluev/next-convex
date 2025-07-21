@@ -17,7 +17,7 @@ import {
   WidgetButtons,
   WidgetIcon,
   WidgetProps,
-} from '@/components/molecules/layout/widget';
+} from '@/components/layout/widget';
 import { Button } from '@/components/ui/button';
 import {
   ChartArea,

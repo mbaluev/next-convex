@@ -24,7 +24,8 @@ import { usePathname } from 'next/navigation';
 import { TRouteDTO } from '@/lib/settings/routes';
 
 const SIDEBAR_STORAGE_NAME = 'sidebar-left';
-const SIDEBAR_KEYBOARD_SHORTCUT = 'h';
+const SIDEBAR_KEYBOARD_SHORTCUT = 'g';
+const SIDEBAR_KEYBOARD_SHORTCUT_FULL = 'f';
 const SIDEBAR_DEFAULT_OPEN = true;
 const SIDEBAR_TRANSITION_DURATION = 200;
 const SIDEBAR_EVENT_START = 'sidebar-start';
@@ -96,13 +97,27 @@ const SidebarLeftProvider = forwardRef<HTMLDivElement, SidebarLeftProviderProps>
     return isMobile ? setOpenMobile((open) => !open) : setOpen((open) => !open);
   };
   const toggleSidebar = useCallback(toggleCallback, [isMobile, setOpen, setOpenMobile]);
+  // hide the sidebar
+  const hideCallback = () => {
+    window.dispatchEvent(new Event(SIDEBAR_EVENT_START));
+    setTimeout(() => {
+      window.dispatchEvent(new Event(SIDEBAR_EVENT_END));
+    }, SIDEBAR_TRANSITION_DURATION * 2);
+    return isMobile ? setOpenMobile(false) : setOpen(false);
+  };
+  const hideSidebar = useCallback(hideCallback, [isMobile, setOpen, setOpenMobile]);
 
-  // keyboard shortcut to toggle the sidebar.
+  // keyboard shortcut to toggle/hide the sidebar.
   useEffect(() => {
     const handleKeyDown = (event: KeyboardEvent) => {
-      if (event.key === SIDEBAR_KEYBOARD_SHORTCUT && (event.metaKey || event.ctrlKey)) {
+      // && (event.metaKey || event.ctrlKey)
+      if (event.key === SIDEBAR_KEYBOARD_SHORTCUT) {
         event.preventDefault();
         toggleSidebar();
+      }
+      if (event.key === SIDEBAR_KEYBOARD_SHORTCUT_FULL) {
+        event.preventDefault();
+        hideSidebar();
       }
     };
     window.addEventListener('keydown', handleKeyDown);

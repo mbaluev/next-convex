@@ -341,7 +341,7 @@ const SidebarLeftResize = forwardRef<HTMLDivElement, SidebarLeftResizeProps>((pr
   const { handleResize } = useSidebarLeft();
   const classResize = cn(
     'absolute top-0 right-0 bottom-0 w-1 opacity-0',
-    'bg-secondary z-1 cursor-col-resize',
+    'bg-secondary active:bg-primary z-1 cursor-col-resize',
     className
   );
   return <div ref={ref} className={classResize} onMouseDown={handleResize} {...rest} />;

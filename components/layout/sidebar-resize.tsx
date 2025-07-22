@@ -15,8 +15,7 @@ import { useCookies } from 'next-client-cookies';
 import React from 'react';
 
 const SIDEBAR_RESIZE_NAME = 'menu-left-width';
-const SIDEBAR_WIDTH = 280;
-const SIDEBAR_WIDTH_MIN = 200;
+const SIDEBAR_WIDTH_MIN = 280;
 const SIDEBAR_WIDTH_MAX = 480;
 
 interface SidebarResizeContext {
@@ -37,7 +36,7 @@ const SidebarResizeProvider = (props: SidebarResizeProviderProps) => {
   const cookies = useCookies();
 
   let _defaultWidth: any = cookies.get(SIDEBAR_RESIZE_NAME);
-  _defaultWidth = _defaultWidth ? Number(_defaultWidth) : SIDEBAR_WIDTH;
+  _defaultWidth = _defaultWidth ? Number(_defaultWidth) : SIDEBAR_WIDTH_MIN;
   const [width, setWidth] = useState(_defaultWidth);
 
   const [resizing, setResizing] = useState(false);

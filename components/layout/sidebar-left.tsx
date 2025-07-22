@@ -1,6 +1,6 @@
 'use client';
 
-import {
+import React, {
   ComponentProps,
   createContext,
   ElementRef,
@@ -9,7 +9,9 @@ import {
   useCallback,
   useContext,
   useEffect,
+  useImperativeHandle,
   useMemo,
+  useRef,
   useState,
 } from 'react';
 import { cn } from '@/lib/utils/cn';
@@ -22,7 +24,6 @@ import { CTree, TTreeDTO } from '@/lib/utils/tree';
 import { menuLeft } from '@/lib/settings/menu';
 import { usePathname } from 'next/navigation';
 import { TRouteDTO } from '@/lib/settings/routes';
-import { useSidebarResize } from '@/components/layout/sidebar-resize';
 
 const SIDEBAR_STORAGE_NAME = 'sidebar-left';
 const SIDEBAR_KEYBOARD_SHORTCUT = 'g';
@@ -31,6 +32,8 @@ const SIDEBAR_DEFAULT_OPEN = true;
 const SIDEBAR_TRANSITION_DURATION = 200;
 const SIDEBAR_EVENT_START = 'sidebar-start';
 const SIDEBAR_EVENT_END = 'sidebar-end';
+const SIDEBAR_WIDTH_MIN = 280;
+const SIDEBAR_WIDTH_MAX = 480;
 
 interface SidebarLeftContext<T> {
   name?: string;
@@ -42,6 +45,10 @@ interface SidebarLeftContext<T> {
   toggleSidebar: () => void;
   toggleNode: (node: TTreeDTO<T>) => void;
   data?: CTree<T>;
+  // resizing
+  handleResize: (e: React.MouseEvent<HTMLDivElement, MouseEvent>) => void;
+  resizing: boolean;
+  width: number;
 }
 const SidebarLeftContext = createContext<SidebarLeftContext<TRouteDTO> | null>(null);
 function useSidebarLeft() {
@@ -146,6 +153,44 @@ const SidebarLeftProvider = forwardRef<HTMLDivElement, SidebarLeftProviderProps>
     setData(_data);
   }, [pathname]);
 
+  // sidebar ref
+  const sidebarRef = useRef<HTMLDivElement>(null);
+  useImperativeHandle(ref, () => sidebarRef.current as HTMLDivElement);
+
+  // resizing
+  const SIDEBAR_RESIZE_NAME = `${name}_width`;
+  let _defaultWidth: any = cookies.get(SIDEBAR_RESIZE_NAME);
+  _defaultWidth = _defaultWidth ? Number(_defaultWidth) : SIDEBAR_WIDTH_MIN;
+  const [width, setWidth] = useState(_defaultWidth);
+  const [resizing, setResizing] = useState(false);
+  const isResizingRef = useRef(false);
+  const handleResize = (e: React.MouseEvent<HTMLDivElement, MouseEvent>) => {
+    e.preventDefault();
+    e.stopPropagation();
+    setResizing(true);
+    isResizingRef.current = true;
+    document.addEventListener('mousemove', handleMouseMove);
+    document.addEventListener('mouseup', handleMouseUp);
+  };
+  const handleMouseMove = (e: MouseEvent) => {
+    if (!isResizingRef.current) {
+      setResizing(false);
+      return;
+    }
+    const offset = sidebarRef.current?.getBoundingClientRect().x ?? 0;
+    let newWidth = e.clientX - offset;
+    if (newWidth < SIDEBAR_WIDTH_MIN) newWidth = SIDEBAR_WIDTH_MIN;
+    if (newWidth > SIDEBAR_WIDTH_MAX) newWidth = SIDEBAR_WIDTH_MAX;
+    setWidth(newWidth);
+    cookies.set(SIDEBAR_RESIZE_NAME, String(newWidth));
+  };
+  const handleMouseUp = () => {
+    isResizingRef.current = false;
+    setResizing(false);
+    document.removeEventListener('mousemove', handleMouseMove);
+    document.removeEventListener('mouseup', handleMouseUp);
+  };
+
   // context value
   const contextValueMemo = (): SidebarLeftContext<TRouteDTO> => ({
     name,
@@ -157,6 +202,9 @@ const SidebarLeftProvider = forwardRef<HTMLDivElement, SidebarLeftProviderProps>
     toggleSidebar,
     toggleNode,
     data,
+    handleResize,
+    resizing,
+    width,
   });
   const contextValue = useMemo<SidebarLeftContext<TRouteDTO>>(contextValueMemo, [
     name,
@@ -168,11 +216,19 @@ const SidebarLeftProvider = forwardRef<HTMLDivElement, SidebarLeftProviderProps>
     toggleSidebar,
     toggleNode,
     data,
+    handleResize,
+    resizing,
+    width,
   ]);
 
   return (
     <SidebarLeftContext.Provider value={contextValue}>
-      <div id={name} className={cn('flex flex-grow h-full', className)} ref={ref} {..._props}>
+      <div
+        id={name}
+        className={cn('flex flex-grow h-full', className)}
+        ref={sidebarRef}
+        {..._props}
+      >
         {children}
       </div>
     </SidebarLeftContext.Provider>
@@ -230,35 +286,29 @@ type SidebarLeftProps = ComponentProps<'nav'> & SidebarLeftBaseProps;
 const SidebarLeft = forwardRef<HTMLDivElement, SidebarLeftProps>((props, ref) => {
   const { className, children, ..._props } = props;
   const { isMobile, open, openMobile, toggleSidebar } = useSidebarLeft();
-  const { width, resizing } = useSidebarResize();
+  const { width, resizing } = useSidebarLeft();
   const isDesktop = useMemo(() => !isMobile, [isMobile]);
 
   const user = useCurrentUser();
   if (!user) return null;
 
-  const classNavDesktop = cn(
-    'h-full flex-grow-0 flex-shrink-0 flex-basis-auto'
-    // 'w-[280px]',
-    // !open && 'ml-[-280px]'
-  );
+  const classNavDesktop = cn('h-full flex-grow-0 flex-shrink-0 flex-basis-auto'); // 'w-[280px]', !open && 'ml-[-280px]'
   const classNavMobile = cn(
     'w-[calc(100%-12px)] max-w-[300px] fixed top-0 bottom-0 z-[10]',
     openMobile && 'left-0 right-4',
     !openMobile && 'left-[-100%] right-[100%]'
   );
   const classNav = cn(
+    'relative',
     !resizing && `transition-all duration-${SIDEBAR_TRANSITION_DURATION}`,
     isMobile ? classNavMobile : classNavDesktop,
     className
   );
 
-  const classDivMobile = cn('h-full shadow-md', 'rounded-r-lg');
-  const classDivDesktop = cn(
-    'fixed h-full'
-    // 'w-[280px]'
-  );
+  const classDivMobile = cn('shadow-md rounded-r-lg');
+  const classDivDesktop = cn('absolute'); // 'w-[280px]'
   const classDiv = cn(
-    'bg-sidebar text-sidebar-foreground',
+    'bg-sidebar text-sidebar-foreground h-full',
     isMobile ? classDivMobile : classDivDesktop
   );
 
@@ -285,11 +335,25 @@ const SidebarLeft = forwardRef<HTMLDivElement, SidebarLeftProps>((props, ref) =>
 });
 SidebarLeft.displayName = 'SidebarLeft';
 
+type SidebarLeftResizeProps = ComponentProps<'div'>;
+const SidebarLeftResize = forwardRef<HTMLDivElement, SidebarLeftResizeProps>((props, ref) => {
+  const { className, children, ...rest } = props;
+  const { handleResize } = useSidebarLeft();
+  const classResize = cn(
+    'absolute top-0 right-0 bottom-0 w-1 opacity-0',
+    'bg-secondary z-1 cursor-col-resize',
+    className
+  );
+  return <div ref={ref} className={classResize} onMouseDown={handleResize} {...rest} />;
+});
+SidebarLeftResize.displayName = 'SidebarLeftResize';
+
 export {
   SidebarLeftProvider,
   SidebarLeft,
   SidebarLeftTrigger,
   SidebarLeftButton,
+  SidebarLeftResize,
   useSidebarLeft,
   SIDEBAR_EVENT_START,
   SIDEBAR_EVENT_END,

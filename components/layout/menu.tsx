@@ -13,6 +13,7 @@ import {
   SidebarLeft,
   SidebarLeftButton,
   SidebarLeftProvider,
+  SidebarLeftResize,
   useSidebarLeft,
 } from '@/components/layout/sidebar-left';
 import {
@@ -25,7 +26,6 @@ import { HeaderUserContent } from '@/components/layout/header';
 import { Separator } from '@/components/ui/separator';
 import { handleDialogOpen } from '@/components/layout/dialogs';
 import { usePathname, useRouter, useSearchParams } from 'next/navigation';
-import { SidebarResize, SidebarResizeProvider } from '@/components/layout/sidebar-resize';
 
 const MENU_PADDING_ITEM = 15;
 const MENU_TRANSITION_DURATION = 100;
@@ -190,12 +190,10 @@ const MenuLeft = (props: IMenuProps) => {
   return (
     <SidebarLeftProvider name="menu-left" collapsed>
       {user && (
-        <SidebarResizeProvider>
-          <SidebarLeft className="z-20 group/sidebar-left">
-            <MenuLeftContent />
-            <SidebarResize className="group-hover/sidebar-left:opacity-100 group-active/sidebar-left:opacity-100" />
-          </SidebarLeft>
-        </SidebarResizeProvider>
+        <SidebarLeft className="z-20 group/sidebar-left">
+          <MenuLeftContent />
+          <SidebarLeftResize className="group-hover/sidebar-left:opacity-100 group-active/sidebar-left:opacity-100" />
+        </SidebarLeft>
       )}
       {children}
     </SidebarLeftProvider>

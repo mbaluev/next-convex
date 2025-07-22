@@ -19,7 +19,9 @@ export const WidgetEmpty = (props: WidgetProps) => {
         </WidgetIcon>
         <WidgetTitle>empty</WidgetTitle>
       </WidgetHeader>
-      <WidgetContent variant="padding">...</WidgetContent>
+      <WidgetContent variant="padding">
+        <div>...</div>
+      </WidgetContent>
     </Widget>
   );
 };

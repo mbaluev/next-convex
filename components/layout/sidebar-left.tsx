@@ -27,12 +27,11 @@ import { TRouteDTO } from '@/lib/settings/routes';
 
 const SIDEBAR_STORAGE_NAME = 'sidebar-left';
 const SIDEBAR_KEYBOARD_SHORTCUT = 'g';
-const SIDEBAR_KEYBOARD_SHORTCUT_FULL = 'f';
 const SIDEBAR_DEFAULT_OPEN = true;
 const SIDEBAR_TRANSITION_DURATION = 200;
 const SIDEBAR_EVENT_START = 'sidebar-start';
 const SIDEBAR_EVENT_END = 'sidebar-end';
-const SIDEBAR_WIDTH_MIN = 280;
+const SIDEBAR_WIDTH_MIN = 260;
 const SIDEBAR_WIDTH_MAX = 480;
 
 interface SidebarLeftContext<T> {
@@ -105,15 +104,6 @@ const SidebarLeftProvider = forwardRef<HTMLDivElement, SidebarLeftProviderProps>
     return isMobile ? setOpenMobile((open) => !open) : setOpen((open) => !open);
   };
   const toggleSidebar = useCallback(toggleCallback, [isMobile, setOpen, setOpenMobile]);
-  // hide the sidebar
-  const hideCallback = () => {
-    window.dispatchEvent(new Event(SIDEBAR_EVENT_START));
-    setTimeout(() => {
-      window.dispatchEvent(new Event(SIDEBAR_EVENT_END));
-    }, SIDEBAR_TRANSITION_DURATION * 2);
-    return isMobile ? setOpenMobile(false) : setOpen(false);
-  };
-  const hideSidebar = useCallback(hideCallback, [isMobile, setOpen, setOpenMobile]);
 
   // keyboard shortcut to toggle/hide the sidebar.
   useEffect(() => {
@@ -122,10 +112,6 @@ const SidebarLeftProvider = forwardRef<HTMLDivElement, SidebarLeftProviderProps>
       if (event.key === SIDEBAR_KEYBOARD_SHORTCUT) {
         event.preventDefault();
         toggleSidebar();
-      }
-      if (event.key === SIDEBAR_KEYBOARD_SHORTCUT_FULL) {
-        event.preventDefault();
-        hideSidebar();
       }
     };
     window.addEventListener('keydown', handleKeyDown);
@@ -177,8 +163,8 @@ const SidebarLeftProvider = forwardRef<HTMLDivElement, SidebarLeftProviderProps>
       setResizing(false);
       return;
     }
-    const offset = sidebarRef.current?.getBoundingClientRect().x ?? 0;
-    let newWidth = e.clientX - offset;
+    const _offset = sidebarRef.current?.getBoundingClientRect().x ?? 0;
+    let newWidth = e.clientX - _offset;
     if (newWidth < SIDEBAR_WIDTH_MIN) newWidth = SIDEBAR_WIDTH_MIN;
     if (newWidth > SIDEBAR_WIDTH_MAX) newWidth = SIDEBAR_WIDTH_MAX;
     setWidth(newWidth);

@@ -20,6 +20,7 @@ import {
   SidebarRight,
   SidebarRightButton,
   SidebarRightProvider,
+  SidebarRightResize,
   useSidebarRight,
 } from '@/components/layout/sidebar-right';
 import { HeaderUserContent } from '@/components/layout/header';
@@ -239,7 +240,8 @@ const MenuRight = (props: IMenuProps) => {
     <SidebarRightProvider name="menu-right" collapsed>
       {children}
       {user && (
-        <SidebarRight className="z-10">
+        <SidebarRight className="z-10 group/sidebar-right">
+          <SidebarRightResize className="group-hover/sidebar-right:opacity-100 group-active/sidebar-right:opacity-100" />
           <MenuRightContent />
         </SidebarRight>
       )}

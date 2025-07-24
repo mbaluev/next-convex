@@ -24,6 +24,7 @@ import { InputOTP, InputOTPGroup, InputOTPSlot } from '@/components/ui/input-otp
 import { REGEXP_ONLY_DIGITS } from 'input-otp';
 import { ButtonsSocial } from '@/components/auth/buttons-social';
 import { ButtonBack } from '@/components/auth/button-back';
+import { Spinner } from '@/components/ui/spinner';
 
 export const FormLogin = () => {
   const searchParams = useSearchParams();
@@ -144,6 +145,7 @@ export const FormLogin = () => {
         <AlertError message={error || urlError} />
         <AlertSuccess message={success} />
         <Button type="submit" className="w-full" disabled={isPending}>
+          {isPending && <Spinner />}
           {showTwoFactor ? 'confirm code' : 'login'}
         </Button>
         <ButtonsSocial />

@@ -29,6 +29,7 @@ import { UserRole } from '@prisma/client';
 import { Switch } from '@/components/ui/switch';
 import { InputPassword } from '@/components/ui/input-password';
 import { toast } from 'sonner';
+import { Spinner } from '@/components/ui/spinner';
 
 export const FormSettings = () => {
   const user = useCurrentUser();
@@ -185,6 +186,7 @@ export const FormSettings = () => {
         </div>
         <div className={_formItem}>
           <Button type="submit" className={_buttonSubmit} disabled={isPending}>
+            {isPending && <Spinner />}
             save
           </Button>
         </div>

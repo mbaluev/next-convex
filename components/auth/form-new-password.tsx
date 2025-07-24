@@ -12,6 +12,7 @@ import { useSearchParams } from 'next/navigation';
 import { newPassword } from '@/auth/actions/new-password';
 import { InputPassword } from '@/components/ui/input-password';
 import { ButtonBack } from '@/components/auth/button-back';
+import { Spinner } from '@/components/ui/spinner';
 
 export const FormNewPassword = () => {
   const searchParams = useSearchParams();
@@ -63,6 +64,7 @@ export const FormNewPassword = () => {
         <AlertError message={error} />
         <AlertSuccess message={success} />
         <Button type="submit" className="w-full" disabled={isPending}>
+          {isPending && <Spinner />}
           reset password
         </Button>
         <ButtonBack href="/auth/login" label="back to login" />

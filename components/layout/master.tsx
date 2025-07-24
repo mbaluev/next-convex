@@ -25,7 +25,7 @@ const MasterCenter = (props: MasterProps) => {
   const _className = 'flex flex-grow justify-center items-center px-4';
   return (
     <section className={cn(_className, className)} {..._props}>
-      <div className="w-[min(350px,100%)] h-fit">{children}</div>
+      <div className="w-[min(320px,100%)] h-fit">{children}</div>
     </section>
   );
 };

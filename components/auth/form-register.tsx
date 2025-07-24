@@ -12,6 +12,7 @@ import { useState, useTransition } from 'react';
 import { register } from '@/auth/actions/register';
 import { InputPassword } from '@/components/ui/input-password';
 import { ButtonBack } from '@/components/auth/button-back';
+import { Spinner } from '@/components/ui/spinner';
 
 export const FormRegister = () => {
   const [error, setError] = useState<string | undefined>();
@@ -97,6 +98,7 @@ export const FormRegister = () => {
         <AlertError message={error} />
         <AlertSuccess message={success} />
         <Button type="submit" className="w-full" disabled={isPending}>
+          {isPending && <Spinner />}
           create an account
         </Button>
         <ButtonBack href="/auth/login" label="already have an account?" />

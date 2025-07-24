@@ -25,16 +25,16 @@ export default function Home() {
         <div className="flex gap-2 flex-wrap items-center">
           <p>layouts</p>
           <Dot />
-          <p>sidebar</p>
+          <p>sidebar resizable</p>
         </div>
         <p>d3.js charts</p>
       </div>
       {!auth && (
-        <div className="flex gap-6 justify-center">
-          <ButtonLogin variant="default" size="lg" mode="redirect">
+        <div className="grid grid-cols-1 gap-6">
+          <ButtonLogin variant="default" mode="redirect">
             sign in
           </ButtonLogin>
-          <ButtonLogin variant="outline" size="lg" mode="modal">
+          <ButtonLogin variant="outline" mode="modal">
             sign in dialog
           </ButtonLogin>
         </div>

@@ -11,6 +11,7 @@ import { AlertSuccess, AlertError } from '@/components/ui/alert';
 import { useState, useTransition } from 'react';
 import { reset } from '@/auth/actions/reset';
 import { ButtonBack } from '@/components/auth/button-back';
+import { Spinner } from '@/components/ui/spinner';
 
 export const FormReset = () => {
   const [error, setError] = useState<string | undefined>();
@@ -60,6 +61,7 @@ export const FormReset = () => {
         <AlertError message={error} />
         <AlertSuccess message={success} />
         <Button type="submit" className="w-full" disabled={isPending}>
+          {isPending && <Spinner />}
           send reset email
         </Button>
         <ButtonBack href="/auth/login" label="back to login" />

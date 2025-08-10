@@ -194,60 +194,6 @@ const MenuItemRight = (props: IMenuItemProps<TRouteDTO>) => {
 };
 MenuItemRight.displayName = 'MenuItemRight';
 
-// user-info
-
-const MenuLeftUserInfo = () => {
-  const user = useCurrentUser();
-  const searchParams = useSearchParams();
-  const pathname = usePathname();
-  const router = useRouter();
-
-  // handlers
-  const handleLogout = async () => {
-    await logout();
-    await signOut();
-  };
-  const handleProfile = () => {
-    const params = new URLSearchParams(searchParams.toString());
-    const _params = handleDialogOpen(params, ROUTES.PROFILE.name);
-    const _pathname = _params.size > 0 ? `${pathname}?${_params.toString()}` : pathname;
-    router.replace(_pathname);
-  };
-
-  if (!user) return null;
-  return (
-    <div className="p-4 flex flex-col space-y-4">
-      <div className="flex space-x-4 items-center">
-        <Avatar className="w-20 h-20 bg-secondary">
-          <AvatarImage src={user?.image || ''} />
-          <AvatarFallback className="bg-secondary">
-            <User className="text-xl" />
-          </AvatarFallback>
-        </Avatar>
-        <div className="space-y-3 overflow-hidden flex-1">
-          <p className="overflow-hidden text-ellipsis">{user?.email}</p>
-          <div className="flex space-x-4">
-            {user.role === UserRole.USER && <Badge variant="default">user</Badge>}
-            {user.role === UserRole.ADMIN && <Badge variant="success">admin</Badge>}
-            <p className="overflow-hidden text-ellipsis">{user?.name}</p>
-          </div>
-        </div>
-      </div>
-      <div className="flex flex-col space-y-2 ">
-        <SidebarLeftButton variant="ghost" onClick={handleProfile}>
-          <UserRoundCog />
-          <p className="flex-1 text-left">profile</p>
-          <BookOpen />
-        </SidebarLeftButton>
-        <SidebarLeftButton variant="ghost-destructive" onClick={handleLogout}>
-          <LogOut />
-          logout
-        </SidebarLeftButton>
-      </div>
-    </div>
-  );
-};
-
 // menu-left
 
 interface IMenuProps {
@@ -300,6 +246,59 @@ const MenuLeftContent = () => {
   );
 };
 MenuLeftContent.displayName = 'MenuLeftContent';
+
+const MenuLeftUserInfo = () => {
+  const user = useCurrentUser();
+  const searchParams = useSearchParams();
+  const pathname = usePathname();
+  const router = useRouter();
+
+  // handlers
+  const handleLogout = async () => {
+    await logout();
+    await signOut();
+  };
+  const handleProfile = () => {
+    const params = new URLSearchParams(searchParams.toString());
+    const _params = handleDialogOpen(params, ROUTES.PROFILE.name);
+    const _pathname = _params.size > 0 ? `${pathname}?${_params.toString()}` : pathname;
+    router.replace(_pathname);
+  };
+
+  if (!user) return null;
+  return (
+    <div className="p-4 flex flex-col space-y-4">
+      <div className="flex space-x-4 items-center">
+        <Avatar className="w-20 h-20 bg-secondary">
+          <AvatarImage src={user?.image || ''} />
+          <AvatarFallback className="bg-secondary">
+            <User className="text-xl" />
+          </AvatarFallback>
+        </Avatar>
+        <div className="space-y-3 overflow-hidden flex-1">
+          <p className="overflow-hidden text-ellipsis">{user?.email}</p>
+          <div className="flex space-x-4">
+            {user.role === UserRole.USER && <Badge variant="default">user</Badge>}
+            {user.role === UserRole.ADMIN && <Badge variant="success">admin</Badge>}
+            <p className="overflow-hidden text-ellipsis">{user?.name}</p>
+          </div>
+        </div>
+      </div>
+      <div className="flex flex-col space-y-2 ">
+        <SidebarLeftButton variant="ghost" onClick={handleLogout}>
+          <LogOut />
+          logout
+        </SidebarLeftButton>
+        <SidebarLeftButton variant="ghost" onClick={handleProfile}>
+          <UserRoundCog />
+          <p className="flex-1 text-left">profile</p>
+          <BookOpen />
+        </SidebarLeftButton>
+      </div>
+    </div>
+  );
+};
+MenuLeftUserInfo.displayName = 'MenuLeftUserInfo';
 
 // menu-right
 

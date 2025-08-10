@@ -4,14 +4,7 @@ import { RoleGate } from '@/components/auth/role-gate';
 import { UserRole } from '@prisma/client';
 import { AlertSuccess } from '@/components/ui/alert';
 import { Button } from '@/components/ui/button';
-import {
-  ArrowLeftFromLine,
-  ArrowRightToLine,
-  ChevronsLeft,
-  ChevronsRight,
-  Code,
-  Ellipsis,
-} from 'lucide-react';
+import { Code, Ellipsis } from 'lucide-react';
 import { TooltipText } from '@/components/ui/tooltip';
 import {
   Widget,
@@ -26,9 +19,6 @@ import {
   DropdownMenuContent,
   DropdownMenuTrigger,
 } from '@/components/ui/dropdown-menu';
-import { useSidebarRight } from '@/components/layout/sidebar-right';
-import React from 'react';
-import { useSidebarLeft } from '@/components/layout/sidebar-left';
 
 export const WidgetDebug = (props: WidgetProps) => {
   const onApiRouteClick = () => {
@@ -54,20 +44,6 @@ export const WidgetDebug = (props: WidgetProps) => {
   const warning = () => toast.warning('warning');
   const error = () => toast.error('error');
   const info = () => toast.info('info');
-
-  const {
-    toggleSidebar: toggleLeft,
-    open: openLeft,
-    isMobile: isMobileLeft,
-    openMobile: openMobileLeft,
-  } = useSidebarLeft();
-  const {
-    toggleSidebar: toggleRight,
-    open: openRight,
-    isMobile: isMobileRight,
-    openMobile: openMobileRight,
-  } = useSidebarRight();
-
   return (
     <Widget {...props}>
       <WidgetHeader variant="background">
@@ -109,18 +85,6 @@ export const WidgetDebug = (props: WidgetProps) => {
           <div>
             <Button variant="default" onClick={info}>
               click to info
-            </Button>
-          </div>
-          <div className="flex gap-4 flex-wrap">
-            <Button variant="outline" onClick={toggleLeft}>
-              {!(isMobileLeft ? openMobileLeft : openLeft) && <ChevronsRight />}
-              {(isMobileLeft ? openMobileLeft : openLeft) && <ChevronsLeft />}
-              sidebar left
-            </Button>
-            <Button variant="outline" onClick={toggleRight}>
-              {!(isMobileRight ? openMobileRight : openRight) && <ArrowLeftFromLine />}
-              {(isMobileRight ? openMobileRight : openRight) && <ArrowRightToLine />}
-              sidebar right
             </Button>
           </div>
         </div>

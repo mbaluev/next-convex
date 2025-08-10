@@ -91,3 +91,17 @@ brew install postgresql@16 #I wanted 16 version
 brew services start postgresql@16 #start the postgres service
 brew link postgresql@16 --force #this will make 16 your default version
 ```
+
+## update packages
+```
+yarn upgrade-interactive --latest
+```
+
+## convex
+```
+docker compose exec backend ./generate_admin_key.sh
+psql postgres -c "CREATE DATABASE convex_self_hosted"
+export POSTGRES_URL='postgresql://<your-username>@host.docker.internal:5432'
+export DO_NOT_REQUIRE_SSL=1
+docker compose up --biild -d
+```

@@ -20,8 +20,11 @@ const buttonVariants = cva(
         warning: 'bg-warning text-warning-foreground hover:bg-warning/90',
         success: 'bg-success text-success-foreground hover:bg-success/90',
         ghost: 'hover:bg-secondary hover:text-secondary-foreground',
+        'ghost-primary': 'hover:bg-secondary text-primary',
+        'ghost-destructive': 'hover:bg-secondary text-destructive',
+        'ghost-warning': 'hover:bg-secondary text-warning',
+        'ghost-success': 'hover:bg-secondary text-success',
         link: 'text-primary underline-offset-4 hover:underline',
-        sidebar: 'hover:bg-secondary text-primary',
         static: 'text-foreground cursor-default',
       },
       size: {

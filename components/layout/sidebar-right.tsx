@@ -17,23 +17,21 @@ import React, {
 import { cn } from '@/lib/utils/cn';
 import { MEDIA_MD, useMatchMedia } from '@/lib/hooks/use-match-media';
 import { Button } from '@/components/ui/button';
-import { Cog } from 'lucide-react';
+import { ArrowLeftFromLine, ArrowRightToLine } from 'lucide-react';
 import { useCurrentUser } from '@/auth/hooks/use-current-user';
 import { useCookies } from 'next-client-cookies';
 import { TRouteDTO } from '@/lib/settings/routes';
 import { useWindowResize } from '@/lib/hooks/use-window-resize';
 import { CTree, TTreeDTO } from '@/lib/utils/tree';
-import { menuRight } from '@/lib/settings/menu';
 import { usePathname } from 'next/navigation';
 
 const SIDEBAR_STORAGE_NAME = 'sidebar-right';
 const SIDEBAR_KEYBOARD_SHORTCUT = 'h';
-const SIDEBAR_DEFAULT_OPEN = true;
 const SIDEBAR_TRANSITION_DURATION = 200;
 const SIDEBAR_EVENT_START = 'sidebar-start';
 const SIDEBAR_EVENT_END = 'sidebar-end';
-const SIDEBAR_WIDTH_MIN = 260;
-const SIDEBAR_WIDTH_MAX = 480;
+const SIDEBAR_WIDTH_MIN = 520;
+const SIDEBAR_WIDTH_MAX = 780;
 
 interface SidebarRightContext<T> {
   name?: string;
@@ -58,6 +56,7 @@ function useSidebarRight() {
 }
 
 type SidebarRightProviderBaseProps = {
+  data?: CTree<TRouteDTO>;
   name?: string;
   open?: boolean;
   onOpenChange?: (open: boolean) => void;
@@ -66,16 +65,17 @@ type SidebarRightProviderBaseProps = {
 };
 type SidebarRightProviderProps = ComponentProps<'div'> & SidebarRightProviderBaseProps;
 const SidebarRightProvider = forwardRef<HTMLDivElement, SidebarRightProviderProps>((props, ref) => {
-  const { name = SIDEBAR_STORAGE_NAME } = props;
+  const { name = SIDEBAR_STORAGE_NAME, defaultOpen: __defaultOpen } = props;
   const cookies = useCookies();
   let _defaultOpen: any = cookies.get(name);
-  _defaultOpen = _defaultOpen ? _defaultOpen === 'true' : SIDEBAR_DEFAULT_OPEN;
+  _defaultOpen = _defaultOpen ? _defaultOpen === 'true' : __defaultOpen;
 
   const {
+    data: initData,
     name: _name,
     open: openProp,
     onOpenChange: setOpenProp,
-    defaultOpen = _defaultOpen,
+    defaultOpen,
     collapsed,
     className,
     children,
@@ -86,7 +86,7 @@ const SidebarRightProvider = forwardRef<HTMLDivElement, SidebarRightProviderProp
   const pathname = usePathname();
 
   // internal state of the sidebar.
-  const [_open, _setOpen] = useState(defaultOpen);
+  const [_open, _setOpen] = useState(_defaultOpen ?? defaultOpen);
   const open = openProp ?? _open;
   const setOpenCallback = (value: boolean | ((value: boolean) => boolean)) => {
     const res = typeof value === 'function' ? value(open) : value;
@@ -120,7 +120,7 @@ const SidebarRightProvider = forwardRef<HTMLDivElement, SidebarRightProviderProp
   }, [toggleSidebar]);
 
   // init data
-  const [data, setData] = useState<CTree<TRouteDTO>>(menuRight);
+  const [data, setData] = useState<CTree<TRouteDTO>>(initData ?? new CTree());
   const toggleNodeCallback = (node: TTreeDTO<TRouteDTO>) => {
     const _data = data.clone();
     _data.toggle(node.id);
@@ -228,7 +228,7 @@ type SidebarRightTriggerProps = ComponentProps<typeof Button>;
 const SidebarRightTrigger = forwardRef<ElementRef<typeof Button>, SidebarRightTriggerProps>(
   (props, ref) => {
     const { onClick, ..._props } = props;
-    const { toggleSidebar, open, isMobile } = useSidebarRight();
+    const { toggleSidebar, open, isMobile, openMobile } = useSidebarRight();
     const user = useCurrentUser();
     if (!user || (!isMobile && open)) return null;
     return (
@@ -242,9 +242,8 @@ const SidebarRightTrigger = forwardRef<ElementRef<typeof Button>, SidebarRightTr
         }}
         {..._props}
       >
-        <Cog />
-        {/*{!(isMobile ? openMobile : open) && <ChevronsLeft />}*/}
-        {/*{(isMobile ? openMobile : open) && <ChevronsRight />}*/}
+        {!(isMobile ? openMobile : open) && <ArrowLeftFromLine />}
+        {(isMobile ? openMobile : open) && <ArrowRightToLine />}
       </Button>
     );
   }

@@ -4,7 +4,16 @@ import Link from 'next/link';
 import { Button } from '@/components/ui/button';
 import { useCurrentUser } from '@/auth/hooks/use-current-user';
 import { SvgLogo } from '@/components/svg/components/logo';
-import { ChevronRight, Cog, X, BookOpen } from 'lucide-react';
+import {
+  ChevronRight,
+  X,
+  BookOpen,
+  UserRoundCog,
+  LogOut,
+  User,
+  ArrowRightToLine,
+  SlidersHorizontal,
+} from 'lucide-react';
 import { TTreeDTO } from '@/lib/utils/tree';
 import { Fragment, ReactNode } from 'react';
 import { cn } from '@/lib/utils/cn';
@@ -23,10 +32,15 @@ import {
   SidebarRightResize,
   useSidebarRight,
 } from '@/components/layout/sidebar-right';
-import { HeaderUserContent } from '@/components/layout/header';
 import { Separator } from '@/components/ui/separator';
 import { handleDialogOpen } from '@/components/layout/dialogs';
 import { usePathname, useRouter, useSearchParams } from 'next/navigation';
+import { menuLeft } from '@/lib/settings/menu';
+import { logout } from '@/auth/actions/logout';
+import { signOut } from 'next-auth/react';
+import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar';
+import { UserRole } from '@prisma/client';
+import { Badge } from '@/components/ui/badge';
 
 const MENU_PADDING_ITEM = 15;
 const MENU_TRANSITION_DURATION = 100;
@@ -35,6 +49,8 @@ interface IMenuItemProps<T> {
   node: TTreeDTO<T>;
   toggleNode?: (node: TTreeDTO<TRouteDTO>) => void;
 }
+
+// menu-item
 
 const MenuItemPadding = (props: IMenuItemProps<TRouteDTO>) => {
   const { node } = props;
@@ -67,7 +83,7 @@ const MenuItemToggle = (props: IMenuItemProps<TRouteDTO>) => {
   };
   return (
     <Button
-      variant={node.state.selected ? 'sidebar' : 'ghost'}
+      variant={node.state.selected ? 'ghost-primary' : 'ghost'}
       onClick={handleToggle}
       className="w-full justify-start"
     >
@@ -77,8 +93,6 @@ const MenuItemToggle = (props: IMenuItemProps<TRouteDTO>) => {
   );
 };
 MenuItemToggle.displayName = 'MenuItemToggle';
-
-// ---
 
 const MenuItemLeft = (props: IMenuItemProps<TRouteDTO>) => {
   const { node } = props;
@@ -101,7 +115,7 @@ const MenuItemLeft = (props: IMenuItemProps<TRouteDTO>) => {
     };
     return (
       <SidebarLeftButton
-        variant={node.state.selected ? 'sidebar' : 'ghost'}
+        variant={node.state.selected ? 'ghost-primary' : 'ghost'}
         className="w-full"
         onClick={handleClick}
       >
@@ -117,7 +131,7 @@ const MenuItemLeft = (props: IMenuItemProps<TRouteDTO>) => {
   // item link
   return (
     <SidebarLeftButton
-      variant={node.state.selected ? 'sidebar' : 'ghost'}
+      variant={node.state.selected ? 'ghost-primary' : 'ghost'}
       className="w-full"
       asChild
     >
@@ -151,7 +165,7 @@ const MenuItemRight = (props: IMenuItemProps<TRouteDTO>) => {
     };
     return (
       <SidebarRightButton
-        variant={node.state.selected ? 'sidebar' : 'ghost'}
+        variant={node.state.selected ? 'ghost-primary' : 'ghost'}
         className="w-full"
         onClick={handleClick}
       >
@@ -167,7 +181,7 @@ const MenuItemRight = (props: IMenuItemProps<TRouteDTO>) => {
   // item link
   return (
     <SidebarRightButton
-      variant={node.state.selected ? 'sidebar' : 'ghost'}
+      variant={node.state.selected ? 'ghost-primary' : 'ghost'}
       className="w-full"
       asChild
     >
@@ -180,7 +194,61 @@ const MenuItemRight = (props: IMenuItemProps<TRouteDTO>) => {
 };
 MenuItemRight.displayName = 'MenuItemRight';
 
-// --- menu-left
+// user-info
+
+const MenuLeftUserInfo = () => {
+  const user = useCurrentUser();
+  const searchParams = useSearchParams();
+  const pathname = usePathname();
+  const router = useRouter();
+
+  // handlers
+  const handleLogout = async () => {
+    await logout();
+    await signOut();
+  };
+  const handleProfile = () => {
+    const params = new URLSearchParams(searchParams.toString());
+    const _params = handleDialogOpen(params, ROUTES.PROFILE.name);
+    const _pathname = _params.size > 0 ? `${pathname}?${_params.toString()}` : pathname;
+    router.replace(_pathname);
+  };
+
+  if (!user) return null;
+  return (
+    <div className="p-4 flex flex-col space-y-4">
+      <div className="flex space-x-4 items-center">
+        <Avatar className="w-20 h-20 bg-secondary">
+          <AvatarImage src={user?.image || ''} />
+          <AvatarFallback className="bg-secondary">
+            <User className="text-xl" />
+          </AvatarFallback>
+        </Avatar>
+        <div className="space-y-3 overflow-hidden flex-1">
+          <p className="overflow-hidden text-ellipsis">{user?.email}</p>
+          <div className="flex space-x-4">
+            {user.role === UserRole.USER && <Badge variant="default">user</Badge>}
+            {user.role === UserRole.ADMIN && <Badge variant="success">admin</Badge>}
+            <p className="overflow-hidden text-ellipsis">{user?.name}</p>
+          </div>
+        </div>
+      </div>
+      <div className="flex flex-col space-y-2 ">
+        <SidebarLeftButton variant="ghost" onClick={handleProfile}>
+          <UserRoundCog />
+          <p className="flex-1 text-left">profile</p>
+          <BookOpen />
+        </SidebarLeftButton>
+        <SidebarLeftButton variant="ghost-destructive" onClick={handleLogout}>
+          <LogOut />
+          logout
+        </SidebarLeftButton>
+      </div>
+    </div>
+  );
+};
+
+// menu-left
 
 interface IMenuProps {
   children: ReactNode;
@@ -189,7 +257,7 @@ const MenuLeft = (props: IMenuProps) => {
   const { children } = props;
   const user = useCurrentUser();
   return (
-    <SidebarLeftProvider name="menu-left" collapsed>
+    <SidebarLeftProvider data={menuLeft} name="menu-left" collapsed>
       {user && (
         <SidebarLeft className="z-20 group/sidebar-left">
           <MenuLeftContent />
@@ -208,7 +276,7 @@ const MenuLeftContent = () => {
   if (!user) return null;
   return (
     <div className="flex flex-col">
-      <div className="flex gap-4 p-4 justify-between">
+      <div className="p-4 flex space-x-4 justify-between">
         <SidebarLeftButton asChild variant="ghost" className="flex-1">
           <Link href={ROUTES.HOME.path}>
             <SvgLogo className="w-6 h-6" />
@@ -220,7 +288,9 @@ const MenuLeftContent = () => {
         </Button>
       </div>
       <Separator />
-      <div className="flex flex-col gap-4 p-4">
+      <MenuLeftUserInfo />
+      <Separator />
+      <div className="p-4 flex flex-col space-y-2">
         {data
           ?.flat()
           ?.filter((d) => !d.state.hidden)
@@ -231,13 +301,13 @@ const MenuLeftContent = () => {
 };
 MenuLeftContent.displayName = 'MenuLeftContent';
 
-// --- menu-right
+// menu-right
 
 const MenuRight = (props: IMenuProps) => {
   const { children } = props;
   const user = useCurrentUser();
   return (
-    <SidebarRightProvider name="menu-right" collapsed>
+    <SidebarRightProvider name="menu-right" collapsed defaultOpen={false}>
       {children}
       {user && (
         <SidebarRight className="z-10 group/sidebar-right">
@@ -256,19 +326,17 @@ const MenuRightContent = () => {
   if (!user) return null;
   return (
     <div className="flex flex-col">
-      <div className="flex gap-4 justify-between items-center p-4">
+      <div className="p-4 flex gap-4 justify-between items-center">
         <SidebarRightButton variant="static" className="flex-1">
-          <Cog />
-          <p>settings</p>
+          <SlidersHorizontal />
+          <p>details</p>
         </SidebarRightButton>
         <Button variant="ghost" size="icon" onClick={toggleSidebar}>
-          <X />
+          <ArrowRightToLine />
         </Button>
       </div>
       <Separator />
-      <HeaderUserContent />
-      <Separator />
-      <div className="flex flex-col gap-4 p-4">
+      <div className="p-4 flex flex-col space-y-2">
         {data
           ?.flat()
           ?.filter((d) => !d.state.hidden)

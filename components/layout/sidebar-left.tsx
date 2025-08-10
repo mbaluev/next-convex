@@ -21,13 +21,11 @@ import { ChevronsRight } from 'lucide-react';
 import { useCurrentUser } from '@/auth/hooks/use-current-user';
 import { useCookies } from 'next-client-cookies';
 import { CTree, TTreeDTO } from '@/lib/utils/tree';
-import { menuLeft } from '@/lib/settings/menu';
 import { usePathname } from 'next/navigation';
 import { TRouteDTO } from '@/lib/settings/routes';
 
 const SIDEBAR_STORAGE_NAME = 'sidebar-left';
 const SIDEBAR_KEYBOARD_SHORTCUT = 'g';
-const SIDEBAR_DEFAULT_OPEN = true;
 const SIDEBAR_TRANSITION_DURATION = 200;
 const SIDEBAR_EVENT_START = 'sidebar-start';
 const SIDEBAR_EVENT_END = 'sidebar-end';
@@ -57,6 +55,7 @@ function useSidebarLeft() {
 }
 
 type SidebarLeftProviderBaseProps = {
+  data?: CTree<TRouteDTO>;
   name?: string;
   open?: boolean;
   onOpenChange?: (open: boolean) => void;
@@ -65,16 +64,17 @@ type SidebarLeftProviderBaseProps = {
 };
 type SidebarLeftProviderProps = ComponentProps<'div'> & SidebarLeftProviderBaseProps;
 const SidebarLeftProvider = forwardRef<HTMLDivElement, SidebarLeftProviderProps>((props, ref) => {
-  const { name = SIDEBAR_STORAGE_NAME } = props;
+  const { name = SIDEBAR_STORAGE_NAME, defaultOpen: __defaultOpen } = props;
   const cookies = useCookies();
   let _defaultOpen: any = cookies.get(name);
-  _defaultOpen = _defaultOpen ? _defaultOpen === 'true' : SIDEBAR_DEFAULT_OPEN;
+  _defaultOpen = _defaultOpen ? _defaultOpen === 'true' : __defaultOpen;
 
   const {
+    data: initData,
     name: _name,
     open: openProp,
     onOpenChange: setOpenProp,
-    defaultOpen = _defaultOpen,
+    defaultOpen,
     collapsed,
     className,
     children,
@@ -85,7 +85,7 @@ const SidebarLeftProvider = forwardRef<HTMLDivElement, SidebarLeftProviderProps>
   const pathname = usePathname();
 
   // internal state of the sidebar.
-  const [_open, _setOpen] = useState(defaultOpen);
+  const [_open, _setOpen] = useState(_defaultOpen ?? defaultOpen);
   const open = openProp ?? _open;
   const setOpenCallback = (value: boolean | ((value: boolean) => boolean)) => {
     const res = typeof value === 'function' ? value(open) : value;
@@ -119,7 +119,7 @@ const SidebarLeftProvider = forwardRef<HTMLDivElement, SidebarLeftProviderProps>
   }, [toggleSidebar]);
 
   // init data
-  const [data, setData] = useState<CTree<TRouteDTO>>(menuLeft);
+  const [data, setData] = useState<CTree<TRouteDTO>>(initData ?? new CTree());
   const toggleNodeCallback = (node: TTreeDTO<TRouteDTO>) => {
     const _data = data.clone();
     _data.toggle(node.id);

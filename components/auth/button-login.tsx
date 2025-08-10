@@ -37,7 +37,7 @@ export const ButtonLogin = (props: LoginButtonProps) => {
             <DialogToolbar title={process.env.APP_NAME} icon={<SvgLogo />} close />
             <DialogDescription>welcome back</DialogDescription>
           </DialogHeader>
-          <WidgetContent variant="dialog">
+          <WidgetContent variant="dialog" className="overflow-y-auto">
             <FormLogin />
           </WidgetContent>
         </DialogContent>

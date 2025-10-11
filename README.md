@@ -98,6 +98,8 @@ yarn upgrade-interactive --latest
 ```
 
 ## convex
+https://github.com/get-convex/convex-backend/blob/main/self-hosted/README.md
+https://docs.convex.dev/quickstart/nextjs
 ```
 docker compose exec backend ./generate_admin_key.sh
 psql postgres -c "CREATE DATABASE convex_self_hosted"

@@ -8,7 +8,8 @@
     "start": "next start",
     "lint": "next lint",
     "prisma-deploy": "prisma migrate deploy --schema=./prisma/schema.prisma",
-    "prisma-generate": "prisma generate --schema=./prisma/schema.prisma"
+    "prisma-generate": "prisma generate --schema=./prisma/schema.prisma",
+    "convex-dev": "npx convex dev --env-file .env.development.local"
   },
   "dependencies": {
     "@auth/prisma-adapter": "^2.10.0",
@@ -28,6 +29,7 @@
     "bcryptjs": "^2.4.3",
     "class-variance-authority": "^0.7.1",
     "clsx": "^2.1.1",
+    "convex": "^1.27.5",
     "d3": "^7.9.0",
     "input-otp": "^1.4.2",
     "lucide-react": "^0.515.0",

@@ -4,9 +4,12 @@ import { useIsAuth } from '@/auth/hooks/use-is-auth';
 import { SvgLogo } from '@/components/svg/components/logo';
 import { ButtonLogin } from '@/components/auth/button-login';
 import { Dot } from 'lucide-react';
+import { useQuery } from 'convex/react';
+import { api } from '../../../convex/_generated/api';
 
 export default function Home() {
   const auth = useIsAuth();
+  const tasks = useQuery(api.tasks.get);
   return (
     <div className="space-y-10 text-center">
       <div className="flex gap-8 flex-col items-center justify-center">
@@ -39,6 +42,9 @@ export default function Home() {
           </ButtonLogin>
         </div>
       )}
+      {tasks?.map(({ _id, text }) => (
+        <div key={_id}>{text}</div>
+      ))}
     </div>
   );
 }

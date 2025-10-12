@@ -13,7 +13,7 @@ import { useQuery } from 'convex/react';
 import { api } from '../../../../convex/_generated/api';
 
 export const WidgetEmpty = (props: WidgetProps) => {
-  const tasks = useQuery(api.dashboard.get);
+  const tasks = useQuery(api.tasks.get);
   return (
     <Widget variant="background" {...props}>
       <WidgetHeader variant="padding">
@@ -23,12 +23,10 @@ export const WidgetEmpty = (props: WidgetProps) => {
         <WidgetTitle>empty</WidgetTitle>
       </WidgetHeader>
       <WidgetContent variant="padding">
-        {tasks?.map(({ _id, a, b, c }) => (
-          <div key={_id} className="flex flex-row gap-2">
-            <div style={{ minWidth: 250 }}>{_id}</div>
-            <div style={{ minWidth: 60 }}>{a}</div>
-            <div style={{ minWidth: 60 }}>{b}</div>
-            <div style={{ minWidth: 60 }}>{c}</div>
+        {tasks?.map(({ _id, text }) => (
+          <div key={_id} className="flex flex-row gap-4">
+            <div>{_id}</div>
+            <div>{text}</div>
           </div>
         ))}
       </WidgetContent>

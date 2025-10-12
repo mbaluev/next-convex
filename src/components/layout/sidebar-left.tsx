@@ -277,7 +277,7 @@ const SidebarLeft = forwardRef<HTMLDivElement, SidebarLeftProps>((props, ref) =>
   const user = useCurrentUser();
   if (!user) return null;
 
-  const classNavDesktop = cn('h-full flex-grow-0 flex-shrink-0 flex-basis-auto'); // 'w-[280px]', !open && 'ml-[-280px]'
+  const classNavDesktop = cn('h-full flex-grow-0 flex-shrink-0 flex-basis-auto static'); // 'w-[280px]', !open && 'ml-[-280px]'
   const classNavMobile = cn(
     'w-[calc(100%-12px)] max-w-[300px] fixed top-0 bottom-0 z-[10]',
     openMobile && 'left-0 right-4',
@@ -307,7 +307,6 @@ const SidebarLeft = forwardRef<HTMLDivElement, SidebarLeftProps>((props, ref) =>
         style={{
           width: isDesktop ? width : undefined,
           marginLeft: isDesktop && !open ? -width : undefined,
-          position: 'static',
         }}
         {..._props}
       >

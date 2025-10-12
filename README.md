@@ -103,7 +103,10 @@ https://docs.convex.dev/quickstart/nextjs
 ```
 docker compose exec backend ./generate_admin_key.sh
 psql postgres -c "CREATE DATABASE convex_self_hosted"
-export POSTGRES_URL='postgresql://<your-username>@host.docker.internal:5432'
+export POSTGRES_URL='postgresql://<your-username>@host.docker.internal:5434'
 export DO_NOT_REQUIRE_SSL=1
 docker compose up --biild -d
 ```
+
+## misc
+`env` - list of system environment variables

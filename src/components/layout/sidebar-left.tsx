@@ -17,7 +17,7 @@ import React, {
 import { cn } from '@/lib/utils/cn';
 import { MEDIA_MD, useMatchMedia } from '@/lib/hooks/use-match-media';
 import { Button } from '@/components/ui/button';
-import { ChevronsRight } from 'lucide-react';
+import { ArrowLeftFromLine, ArrowRightToLine } from 'lucide-react';
 import { useCurrentUser } from '@/auth/hooks/use-current-user';
 import { useCookies } from 'next-client-cookies';
 import { CTree, TTreeDTO } from '@/lib/utils/tree';
@@ -27,8 +27,8 @@ import { TRouteDTO } from '@/lib/settings/routes';
 const SIDEBAR_STORAGE_NAME = 'sidebar-left';
 const SIDEBAR_KEYBOARD_SHORTCUT = 'g';
 const SIDEBAR_TRANSITION_DURATION = 200;
-const SIDEBAR_EVENT_START = 'sidebar-start';
-const SIDEBAR_EVENT_END = 'sidebar-end';
+const SIDEBAR_EVENT_START = 'sidebar-left-start';
+const SIDEBAR_EVENT_END = 'sidebar-left-end';
 const SIDEBAR_WIDTH_MIN = 260;
 const SIDEBAR_WIDTH_MAX = 480;
 
@@ -226,7 +226,7 @@ type SidebarLeftTriggerProps = ComponentProps<typeof Button>;
 const SidebarLeftTrigger = forwardRef<ElementRef<typeof Button>, SidebarLeftTriggerProps>(
   (props, ref) => {
     const { onClick, ..._props } = props;
-    const { toggleSidebar, open, isMobile } = useSidebarLeft();
+    const { toggleSidebar, open, isMobile, openMobile } = useSidebarLeft();
     const user = useCurrentUser();
     if (!user || (!isMobile && open)) return null;
     return (
@@ -240,9 +240,8 @@ const SidebarLeftTrigger = forwardRef<ElementRef<typeof Button>, SidebarLeftTrig
         }}
         {..._props}
       >
-        <ChevronsRight />
-        {/*{!(isMobile ? openMobile : open) && <ChevronsRight />}*/}
-        {/*{(isMobile ? openMobile : open) && <ChevronsLeft />}*/}
+        {!(isMobile ? openMobile : open) && <ArrowRightToLine />}
+        {(isMobile ? openMobile : open) && <ArrowLeftFromLine />}
       </Button>
     );
   }
@@ -308,6 +307,7 @@ const SidebarLeft = forwardRef<HTMLDivElement, SidebarLeftProps>((props, ref) =>
         style={{
           width: isDesktop ? width : undefined,
           marginLeft: isDesktop && !open ? -width : undefined,
+          position: 'static',
         }}
         {..._props}
       >

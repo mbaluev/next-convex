@@ -28,10 +28,10 @@ import { usePathname } from 'next/navigation';
 const SIDEBAR_STORAGE_NAME = 'sidebar-right';
 const SIDEBAR_KEYBOARD_SHORTCUT = 'h';
 const SIDEBAR_TRANSITION_DURATION = 200;
-const SIDEBAR_EVENT_START = 'sidebar-start';
-const SIDEBAR_EVENT_END = 'sidebar-end';
-const SIDEBAR_WIDTH_MIN = 520;
-const SIDEBAR_WIDTH_MAX = 780;
+const SIDEBAR_EVENT_START = 'sidebar-right-start';
+const SIDEBAR_EVENT_END = 'sidebar-right-end';
+const SIDEBAR_WIDTH_MIN = 260;
+const SIDEBAR_WIDTH_MAX = 480;
 
 interface SidebarRightContext<T> {
   name?: string;
@@ -311,6 +311,7 @@ const SidebarRight = forwardRef<HTMLDivElement, SidebarRightProps>((props, ref) 
         style={{
           width: isDesktop ? width : undefined,
           marginRight: isDesktop && !open ? -width : undefined,
+          position: 'static',
         }}
         {..._props}
       >

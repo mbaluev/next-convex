@@ -6,13 +6,13 @@ import { useCurrentUser } from '@/auth/hooks/use-current-user';
 import { SvgLogo } from '@/components/svg/components/logo';
 import {
   ChevronRight,
-  X,
   BookOpen,
   UserRoundCog,
   LogOut,
   User,
   ArrowRightToLine,
   SlidersHorizontal,
+  ArrowLeftFromLine,
 } from 'lucide-react';
 import { TTreeDTO } from '@/lib/utils/tree';
 import { Fragment, ReactNode } from 'react';
@@ -230,7 +230,7 @@ const MenuLeftContent = () => {
           </Link>
         </SidebarLeftButton>
         <Button variant="ghost" size="icon" onClick={toggleSidebar}>
-          <X />
+          <ArrowLeftFromLine />
         </Button>
       </div>
       <Separator />
@@ -240,7 +240,9 @@ const MenuLeftContent = () => {
         {data
           ?.flat()
           ?.filter((d) => !d.state.hidden)
-          .map((node, index) => <MenuItemLeft key={index} node={node} />)}
+          .map((node, index) => (
+            <MenuItemLeft key={index} node={node} />
+          ))}
       </div>
     </div>
   );
@@ -339,7 +341,9 @@ const MenuRightContent = () => {
         {data
           ?.flat()
           ?.filter((d) => !d.state.hidden)
-          .map((node, index) => <MenuItemRight key={index} node={node} />)}
+          .map((node, index) => (
+            <MenuItemRight key={index} node={node} />
+          ))}
       </div>
     </div>
   );

@@ -1,11 +1,10 @@
 'use client';
 
 import Link from 'next/link';
-import { useCallback, useEffect, useRef, useState } from 'react';
+import { useCallback, useEffect, useMemo, useRef, useState } from 'react';
 import { ChartCreate } from '@/components/organisms/chart/create';
 import {
   EChartType,
-  MOCK_CHART_DATA,
   MOCK_CHART_LEGEND,
   DEFAULT_CHART_TYPE,
 } from '@/components/organisms/chart/mock';
@@ -34,6 +33,8 @@ import { v4 } from 'uuid';
 import { TooltipText } from '@/components/ui/tooltip';
 import { ROUTES } from '@/lib/settings/routes';
 import { ChartColors } from '@/components/organisms/chart/colors';
+import { useQuery } from 'convex/react';
+import { api } from '../../../../convex/_generated/api';
 
 export const Chart = (props: WidgetProps) => {
   const ref = useRef<any>(null);
@@ -43,6 +44,10 @@ export const Chart = (props: WidgetProps) => {
   const type = params.get('type') ?? DEFAULT_CHART_TYPE;
   const loading = false;
   const id = `widget-chart-${v4()}`;
+
+  const dashboard = useQuery(api.dashboard.get);
+  const data = useMemo(() => dashboard ?? [], [dashboard]);
+  // const data = MOCK_CHART_DATA;
 
   // create chart
   const formatValue = (value: number) => {
@@ -54,10 +59,10 @@ export const Chart = (props: WidgetProps) => {
   };
   const create = useCallback(() => {
     if (ref.current) {
-      const obj = ChartCreate(ref, id, MOCK_CHART_DATA, MOCK_CHART_LEGEND, type, formatValue);
+      const obj = ChartCreate(ref, id, data, MOCK_CHART_LEGEND, type, formatValue);
       setChart(obj);
     }
-  }, [ref, type]);
+  }, [ref, type, data, id]);
 
   // update
   const handleChange = (type: EChartType) => {
@@ -65,8 +70,8 @@ export const Chart = (props: WidgetProps) => {
     router.push(`${path}?type=${type}`);
   };
   useEffect(() => {
-    if (chart) chart.update(MOCK_CHART_DATA, type);
-  }, [type]);
+    if (chart) chart.update(data, type);
+  }, [type, data]);
 
   // create, resize
   const { width, height, start } = useResizeObserver(ref, 100);

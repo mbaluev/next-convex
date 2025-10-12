@@ -1,9 +1,9 @@
 import { Button } from '@/components/ui/button';
 import {
   ArrowLeftFromLine,
+  ArrowLeftToLine,
+  ArrowRightFromLine,
   ArrowRightToLine,
-  ChevronsLeft,
-  ChevronsRight,
   Code,
   Ellipsis,
 } from 'lucide-react';
@@ -44,13 +44,13 @@ export const WidgetSidebars = (props: WidgetProps) => {
         <WidgetIcon>
           <Code />
         </WidgetIcon>
-        <WidgetTitle>debug</WidgetTitle>
+        <WidgetTitle>sidebars</WidgetTitle>
       </WidgetHeader>
       <WidgetContent variant="background" className="flex">
-        <div className="flex flex-col space-y-6">
+        <div className="flex flex-col space-y-6 items-start">
           <Button variant="outline" onClick={toggleLeft}>
-            {!(isMobileLeft ? openMobileLeft : openLeft) && <ChevronsRight />}
-            {(isMobileLeft ? openMobileLeft : openLeft) && <ChevronsLeft />}
+            {!(isMobileLeft ? openMobileLeft : openLeft) && <ArrowRightFromLine />}
+            {(isMobileLeft ? openMobileLeft : openLeft) && <ArrowLeftToLine />}
             sidebar left
           </Button>
           <Button variant="outline" onClick={toggleRight}>

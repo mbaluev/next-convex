@@ -3,6 +3,9 @@
 export const ChartColors = () => {
   return (
     <div className="hidden">
+      <div className="bg-chart-1" />
+      <div className="bg-chart-2" />
+      <div className="bg-chart-3" />
       <div className="fill-[hsl(var(--chart-1))]" />
       <div className="fill-[hsl(var(--chart-2))]" />
       <div className="fill-[hsl(var(--chart-3))]" />

@@ -1,5 +1,5 @@
 import { ReactNode } from 'react';
-import { MasterCenter } from '@/components/layout/master';
+import { MasterCenter } from '@/components/molecules/master';
 
 const AuthLayout = ({ children }: { children: ReactNode }) => {
   return (

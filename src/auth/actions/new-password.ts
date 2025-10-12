@@ -2,8 +2,8 @@
 
 import * as z from 'zod';
 import { newPasswordSchema } from '@/auth/schemas';
-import { getPasswordResetTokenByToken } from '@/auth/data/password-reset-token';
-import { getUserByEmail } from '@/auth/data/user';
+import { getPasswordResetTokenByToken } from '@/auth/api/password-reset-token';
+import { getUserByEmail } from '@/auth/api/user';
 import bcrypt from 'bcryptjs';
 import { db } from '@/lib/utils/db';
 

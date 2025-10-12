@@ -1,7 +1,7 @@
 'use client';
 
 import Link from 'next/link';
-import { Button } from '@/components/ui/button';
+import { Button } from '@/components/atoms/button';
 import { Dot } from 'lucide-react';
 import { ROUTES } from '@/lib/settings/routes';
 

@@ -1,6 +1,6 @@
 import Link from 'next/link';
-import { Spinner } from '@/components/ui/spinner';
-import { Button } from '@/components/ui/button';
+import { Spinner } from '@/components/atoms/spinner';
+import { Button } from '@/components/atoms/button';
 import { SvgLogo } from '@/components/svg/components/logo';
 import { ROUTES } from '@/lib/settings/routes';
 

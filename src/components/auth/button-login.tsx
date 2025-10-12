@@ -9,10 +9,10 @@ import {
   DialogHeader,
   DialogToolbar,
   DialogTrigger,
-} from '@/components/ui/dialog';
-import { Button, ButtonProps } from '@/components/ui/button';
+} from '@/components/atoms/dialog';
+import { Button, ButtonProps } from '@/components/atoms/button';
 import { SvgLogo } from '@/components/svg/components/logo';
-import { WidgetContent } from '@/components/layout/widget';
+import { WidgetContent } from '@/components/molecules/widget';
 
 interface LoginButtonProps extends ButtonProps {
   mode?: 'modal' | 'redirect';

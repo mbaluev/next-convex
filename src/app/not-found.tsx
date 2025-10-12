@@ -1,6 +1,6 @@
-import { MasterCenter } from '@/components/layout/master';
+import { MasterCenter } from '@/components/molecules/master';
 import { SvgTrash } from '@/components/svg/components/trash';
-import { ErrorBlock } from '@/components/layout/error-block';
+import { ErrorBlock } from '@/components/molecules/error-block';
 
 export default function NotFound() {
   return (

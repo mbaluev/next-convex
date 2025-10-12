@@ -3,10 +3,10 @@
 import * as React from 'react';
 import * as DialogPrimitive from '@radix-ui/react-dialog';
 import { X } from 'lucide-react';
-import { Button } from '@/components/ui/button';
+import { Button } from '@/components/atoms/button';
 import { cn } from '@/lib/utils/cn';
 import { DialogContentProps } from '@radix-ui/react-dialog';
-import { Separator } from '@/components/ui/separator';
+import { Separator } from '@/components/atoms/separator';
 
 const Dialog = DialogPrimitive.Root;
 

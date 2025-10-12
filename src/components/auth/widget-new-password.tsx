@@ -1,4 +1,4 @@
-import { Widget, WidgetContent, WidgetHeader } from '@/components/layout/widget';
+import { Widget, WidgetContent, WidgetHeader } from '@/components/molecules/widget';
 import { WidgetHeaderContent } from '@/components/auth/widget-header-content';
 import { FormNewPassword } from '@/components/auth/form-new-password';
 

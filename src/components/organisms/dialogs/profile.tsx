@@ -6,7 +6,7 @@ import {
   DialogDescription,
   DialogHeader,
   DialogToolbar,
-} from '@/components/ui/dialog';
+} from '@/components/atoms/dialog';
 import { UserRoundCog } from 'lucide-react';
 import { useSearchParams, useRouter, usePathname } from 'next/navigation';
 import { ROUTES } from '@/lib/settings/routes';
@@ -14,9 +14,9 @@ import {
   DIALOG_SEARCH_PARAM_NAME,
   handleDialogClose,
   isDialogOpen,
-} from '@/components/layout/dialogs';
+} from '@/components/molecules/dialogs';
 import { useMemo } from 'react';
-import { WidgetContent } from '@/components/layout/widget';
+import { WidgetContent } from '@/components/molecules/widget';
 import { FormSettings } from '@/components/auth/form-settings';
 
 export const ProfileDialog = () => {

@@ -1,7 +1,7 @@
 'use client';
 
 import Link from 'next/link';
-import { Button } from '@/components/ui/button';
+import { Button } from '@/components/atoms/button';
 import { ChevronRight } from 'lucide-react';
 import { SvgLogo } from '@/components/svg/components/logo';
 import { ReactNode } from 'react';

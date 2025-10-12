@@ -4,7 +4,7 @@ import * as z from 'zod';
 import { useForm } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { loginSchema } from '@/auth/schemas';
-import { Input } from '@/components/ui/input';
+import { Input } from '@/components/atoms/input';
 import {
   Form,
   FormControl,
@@ -12,19 +12,19 @@ import {
   FormField,
   FormItem,
   FormMessage,
-} from '@/components/ui/form';
-import { Button } from '@/components/ui/button';
-import { AlertSuccess, AlertError } from '@/components/ui/alert';
+} from '@/components/atoms/form';
+import { Button } from '@/components/atoms/button';
+import { AlertSuccess, AlertError } from '@/components/atoms/alert';
 import { login } from '@/auth/actions/login';
 import { Fragment, useState, useTransition } from 'react';
 import { useSearchParams } from 'next/navigation';
-import { InputPassword } from '@/components/ui/input-password';
+import { InputPassword } from '@/components/atoms/input-password';
 import Link from 'next/link';
-import { InputOTP, InputOTPGroup, InputOTPSlot } from '@/components/ui/input-otp';
+import { InputOTP, InputOTPGroup, InputOTPSlot } from '@/components/atoms/input-otp';
 import { REGEXP_ONLY_DIGITS } from 'input-otp';
 import { ButtonsSocial } from '@/components/auth/buttons-social';
 import { ButtonBack } from '@/components/auth/button-back';
-import { Spinner } from '@/components/ui/spinner';
+import { Spinner } from '@/components/atoms/spinner';
 
 export const FormLogin = () => {
   const searchParams = useSearchParams();

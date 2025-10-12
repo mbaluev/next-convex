@@ -2,10 +2,10 @@ import { toast } from 'sonner';
 import { admin } from '@/auth/actions/admin';
 import { RoleGate } from '@/components/auth/role-gate';
 import { UserRole } from '@prisma/client';
-import { AlertSuccess } from '@/components/ui/alert';
-import { Button } from '@/components/ui/button';
+import { AlertSuccess } from '@/components/atoms/alert';
+import { Button } from '@/components/atoms/button';
 import { Code, Ellipsis } from 'lucide-react';
-import { TooltipText } from '@/components/ui/tooltip';
+import { TooltipText } from '@/components/atoms/tooltip';
 import {
   Widget,
   WidgetContent,
@@ -13,12 +13,12 @@ import {
   WidgetIcon,
   WidgetProps,
   WidgetTitle,
-} from '@/components/layout/widget';
+} from '@/components/molecules/widget';
 import {
   DropdownMenu,
   DropdownMenuContent,
   DropdownMenuTrigger,
-} from '@/components/ui/dropdown-menu';
+} from '@/components/atoms/dropdown-menu';
 
 export const WidgetDebug = (props: WidgetProps) => {
   const onApiRouteClick = () => {

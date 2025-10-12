@@ -8,7 +8,7 @@ import {
   WidgetTitle,
   WidgetIcon,
   WidgetProps,
-} from '@/components/layout/widget';
+} from '@/components/molecules/widget';
 import { useQuery } from 'convex/react';
 import { api } from '../../../../convex/_generated/api';
 

@@ -5,12 +5,12 @@ import { loginSchema } from '@/auth/schemas';
 import { signIn } from '@/auth/auth';
 import { DEFAULT_LOGIN_REDIRECT } from '@/auth/routes';
 import { AuthError } from 'next-auth';
-import { getUserByEmail } from '@/auth/data/user';
+import { getUserByEmail } from '@/auth/api/user';
 import { generateVerificationToken, generateTwoFactorToken } from '@/lib/utils/tokens';
 import { sendVerificationEmail, sendTwoFactorTokenEmail } from '@/lib/utils/mail';
-import { getTwoFactorTokenByEmail } from '@/auth/data/two-factor-token';
+import { getTwoFactorTokenByEmail } from '@/auth/api/two-factor-token';
 import { db } from '@/lib/utils/db';
-import { getTwoFactorConfirmationByUserId } from '@/auth/data/two-factor-confirmation';
+import { getTwoFactorConfirmationByUserId } from '@/auth/api/two-factor-confirmation';
 
 export const login = async (values: z.infer<typeof loginSchema>, callbackUrl?: string | null) => {
   const validatedFields = loginSchema.safeParse(values);

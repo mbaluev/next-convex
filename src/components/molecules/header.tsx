@@ -1,14 +1,14 @@
 'use client';
 
-import { SidebarLeftTrigger } from '@/components/layout/sidebar-left';
-import { SidebarRightTrigger } from '@/components/layout/sidebar-right';
-import { Button } from '@/components/ui/button';
+import { SidebarLeftTrigger } from '@/components/molecules/sidebar-left';
+import { SidebarRightTrigger } from '@/components/molecules/sidebar-right';
+import { Button } from '@/components/atoms/button';
 import { useTheme } from 'next-themes';
-import { TooltipText } from '@/components/ui/tooltip';
+import { TooltipText } from '@/components/atoms/tooltip';
 import { Moon, Sun } from 'lucide-react';
 import { usePathname } from 'next/navigation';
 import { BREAD_CRUMBS } from '@/lib/settings/bread-crumbs';
-import { BreadCrumbs } from '@/components/layout/bread-crumbs';
+import { BreadCrumbs } from '@/components/molecules/bread-crumbs';
 
 const HeaderThemeBtn = () => {
   const { setTheme, theme } = useTheme();

@@ -4,14 +4,14 @@ import * as z from 'zod';
 import { useForm } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { resetSchema } from '@/auth/schemas';
-import { Input } from '@/components/ui/input';
-import { Form, FormControl, FormField, FormItem, FormMessage } from '@/components/ui/form';
-import { Button } from '@/components/ui/button';
-import { AlertSuccess, AlertError } from '@/components/ui/alert';
+import { Input } from '@/components/atoms/input';
+import { Form, FormControl, FormField, FormItem, FormMessage } from '@/components/atoms/form';
+import { Button } from '@/components/atoms/button';
+import { AlertSuccess, AlertError } from '@/components/atoms/alert';
 import { useState, useTransition } from 'react';
 import { reset } from '@/auth/actions/reset';
 import { ButtonBack } from '@/components/auth/button-back';
-import { Spinner } from '@/components/ui/spinner';
+import { Spinner } from '@/components/atoms/spinner';
 
 export const FormReset = () => {
   const [error, setError] = useState<string | undefined>();

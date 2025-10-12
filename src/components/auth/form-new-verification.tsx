@@ -3,7 +3,7 @@
 import { useSearchParams } from 'next/navigation';
 import { useCallback, useEffect, useState } from 'react';
 import { newVerification } from '@/auth/actions/new-verification';
-import { AlertSuccess, AlertError, AlertInfo } from '@/components/ui/alert';
+import { AlertSuccess, AlertError, AlertInfo } from '@/components/atoms/alert';
 import { router } from 'next/client';
 import { ButtonBack } from '@/components/auth/button-back';
 

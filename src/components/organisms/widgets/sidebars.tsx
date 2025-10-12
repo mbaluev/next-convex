@@ -1,4 +1,4 @@
-import { Button } from '@/components/ui/button';
+import { Button } from '@/components/atoms/button';
 import {
   ArrowLeftFromLine,
   ArrowLeftToLine,
@@ -7,7 +7,7 @@ import {
   Code,
   Ellipsis,
 } from 'lucide-react';
-import { TooltipText } from '@/components/ui/tooltip';
+import { TooltipText } from '@/components/atoms/tooltip';
 import {
   Widget,
   WidgetContent,
@@ -15,14 +15,14 @@ import {
   WidgetIcon,
   WidgetProps,
   WidgetTitle,
-} from '@/components/layout/widget';
+} from '@/components/molecules/widget';
 import {
   DropdownMenu,
   DropdownMenuContent,
   DropdownMenuTrigger,
-} from '@/components/ui/dropdown-menu';
-import { useSidebarRight } from '@/components/layout/sidebar-right';
-import { useSidebarLeft } from '@/components/layout/sidebar-left';
+} from '@/components/atoms/dropdown-menu';
+import { useSidebarRight } from '@/components/molecules/sidebar-right';
+import { useSidebarLeft } from '@/components/molecules/sidebar-left';
 
 export const WidgetSidebars = (props: WidgetProps) => {
   const {

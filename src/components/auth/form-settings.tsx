@@ -3,7 +3,7 @@
 import * as z from 'zod';
 import { useForm } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
-import { Button } from '@/components/ui/button';
+import { Button } from '@/components/atoms/button';
 import { settings } from '@/auth/actions/settings';
 import { Fragment, useTransition } from 'react';
 import { useSession } from 'next-auth/react';
@@ -15,8 +15,8 @@ import {
   FormItem,
   FormLabel,
   FormMessage,
-} from '@/components/ui/form';
-import { Input } from '@/components/ui/input';
+} from '@/components/atoms/form';
+import { Input } from '@/components/atoms/input';
 import { useCurrentUser } from '@/auth/hooks/use-current-user';
 import {
   Select,
@@ -24,12 +24,12 @@ import {
   SelectItem,
   SelectTrigger,
   SelectValue,
-} from '@/components/ui/select';
+} from '@/components/atoms/select';
 import { UserRole } from '@prisma/client';
-import { Switch } from '@/components/ui/switch';
-import { InputPassword } from '@/components/ui/input-password';
+import { Switch } from '@/components/atoms/switch';
+import { InputPassword } from '@/components/atoms/input-password';
 import { toast } from 'sonner';
-import { Spinner } from '@/components/ui/spinner';
+import { Spinner } from '@/components/atoms/spinner';
 
 export const FormSettings = () => {
   const user = useCurrentUser();

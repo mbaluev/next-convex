@@ -16,8 +16,8 @@ import {
   WidgetButtons,
   WidgetIcon,
   WidgetProps,
-} from '@/components/layout/widget';
-import { Button } from '@/components/ui/button';
+} from '@/components/molecules/widget';
+import { Button } from '@/components/atoms/button';
 import {
   ChartArea,
   ChartColumn,
@@ -27,10 +27,10 @@ import {
   RefreshCw,
 } from 'lucide-react';
 import { useRouter, useSearchParams } from 'next/navigation';
-import { Spinner } from '@/components/ui/spinner';
+import { Spinner } from '@/components/atoms/spinner';
 import { useResizeObserver } from '@/lib/hooks/use-resize-observer';
 import { v4 } from 'uuid';
-import { TooltipText } from '@/components/ui/tooltip';
+import { TooltipText } from '@/components/atoms/tooltip';
 import { ROUTES } from '@/lib/settings/routes';
 import { ChartColors } from '@/components/organisms/chart/colors';
 import { useQuery } from 'convex/react';

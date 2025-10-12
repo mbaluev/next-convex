@@ -4,15 +4,15 @@ import * as z from 'zod';
 import { useForm } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { newPasswordSchema } from '@/auth/schemas';
-import { Form, FormControl, FormField, FormItem, FormMessage } from '@/components/ui/form';
-import { Button } from '@/components/ui/button';
-import { AlertSuccess, AlertError } from '@/components/ui/alert';
+import { Form, FormControl, FormField, FormItem, FormMessage } from '@/components/atoms/form';
+import { Button } from '@/components/atoms/button';
+import { AlertSuccess, AlertError } from '@/components/atoms/alert';
 import { useState, useTransition } from 'react';
 import { useSearchParams } from 'next/navigation';
 import { newPassword } from '@/auth/actions/new-password';
-import { InputPassword } from '@/components/ui/input-password';
+import { InputPassword } from '@/components/atoms/input-password';
 import { ButtonBack } from '@/components/auth/button-back';
-import { Spinner } from '@/components/ui/spinner';
+import { Spinner } from '@/components/atoms/spinner';
 
 export const FormNewPassword = () => {
   const searchParams = useSearchParams();

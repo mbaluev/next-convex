@@ -16,24 +16,23 @@ import React, {
 } from 'react';
 import { cn } from '@/lib/utils/cn';
 import { MEDIA_MD, useMatchMedia } from '@/lib/hooks/use-match-media';
-import { Button } from '@/components/ui/button';
-import { ArrowLeftFromLine, ArrowRightToLine } from 'lucide-react';
+import { Button } from '@/components/atoms/button';
+import { ArrowLeftToLine, ArrowRightFromLine } from 'lucide-react';
 import { useCurrentUser } from '@/auth/hooks/use-current-user';
 import { useCookies } from 'next-client-cookies';
-import { TRouteDTO } from '@/lib/settings/routes';
-import { useWindowResize } from '@/lib/hooks/use-window-resize';
 import { CTree, TTreeDTO } from '@/lib/utils/tree';
 import { usePathname } from 'next/navigation';
+import { TRouteDTO } from '@/lib/settings/routes';
 
-const SIDEBAR_STORAGE_NAME = 'sidebar-right';
-const SIDEBAR_KEYBOARD_SHORTCUT = 'h';
+const SIDEBAR_STORAGE_NAME = 'sidebar-left';
+const SIDEBAR_KEYBOARD_SHORTCUT = 'g';
 const SIDEBAR_TRANSITION_DURATION = 200;
-const SIDEBAR_EVENT_START = 'sidebar-right-start';
-const SIDEBAR_EVENT_END = 'sidebar-right-end';
+const SIDEBAR_EVENT_START = 'sidebar-left-start';
+const SIDEBAR_EVENT_END = 'sidebar-left-end';
 const SIDEBAR_WIDTH_MIN = 260;
 const SIDEBAR_WIDTH_MAX = 480;
 
-interface SidebarRightContext<T> {
+interface SidebarLeftContext<T> {
   name?: string;
   open: boolean;
   setOpen: (open: boolean) => void;
@@ -48,14 +47,14 @@ interface SidebarRightContext<T> {
   resizing: boolean;
   width: number;
 }
-const SidebarRightContext = createContext<SidebarRightContext<TRouteDTO> | null>(null);
-function useSidebarRight() {
-  const context = useContext(SidebarRightContext);
-  if (!context) throw new Error('useSidebarRight must be used within a SidebarRight.');
+const SidebarLeftContext = createContext<SidebarLeftContext<TRouteDTO> | null>(null);
+function useSidebarLeft() {
+  const context = useContext(SidebarLeftContext);
+  if (!context) throw new Error('useSidebarLeft must be used within a SidebarLeft.');
   return context;
 }
 
-type SidebarRightProviderBaseProps = {
+type SidebarLeftProviderBaseProps = {
   data?: CTree<TRouteDTO>;
   name?: string;
   open?: boolean;
@@ -63,8 +62,8 @@ type SidebarRightProviderBaseProps = {
   defaultOpen?: boolean;
   collapsed?: boolean;
 };
-type SidebarRightProviderProps = ComponentProps<'div'> & SidebarRightProviderBaseProps;
-const SidebarRightProvider = forwardRef<HTMLDivElement, SidebarRightProviderProps>((props, ref) => {
+type SidebarLeftProviderProps = ComponentProps<'div'> & SidebarLeftProviderBaseProps;
+const SidebarLeftProvider = forwardRef<HTMLDivElement, SidebarLeftProviderProps>((props, ref) => {
   const { name = SIDEBAR_STORAGE_NAME, defaultOpen: __defaultOpen } = props;
   const cookies = useCookies();
   let _defaultOpen: any = cookies.get(name);
@@ -91,7 +90,7 @@ const SidebarRightProvider = forwardRef<HTMLDivElement, SidebarRightProviderProp
   const setOpenCallback = (value: boolean | ((value: boolean) => boolean)) => {
     const res = typeof value === 'function' ? value(open) : value;
     if (setOpenProp) return setOpenProp?.(res);
-    cookies.set(name || SIDEBAR_STORAGE_NAME, String(res));
+    cookies.set(name, String(res));
     _setOpen(value);
   };
   const setOpen = useCallback(setOpenCallback, [setOpenProp, open, cookies]);
@@ -165,8 +164,7 @@ const SidebarRightProvider = forwardRef<HTMLDivElement, SidebarRightProviderProp
       return;
     }
     const _offset = sidebarRef.current?.getBoundingClientRect().x ?? 0;
-    const _width = sidebarRef.current?.getBoundingClientRect().width ?? 0;
-    let newWidth = _width - e.clientX + _offset;
+    let newWidth = e.clientX - _offset;
     if (newWidth < SIDEBAR_WIDTH_MIN) newWidth = SIDEBAR_WIDTH_MIN;
     if (newWidth > SIDEBAR_WIDTH_MAX) newWidth = SIDEBAR_WIDTH_MAX;
     setWidth(newWidth);
@@ -180,7 +178,7 @@ const SidebarRightProvider = forwardRef<HTMLDivElement, SidebarRightProviderProp
   };
 
   // context value
-  const contextValueMemo = (): SidebarRightContext<TRouteDTO> => ({
+  const contextValueMemo = (): SidebarLeftContext<TRouteDTO> => ({
     name,
     open,
     setOpen,
@@ -194,7 +192,7 @@ const SidebarRightProvider = forwardRef<HTMLDivElement, SidebarRightProviderProp
     resizing,
     width,
   });
-  const contextValue = useMemo<SidebarRightContext<TRouteDTO>>(contextValueMemo, [
+  const contextValue = useMemo<SidebarLeftContext<TRouteDTO>>(contextValueMemo, [
     name,
     open,
     setOpen,
@@ -210,7 +208,7 @@ const SidebarRightProvider = forwardRef<HTMLDivElement, SidebarRightProviderProp
   ]);
 
   return (
-    <SidebarRightContext.Provider value={contextValue}>
+    <SidebarLeftContext.Provider value={contextValue}>
       <div
         id={name}
         className={cn('flex flex-grow h-full', className)}
@@ -219,16 +217,16 @@ const SidebarRightProvider = forwardRef<HTMLDivElement, SidebarRightProviderProp
       >
         {children}
       </div>
-    </SidebarRightContext.Provider>
+    </SidebarLeftContext.Provider>
   );
 });
-SidebarRightProvider.displayName = 'SidebarRightProvider';
+SidebarLeftProvider.displayName = 'SidebarLeftProvider';
 
-type SidebarRightTriggerProps = ComponentProps<typeof Button>;
-const SidebarRightTrigger = forwardRef<ElementRef<typeof Button>, SidebarRightTriggerProps>(
+type SidebarLeftTriggerProps = ComponentProps<typeof Button>;
+const SidebarLeftTrigger = forwardRef<ElementRef<typeof Button>, SidebarLeftTriggerProps>(
   (props, ref) => {
     const { onClick, ..._props } = props;
-    const { toggleSidebar, open, isMobile, openMobile } = useSidebarRight();
+    const { toggleSidebar, open, isMobile, openMobile } = useSidebarLeft();
     const user = useCurrentUser();
     if (!user || (!isMobile && open)) return null;
     return (
@@ -242,19 +240,19 @@ const SidebarRightTrigger = forwardRef<ElementRef<typeof Button>, SidebarRightTr
         }}
         {..._props}
       >
-        {!(isMobile ? openMobile : open) && <ArrowLeftFromLine />}
-        {(isMobile ? openMobile : open) && <ArrowRightToLine />}
+        {!(isMobile ? openMobile : open) && <ArrowRightFromLine />}
+        {(isMobile ? openMobile : open) && <ArrowLeftToLine />}
       </Button>
     );
   }
 );
-SidebarRightTrigger.displayName = 'SidebarRightTrigger';
+SidebarLeftTrigger.displayName = 'SidebarLeftTrigger';
 
-type SidebarRightButtonProps = ComponentProps<typeof Button>;
-const SidebarRightButton = forwardRef<ElementRef<typeof Button>, SidebarRightButtonProps>(
+type SidebarLeftButtonProps = ComponentProps<typeof Button>;
+const SidebarLeftButton = forwardRef<ElementRef<typeof Button>, SidebarLeftButtonProps>(
   (props, ref) => {
     const { onClick, children, className, ...rest } = props;
-    const { toggleSidebar, isMobile } = useSidebarRight();
+    const { toggleSidebar, isMobile } = useSidebarLeft();
     const handleClick = (e: any) => {
       if (onClick) onClick(e);
       if (isMobile) toggleSidebar();
@@ -266,26 +264,24 @@ const SidebarRightButton = forwardRef<ElementRef<typeof Button>, SidebarRightBut
     );
   }
 );
-SidebarRightButton.displayName = 'SidebarRightButton';
+SidebarLeftButton.displayName = 'SidebarLeftButton';
 
-type SidebarRightBaseProps = {};
-type SidebarRightProps = ComponentProps<'nav'> & SidebarRightBaseProps;
-const SidebarRight = forwardRef<HTMLDivElement, SidebarRightProps>((props, ref) => {
+type SidebarLeftBaseProps = {};
+type SidebarLeftProps = ComponentProps<'nav'> & SidebarLeftBaseProps;
+const SidebarLeft = forwardRef<HTMLDivElement, SidebarLeftProps>((props, ref) => {
   const { className, children, ..._props } = props;
-  const { isMobile, open, openMobile, toggleSidebar } = useSidebarRight();
-  const { width: windowWidth } = useWindowResize();
-  const { width, resizing } = useSidebarRight();
+  const { isMobile, open, openMobile, toggleSidebar } = useSidebarLeft();
+  const { width, resizing } = useSidebarLeft();
   const isDesktop = useMemo(() => !isMobile, [isMobile]);
 
   const user = useCurrentUser();
   if (!user) return null;
 
-  const classNavDesktop = cn('h-full flex-grow-0 flex-shrink-0 flex-basis-auto static'); // 'w-[280px]', !open && 'mr-[-280px]'
+  const classNavDesktop = cn('h-full flex-grow-0 flex-shrink-0 flex-basis-auto static'); // 'w-[280px]', !open && 'ml-[-280px]'
   const classNavMobile = cn(
     'w-[calc(100%-12px)] max-w-[300px] fixed top-0 bottom-0 z-[10]',
-    openMobile && windowWidth > 312 && 'right-0 left-[calc(100%-300px)]',
-    openMobile && windowWidth <= 312 && 'right-0 left-auto',
-    !openMobile && 'right-[-100%] left-[100%]'
+    openMobile && 'left-0 right-4',
+    !openMobile && 'left-[-100%] right-[100%]'
   );
   const classNav = cn(
     'relative',
@@ -294,10 +290,10 @@ const SidebarRight = forwardRef<HTMLDivElement, SidebarRightProps>((props, ref) 
     className
   );
 
-  const classDivMobile = cn('h-full shadow-md', 'rounded-l-lg');
-  const classDivDesktop = cn('absolute h-full'); // 'w-[280px]'
+  const classDivMobile = cn('shadow-md rounded-r-lg');
+  const classDivDesktop = cn('absolute'); // 'w-[280px]'
   const classDiv = cn(
-    'bg-sidebar text-sidebar-foreground',
+    'bg-sidebar text-sidebar-foreground h-full',
     isMobile ? classDivMobile : classDivDesktop
   );
 
@@ -310,7 +306,7 @@ const SidebarRight = forwardRef<HTMLDivElement, SidebarRightProps>((props, ref) 
         ref={ref}
         style={{
           width: isDesktop ? width : undefined,
-          marginRight: isDesktop && !open ? -width : undefined,
+          marginLeft: isDesktop && !open ? -width : undefined,
         }}
         {..._props}
       >
@@ -322,28 +318,28 @@ const SidebarRight = forwardRef<HTMLDivElement, SidebarRightProps>((props, ref) 
     </Fragment>
   );
 });
-SidebarRight.displayName = 'SidebarRight';
+SidebarLeft.displayName = 'SidebarLeft';
 
-type SidebarRightResizeProps = ComponentProps<'div'>;
-const SidebarRightResize = forwardRef<HTMLDivElement, SidebarRightResizeProps>((props, ref) => {
+type SidebarLeftResizeProps = ComponentProps<'div'>;
+const SidebarLeftResize = forwardRef<HTMLDivElement, SidebarLeftResizeProps>((props, ref) => {
   const { className, children, ...rest } = props;
-  const { handleResize } = useSidebarRight();
+  const { handleResize } = useSidebarLeft();
   const classResize = cn(
-    'absolute top-0 left-0 bottom-0 w-1 opacity-0',
+    'absolute top-0 right-0 bottom-0 w-1 opacity-0',
     'bg-secondary active:bg-primary z-1 cursor-col-resize',
     className
   );
   return <div ref={ref} className={classResize} onMouseDown={handleResize} {...rest} />;
 });
-SidebarRightResize.displayName = 'SidebarRightResize';
+SidebarLeftResize.displayName = 'SidebarLeftResize';
 
 export {
-  SidebarRightProvider,
-  SidebarRight,
-  SidebarRightTrigger,
-  SidebarRightButton,
-  SidebarRightResize,
-  useSidebarRight,
+  SidebarLeftProvider,
+  SidebarLeft,
+  SidebarLeftTrigger,
+  SidebarLeftButton,
+  SidebarLeftResize,
+  useSidebarLeft,
   SIDEBAR_EVENT_START,
   SIDEBAR_EVENT_END,
 };

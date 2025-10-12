@@ -3,7 +3,7 @@
 import { forwardRef } from 'react';
 import { logout } from '@/auth/actions/logout';
 import { signOut } from 'next-auth/react';
-import { Button, ButtonProps } from '@/components/ui/button';
+import { Button, ButtonProps } from '@/components/atoms/button';
 
 const ButtonLogout = forwardRef<HTMLButtonElement, ButtonProps>((props, ref) => {
   const { children, ...rest } = props;

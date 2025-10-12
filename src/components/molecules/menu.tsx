@@ -1,7 +1,7 @@
 'use client';
 
 import Link from 'next/link';
-import { Button } from '@/components/ui/button';
+import { Button } from '@/components/atoms/button';
 import { useCurrentUser } from '@/auth/hooks/use-current-user';
 import { SvgLogo } from '@/components/svg/components/logo';
 import {
@@ -24,23 +24,23 @@ import {
   SidebarLeftProvider,
   SidebarLeftResize,
   useSidebarLeft,
-} from '@/components/layout/sidebar-left';
+} from '@/components/molecules/sidebar-left';
 import {
   SidebarRight,
   SidebarRightButton,
   SidebarRightProvider,
   SidebarRightResize,
   useSidebarRight,
-} from '@/components/layout/sidebar-right';
-import { Separator } from '@/components/ui/separator';
-import { handleDialogOpen } from '@/components/layout/dialogs';
+} from '@/components/molecules/sidebar-right';
+import { Separator } from '@/components/atoms/separator';
+import { handleDialogOpen } from '@/components/molecules/dialogs';
 import { usePathname, useRouter, useSearchParams } from 'next/navigation';
 import { menuLeft } from '@/lib/settings/menu';
 import { logout } from '@/auth/actions/logout';
 import { signOut } from 'next-auth/react';
-import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar';
+import { Avatar, AvatarFallback, AvatarImage } from '@/components/atoms/avatar';
 import { UserRole } from '@prisma/client';
-import { Badge } from '@/components/ui/badge';
+import { Badge } from '@/components/atoms/badge';
 
 const MENU_PADDING_ITEM = 15;
 const MENU_TRANSITION_DURATION = 100;

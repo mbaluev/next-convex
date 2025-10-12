@@ -12,7 +12,9 @@
     "convex-dev": "npx convex dev --env-file .env.development.local"
   },
   "dependencies": {
+    "@auth/core": "0.37.0",
     "@auth/prisma-adapter": "^2.10.0",
+    "@convex-dev/auth": "^0.0.90",
     "@hookform/resolvers": "^3.9.0",
     "@prisma/client": "^6.13.0",
     "@radix-ui/react-avatar": "^1.1.10",

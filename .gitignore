@@ -15,9 +15,13 @@ node_modules
 client.cert
 client.key
 /backups
-/convex
 /patches
 /postgres
+/convex/_generated
+/convex/credentials
+/convex/storage
+/convex/tmp
+/convex/db.sqlite3
 
 # debug
 npm-debug.log*

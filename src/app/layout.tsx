@@ -12,6 +12,7 @@ import { Check, Info, OctagonX, TriangleAlert } from 'lucide-react';
 import { CookiesProvider } from 'next-client-cookies/server';
 import { Dialogs } from '@/components/layout/dialogs';
 import { ConvexClientProvider } from '@/lib/providers/convex-client-provider';
+import { ConvexAuthNextjsServerProvider } from '@convex-dev/auth/nextjs/server';
 import './globals.css';
 
 const font = JetBrains_Mono({ subsets: ['latin'] });
@@ -37,44 +38,46 @@ export const viewport: Viewport = {
 export default async function RootLayout({ children }: { children: ReactNode }) {
   const session = await auth();
   return (
-    <CookiesProvider>
-      <SessionProvider session={session}>
-        <html lang="en" suppressHydrationWarning>
-          <body className={font.className}>
-            <ConvexClientProvider>
-              <ThemeProvider attribute="class" defaultTheme="system" enableSystem>
-                <Layout>{children}</Layout>
-                <Dialogs />
-                <Toaster
-                  visibleToasts={5}
-                  position="bottom-right"
-                  className={font.className}
-                  toastOptions={{
-                    unstyled: true,
-                    classNames: {
-                      toast: 'flex gap-x-3 px-5 py-4 w-full rounded-lg border-2 bg-card',
-                      title: '',
-                      icon: 'm-0',
-                      closeButton: 'bg-background hover:bg-secondary border-none',
-                      success: 'text-success border-success',
-                      warning: 'text-warning border-warning',
-                      error: 'text-destructive border-destructive',
-                      info: 'text-primary border-primary',
-                    },
-                  }}
-                  icons={{
-                    success: <Check />,
-                    info: <Info />,
-                    warning: <TriangleAlert />,
-                    error: <OctagonX />,
-                    loading: <Spinner />,
-                  }}
-                />
-              </ThemeProvider>
-            </ConvexClientProvider>
-          </body>
-        </html>
-      </SessionProvider>
-    </CookiesProvider>
+    <ConvexAuthNextjsServerProvider>
+      <CookiesProvider>
+        <SessionProvider session={session}>
+          <html lang="en" suppressHydrationWarning>
+            <body className={font.className}>
+              <ConvexClientProvider>
+                <ThemeProvider attribute="class" defaultTheme="system" enableSystem>
+                  <Layout>{children}</Layout>
+                  <Dialogs />
+                  <Toaster
+                    visibleToasts={5}
+                    position="bottom-right"
+                    className={font.className}
+                    toastOptions={{
+                      unstyled: true,
+                      classNames: {
+                        toast: 'flex gap-x-3 px-5 py-4 w-full rounded-lg border-2 bg-card',
+                        title: '',
+                        icon: 'm-0',
+                        closeButton: 'bg-background hover:bg-secondary border-none',
+                        success: 'text-success border-success',
+                        warning: 'text-warning border-warning',
+                        error: 'text-destructive border-destructive',
+                        info: 'text-primary border-primary',
+                      },
+                    }}
+                    icons={{
+                      success: <Check />,
+                      info: <Info />,
+                      warning: <TriangleAlert />,
+                      error: <OctagonX />,
+                      loading: <Spinner />,
+                    }}
+                  />
+                </ThemeProvider>
+              </ConvexClientProvider>
+            </body>
+          </html>
+        </SessionProvider>
+      </CookiesProvider>
+    </ConvexAuthNextjsServerProvider>
   );
 }

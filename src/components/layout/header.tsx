@@ -33,7 +33,7 @@ const HeaderRight = () => {
   );
 };
 
-const HeaderBreadCrumbs = () => {
+const HeaderLeft = () => {
   const pathname = usePathname();
   const breadCrumbs = BREAD_CRUMBS[pathname];
   return (
@@ -50,7 +50,7 @@ const Header = () => {
   return (
     <header className="flex flex-col w-full z-[8] sticky top-0">
       <div className="flex gap-4 justify-end items-start p-4 w-full bg-background">
-        <HeaderBreadCrumbs />
+        <HeaderLeft />
         <HeaderRight />
       </div>
       {/*{user && <Separator />}*/}

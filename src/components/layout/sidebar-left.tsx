@@ -17,7 +17,7 @@ import React, {
 import { cn } from '@/lib/utils/cn';
 import { MEDIA_MD, useMatchMedia } from '@/lib/hooks/use-match-media';
 import { Button } from '@/components/ui/button';
-import { ArrowLeftFromLine, ArrowRightToLine } from 'lucide-react';
+import { ArrowLeftToLine, ArrowRightFromLine } from 'lucide-react';
 import { useCurrentUser } from '@/auth/hooks/use-current-user';
 import { useCookies } from 'next-client-cookies';
 import { CTree, TTreeDTO } from '@/lib/utils/tree';
@@ -240,8 +240,8 @@ const SidebarLeftTrigger = forwardRef<ElementRef<typeof Button>, SidebarLeftTrig
         }}
         {..._props}
       >
-        {!(isMobile ? openMobile : open) && <ArrowRightToLine />}
-        {(isMobile ? openMobile : open) && <ArrowLeftFromLine />}
+        {!(isMobile ? openMobile : open) && <ArrowRightFromLine />}
+        {(isMobile ? openMobile : open) && <ArrowLeftToLine />}
       </Button>
     );
   }

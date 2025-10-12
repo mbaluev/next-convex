@@ -12,7 +12,7 @@ import {
   User,
   ArrowRightToLine,
   SlidersHorizontal,
-  ArrowLeftFromLine,
+  ArrowLeftToLine,
 } from 'lucide-react';
 import { TTreeDTO } from '@/lib/utils/tree';
 import { Fragment, ReactNode } from 'react';
@@ -230,7 +230,7 @@ const MenuLeftContent = () => {
           </Link>
         </SidebarLeftButton>
         <Button variant="ghost" size="icon" onClick={toggleSidebar}>
-          <ArrowLeftFromLine />
+          <ArrowLeftToLine />
         </Button>
       </div>
       <Separator />

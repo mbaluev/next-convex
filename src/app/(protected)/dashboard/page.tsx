@@ -4,7 +4,7 @@ import { Chart } from '@/components/organisms/chart';
 
 const DashboardPage = () => {
   return (
-    <div className="h-[400] w-full grid gap-4 grid-cols-1">
+    <div className="h-[400px] w-full grid gap-4 grid-cols-1">
       <Chart />
     </div>
   );

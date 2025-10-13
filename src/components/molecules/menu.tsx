@@ -33,7 +33,7 @@ import {
   useSidebarRight,
 } from '@/components/molecules/sidebar-right';
 import { Separator } from '@/components/atoms/separator';
-import { handleDialogOpen } from '@/components/molecules/dialogs';
+import { handleDialogOpen } from '@/components/atoms/dialog-handlers';
 import { usePathname, useRouter, useSearchParams } from 'next/navigation';
 import { menuLeft } from '@/lib/settings/menu';
 import { logout } from '@/auth/actions/logout';

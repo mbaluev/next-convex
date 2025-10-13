@@ -1,10 +1,6 @@
 'use client';
 
-import { Fragment } from 'react';
-import { ProfileDialog } from '@/components/organisms/dialogs/profile';
-import { ROUTES } from '@/lib/settings/routes';
-
-const DIALOG_SEARCH_PARAM_NAME = 'd';
+const DIALOG_SEARCH_PARAM_NAME = 'a';
 
 const handleDialogOpen = (params: URLSearchParams, value: string) => {
   const dialogs_value = params.get(DIALOG_SEARCH_PARAM_NAME);
@@ -28,15 +24,8 @@ const handleDialogClose = (params: URLSearchParams, value: string) => {
 };
 
 const isDialogOpen = (params: URLSearchParams, value: string) => {
-  return params.has(DIALOG_SEARCH_PARAM_NAME, value);
+  // params.has(DIALOG_SEARCH_PARAM_NAME, value)
+  return params.get(DIALOG_SEARCH_PARAM_NAME)?.split(',').includes(value);
 };
 
-const Dialogs = () => {
-  return (
-    <Fragment>
-      <ProfileDialog />
-    </Fragment>
-  );
-};
-
-export { DIALOG_SEARCH_PARAM_NAME, Dialogs, handleDialogOpen, handleDialogClose, isDialogOpen };
+export { DIALOG_SEARCH_PARAM_NAME, handleDialogOpen, handleDialogClose, isDialogOpen };

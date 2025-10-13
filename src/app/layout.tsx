@@ -10,9 +10,9 @@ import { Spinner } from '@/components/atoms/spinner';
 import { Layout } from '@/components/molecules/layout';
 import { Check, Info, OctagonX, TriangleAlert } from 'lucide-react';
 import { CookiesProvider } from 'next-client-cookies/server';
-import { Dialogs } from '@/components/molecules/dialogs';
 import { ConvexClientProvider } from '@/lib/providers/convex-client-provider';
 import { ConvexAuthNextjsServerProvider } from '@convex-dev/auth/nextjs/server';
+import { ProfileDialog } from '@/components/organisms/profile';
 import './globals.css';
 
 const font = JetBrains_Mono({ subsets: ['latin'] });
@@ -46,7 +46,7 @@ export default async function RootLayout({ children }: { children: ReactNode }) 
               <ConvexClientProvider>
                 <ThemeProvider attribute="class" defaultTheme="system" enableSystem>
                   <Layout>{children}</Layout>
-                  <Dialogs />
+                  <ProfileDialog />
                   <Toaster
                     visibleToasts={5}
                     position="bottom-right"

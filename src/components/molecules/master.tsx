@@ -11,15 +11,6 @@ const MasterDefault = (props: MasterProps) => {
     </section>
   );
 };
-const MasterFullHeight = (props: MasterProps) => {
-  const { children, className, ..._props } = props;
-  const _className = 'flex flex-grow px-4';
-  return (
-    <section className={cn(_className, className)} {..._props}>
-      {children}
-    </section>
-  );
-};
 const MasterCenter = (props: MasterProps) => {
   const { children, className, ..._props } = props;
   const _className = 'flex flex-grow justify-center items-center px-4';
@@ -30,4 +21,4 @@ const MasterCenter = (props: MasterProps) => {
   );
 };
 
-export { MasterDefault, MasterFullHeight, MasterCenter };
+export { MasterDefault, MasterCenter };

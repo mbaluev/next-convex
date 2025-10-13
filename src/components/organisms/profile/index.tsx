@@ -10,11 +10,7 @@ import {
 import { UserRoundCog } from 'lucide-react';
 import { useSearchParams, useRouter, usePathname } from 'next/navigation';
 import { ROUTES } from '@/lib/settings/routes';
-import {
-  DIALOG_SEARCH_PARAM_NAME,
-  handleDialogClose,
-  isDialogOpen,
-} from '@/components/molecules/dialogs';
+import { handleDialogClose, isDialogOpen } from '@/components/atoms/dialog-handlers';
 import { useMemo } from 'react';
 import { WidgetContent } from '@/components/molecules/widget';
 import { FormSettings } from '@/components/auth/form-settings';

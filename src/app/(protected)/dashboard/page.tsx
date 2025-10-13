@@ -1,11 +1,11 @@
 'use client';
 
-import { Chart } from '@/components/organisms/chart';
+import { Dashboard } from '@/components/organisms/dashboard';
 
 const DashboardPage = () => {
   return (
     <div className="h-[400px] w-full grid gap-4 grid-cols-1">
-      <Chart />
+      <Dashboard />
     </div>
   );
 };

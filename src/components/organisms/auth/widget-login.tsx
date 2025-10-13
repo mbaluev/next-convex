@@ -1,6 +1,6 @@
-import { FormLogin } from '@/components/auth/form-login';
+import { FormLogin } from '@/components/organisms/auth/form-login';
 import { Widget, WidgetContent, WidgetHeader } from '@/components/molecules/widget';
-import { WidgetHeaderContent } from '@/components/auth/widget-header-content';
+import { WidgetHeaderContent } from '@/components/organisms/auth/widget-header-content';
 
 export const WidgetLogin = () => {
   return (

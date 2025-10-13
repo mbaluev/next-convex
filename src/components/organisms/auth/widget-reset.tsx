@@ -1,6 +1,6 @@
 import { Widget, WidgetContent, WidgetHeader } from '@/components/molecules/widget';
-import { WidgetHeaderContent } from '@/components/auth/widget-header-content';
-import { FormReset } from '@/components/auth/form-reset';
+import { WidgetHeaderContent } from '@/components/organisms/auth/widget-header-content';
+import { FormReset } from '@/components/organisms/auth/form-reset';
 
 export const WidgetReset = () => {
   return (

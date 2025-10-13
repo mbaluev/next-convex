@@ -1,11 +1,11 @@
 'use client';
 
-import { WidgetEmpty } from '@/components/organisms/widgets/empty';
+import { WidgetFiles } from '@/components/organisms/widgets/files';
 
 const FilesPage = () => {
   return (
     <div className="w-full">
-      <WidgetEmpty />
+      <WidgetFiles />
     </div>
   );
 };

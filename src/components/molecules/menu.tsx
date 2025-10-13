@@ -3,7 +3,7 @@
 import Link from 'next/link';
 import { Button } from '@/components/atoms/button';
 import { useCurrentUser } from '@/auth/hooks/use-current-user';
-import { SvgLogo } from '@/components/svg/components/logo';
+import { SvgLogo } from '@/components/icons/components/logo';
 import {
   ChevronRight,
   BookOpen,

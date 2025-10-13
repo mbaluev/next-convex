@@ -1,4 +1,4 @@
-import { WidgetRegister } from '@/components/auth/widget-register';
+import { WidgetRegister } from '@/components/organisms/auth/widget-register';
 
 const RegisterPage = () => {
   return <WidgetRegister />;

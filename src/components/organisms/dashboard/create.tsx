@@ -1,13 +1,13 @@
 import * as d3 from 'd3';
 import moment from 'moment/moment';
 import { MutableRefObject } from 'react';
-import { EChartType, IChartItem, IChartLegendItem } from '@/components/organisms/chart/mock';
+import { EChartType, IChartItem, IChartLegendItem } from '@/components/organisms/dashboard/mock';
 import { JetBrains_Mono } from 'next/font/google';
-import { getFillColor, getStrokeColor } from '@/components/organisms/chart/colors';
+import { getFillColor, getStrokeColor } from '@/components/organisms/dashboard/colors';
 
 const font = JetBrains_Mono({ subsets: ['latin'] });
 
-export const ChartCreate = (
+export const DashboardCreate = (
   ref: MutableRefObject<any>,
   id: string,
   data: IChartItem[],

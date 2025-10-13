@@ -1,7 +1,7 @@
 'use client';
 
 import { useRouter } from 'next/navigation';
-import { FormLogin } from '@/components/auth/form-login';
+import { FormLogin } from '@/components/organisms/auth/form-login';
 import {
   Dialog,
   DialogContent,
@@ -11,7 +11,7 @@ import {
   DialogTrigger,
 } from '@/components/atoms/dialog';
 import { Button, ButtonProps } from '@/components/atoms/button';
-import { SvgLogo } from '@/components/svg/components/logo';
+import { SvgLogo } from '@/components/icons/components/logo';
 import { WidgetContent } from '@/components/molecules/widget';
 
 interface LoginButtonProps extends ButtonProps {

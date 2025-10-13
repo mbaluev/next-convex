@@ -22,8 +22,8 @@ import { InputPassword } from '@/components/atoms/input-password';
 import Link from 'next/link';
 import { InputOTP, InputOTPGroup, InputOTPSlot } from '@/components/atoms/input-otp';
 import { REGEXP_ONLY_DIGITS } from 'input-otp';
-import { ButtonsSocial } from '@/components/auth/buttons-social';
-import { ButtonBack } from '@/components/auth/button-back';
+import { ButtonsSocial } from '@/components/organisms/auth/buttons-social';
+import { ButtonBack } from '@/components/organisms/auth/button-back';
 import { Spinner } from '@/components/atoms/spinner';
 
 export const FormLogin = () => {

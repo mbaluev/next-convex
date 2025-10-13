@@ -1,4 +1,4 @@
-import { WidgetError } from '@/components/auth/widget-error';
+import { WidgetError } from '@/components/organisms/auth/widget-error';
 
 const AuthErrorPage = () => {
   return <WidgetError />;

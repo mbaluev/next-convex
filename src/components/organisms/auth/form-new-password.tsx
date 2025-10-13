@@ -11,7 +11,7 @@ import { useState, useTransition } from 'react';
 import { useSearchParams } from 'next/navigation';
 import { newPassword } from '@/auth/actions/new-password';
 import { InputPassword } from '@/components/atoms/input-password';
-import { ButtonBack } from '@/components/auth/button-back';
+import { ButtonBack } from '@/components/organisms/auth/button-back';
 import { Spinner } from '@/components/atoms/spinner';
 
 export const FormNewPassword = () => {

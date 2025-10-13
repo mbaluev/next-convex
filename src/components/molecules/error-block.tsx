@@ -1,5 +1,5 @@
 import { ComponentProps, forwardRef, ReactElement } from 'react';
-import { ButtonBack } from '@/components/auth/button-back';
+import { ButtonBack } from '@/components/organisms/auth/button-back';
 
 type ErrorBlockBaseProps = {
   icon?: ReactElement;
@@ -11,10 +11,10 @@ const ErrorBlock = forwardRef<HTMLDivElement, ErrorBlockProps>((props, ref) => {
   const { icon, code, name, ...rest } = props;
   return (
     <div ref={ref} className="flex flex-col gap-6 items-center w-full py-10" {...rest}>
-      {icon && <p className="text-[12rem]">{icon}</p>}
-      <div className="flex flex-col gap-3 items-center">
-        {code && <p className="text-4xl font-medium">{code}</p>}
-        {name && <p>{name}</p>}
+      {icon && <p className="text-[10rem]">{icon}</p>}
+      <div className="flex flex-col gap-4 items-center">
+        {code && <p className="text-3xl font-medium text-center">{code}</p>}
+        {name && <p className="text-center">{name}</p>}
         <ButtonBack href="/" label="back home" />
       </div>
     </div>

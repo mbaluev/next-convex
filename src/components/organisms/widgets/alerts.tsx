@@ -1,11 +1,10 @@
 import { toast } from 'sonner';
 import { admin } from '@/auth/actions/admin';
-import { RoleGate } from '@/components/auth/role-gate';
+import { RoleGate } from '@/components/organisms/auth/role-gate';
 import { UserRole } from '@prisma/client';
 import { AlertSuccess } from '@/components/atoms/alert';
 import { Button } from '@/components/atoms/button';
-import { Code, Ellipsis } from 'lucide-react';
-import { TooltipText } from '@/components/atoms/tooltip';
+import { Bell } from 'lucide-react';
 import {
   Widget,
   WidgetContent,
@@ -14,13 +13,8 @@ import {
   WidgetProps,
   WidgetTitle,
 } from '@/components/molecules/widget';
-import {
-  DropdownMenu,
-  DropdownMenuContent,
-  DropdownMenuTrigger,
-} from '@/components/atoms/dropdown-menu';
 
-export const WidgetDebug = (props: WidgetProps) => {
+export const WidgetAlerts = (props: WidgetProps) => {
   const onApiRouteClick = () => {
     fetch('/api/admin').then((response) => {
       if (response.ok) {
@@ -48,15 +42,15 @@ export const WidgetDebug = (props: WidgetProps) => {
     <Widget {...props}>
       <WidgetHeader variant="background">
         <WidgetIcon>
-          <Code />
+          <Bell />
         </WidgetIcon>
-        <WidgetTitle>debug</WidgetTitle>
+        <WidgetTitle>alerts</WidgetTitle>
       </WidgetHeader>
-      <WidgetContent variant="background" className="space-y-6">
+      <WidgetContent variant="background" className="space-y-4 pb-10">
         <RoleGate allowedRole={UserRole.ADMIN}>
           <AlertSuccess message="you are allowed to see this content" />
         </RoleGate>
-        <div className="space-y-6">
+        <div className="space-y-4">
           <div className="flex flex-row items-center justify-between rounded-md p-4 gap-4 border-2">
             <p>admin-only api route</p>
             <Button onClick={onApiRouteClick}>click to test</Button>
@@ -66,7 +60,7 @@ export const WidgetDebug = (props: WidgetProps) => {
             <Button onClick={onServerActionClick}>click to test</Button>
           </div>
         </div>
-        <div className="space-y-6">
+        <div className="space-y-4">
           <div>
             <Button variant="destructive" onClick={error}>
               click to error
@@ -89,20 +83,6 @@ export const WidgetDebug = (props: WidgetProps) => {
           </div>
         </div>
       </WidgetContent>
-      <WidgetHeader variant="background" className="justify-end">
-        <TooltipText title="more actions" side="left">
-          <DropdownMenu>
-            <DropdownMenuTrigger asChild>
-              <Button variant="ghost" size="icon">
-                <Ellipsis />
-              </Button>
-            </DropdownMenuTrigger>
-            <DropdownMenuContent align="start" side="bottom" className="min-w-[300px]">
-              ...
-            </DropdownMenuContent>
-          </DropdownMenu>
-        </TooltipText>
-      </WidgetHeader>
     </Widget>
   );
 };

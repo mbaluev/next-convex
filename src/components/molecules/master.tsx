@@ -4,7 +4,7 @@ import { cn } from '@/lib/utils/cn';
 type MasterProps = ComponentProps<'div'>;
 const MasterDefault = (props: MasterProps) => {
   const { children, className, ..._props } = props;
-  const _className = 'flex flex-grow items-start px-4';
+  const _className = 'flex flex-grow px-4 items-start';
   return (
     <section className={cn(_className, className)} {..._props}>
       {children}
@@ -13,7 +13,7 @@ const MasterDefault = (props: MasterProps) => {
 };
 const MasterCenter = (props: MasterProps) => {
   const { children, className, ..._props } = props;
-  const _className = 'flex flex-grow justify-center items-center px-4';
+  const _className = 'flex flex-grow px-4 items-center justify-center';
   return (
     <section className={cn(_className, className)} {..._props}>
       <div className="w-[min(320px,100%)] h-fit">{children}</div>

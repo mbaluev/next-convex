@@ -5,7 +5,7 @@ import { useCallback, useEffect, useState } from 'react';
 import { newVerification } from '@/auth/actions/new-verification';
 import { AlertSuccess, AlertError, AlertInfo } from '@/components/atoms/alert';
 import { router } from 'next/client';
-import { ButtonBack } from '@/components/auth/button-back';
+import { ButtonBack } from '@/components/organisms/auth/button-back';
 
 export const FormNewVerification = () => {
   const searchParams = useSearchParams();

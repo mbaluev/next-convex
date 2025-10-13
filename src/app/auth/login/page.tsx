@@ -1,4 +1,4 @@
-import { WidgetLogin } from '@/components/auth/widget-login';
+import { WidgetLogin } from '@/components/organisms/auth/widget-login';
 
 const LoginPage = () => {
   return <WidgetLogin />;

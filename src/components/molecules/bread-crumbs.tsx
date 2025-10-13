@@ -3,7 +3,7 @@
 import Link from 'next/link';
 import { Button } from '@/components/atoms/button';
 import { ChevronRight } from 'lucide-react';
-import { SvgLogo } from '@/components/svg/components/logo';
+import { SvgLogo } from '@/components/icons/components/logo';
 import { ReactNode } from 'react';
 import { IS_PATH, TRouteDTO, ROUTES } from '@/lib/settings/routes';
 

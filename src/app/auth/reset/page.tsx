@@ -1,4 +1,4 @@
-import { WidgetReset } from '@/components/auth/widget-reset';
+import { WidgetReset } from '@/components/organisms/auth/widget-reset';
 
 const NewVerificationPage = () => {
   return <WidgetReset />;

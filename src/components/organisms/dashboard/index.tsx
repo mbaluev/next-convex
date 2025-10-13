@@ -2,12 +2,12 @@
 
 import Link from 'next/link';
 import { useCallback, useEffect, useMemo, useRef, useState } from 'react';
-import { ChartCreate } from '@/components/organisms/chart/create';
+import { DashboardCreate } from '@/components/organisms/dashboard/create';
 import {
   EChartType,
   MOCK_CHART_LEGEND,
   DEFAULT_CHART_TYPE,
-} from '@/components/organisms/chart/mock';
+} from '@/components/organisms/dashboard/mock';
 import {
   Widget,
   WidgetContent,
@@ -32,11 +32,11 @@ import { useResizeObserver } from '@/lib/hooks/use-resize-observer';
 import { v4 } from 'uuid';
 import { TooltipText } from '@/components/atoms/tooltip';
 import { ROUTES } from '@/lib/settings/routes';
-import { ChartColors } from '@/components/organisms/chart/colors';
+import { ChartColors } from '@/components/organisms/dashboard/colors';
 import { useQuery } from 'convex/react';
 import { api } from '../../../../convex/_generated/api';
 
-export const Chart = (props: WidgetProps) => {
+export const Dashboard = (props: WidgetProps) => {
   const ref = useRef<any>(null);
   const [chart, setChart] = useState<any>();
   const router = useRouter();
@@ -60,7 +60,7 @@ export const Chart = (props: WidgetProps) => {
   };
   const create = useCallback(() => {
     if (ref.current) {
-      const obj = ChartCreate(ref, id, data, dataLegend, type, formatValue);
+      const obj = DashboardCreate(ref, id, data, dataLegend, type, formatValue);
       setChart(obj);
     }
   }, [ref, type, data, dataLegend, id]);

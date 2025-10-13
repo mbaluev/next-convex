@@ -11,7 +11,7 @@ import { AlertSuccess, AlertError } from '@/components/atoms/alert';
 import { useState, useTransition } from 'react';
 import { register } from '@/auth/actions/register';
 import { InputPassword } from '@/components/atoms/input-password';
-import { ButtonBack } from '@/components/auth/button-back';
+import { ButtonBack } from '@/components/organisms/auth/button-back';
 import { Spinner } from '@/components/atoms/spinner';
 
 export const FormRegister = () => {

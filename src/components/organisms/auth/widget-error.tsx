@@ -2,8 +2,8 @@
 
 import { AlertError } from '@/components/atoms/alert';
 import { Widget, WidgetContent, WidgetHeader } from '@/components/molecules/widget';
-import { WidgetHeaderContent } from '@/components/auth/widget-header-content';
-import { ButtonBack } from '@/components/auth/button-back';
+import { WidgetHeaderContent } from '@/components/organisms/auth/widget-header-content';
+import { ButtonBack } from '@/components/organisms/auth/button-back';
 
 export const WidgetError = () => {
   return (

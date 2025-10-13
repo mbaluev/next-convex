@@ -1,6 +1,8 @@
 'use client';
 
-import { CircleOff } from 'lucide-react';
+import { CircleOff, Ellipsis } from 'lucide-react';
+import { Button } from '@/components/atoms/button';
+import { TooltipText } from '@/components/atoms/tooltip';
 import {
   Widget,
   WidgetContent,
@@ -9,11 +11,13 @@ import {
   WidgetIcon,
   WidgetProps,
 } from '@/components/molecules/widget';
-import { useQuery } from 'convex/react';
-import { api } from '../../../../convex/_generated/api';
+import {
+  DropdownMenu,
+  DropdownMenuContent,
+  DropdownMenuTrigger,
+} from '@/components/atoms/dropdown-menu';
 
 export const WidgetEmpty = (props: WidgetProps) => {
-  const tasks = useQuery(api.tasks.get);
   return (
     <Widget variant="background" {...props}>
       <WidgetHeader variant="padding">
@@ -22,14 +26,21 @@ export const WidgetEmpty = (props: WidgetProps) => {
         </WidgetIcon>
         <WidgetTitle>empty</WidgetTitle>
       </WidgetHeader>
-      <WidgetContent variant="padding">
-        {tasks?.map(({ _id, text }) => (
-          <div key={_id} className="flex flex-row gap-4">
-            <div>{_id}</div>
-            <div>{text}</div>
-          </div>
-        ))}
-      </WidgetContent>
+      <WidgetContent variant="padding">...</WidgetContent>
+      <WidgetHeader variant="background" className="justify-end">
+        <TooltipText title="more actions" side="left">
+          <DropdownMenu>
+            <DropdownMenuTrigger asChild>
+              <Button variant="ghost" size="icon">
+                <Ellipsis />
+              </Button>
+            </DropdownMenuTrigger>
+            <DropdownMenuContent align="start" side="bottom" className="min-w-[200px]">
+              ...
+            </DropdownMenuContent>
+          </DropdownMenu>
+        </TooltipText>
+      </WidgetHeader>
     </Widget>
   );
 };

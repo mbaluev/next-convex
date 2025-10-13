@@ -1,12 +1,15 @@
 import { ReactNode } from 'react';
 import {
-  Banknote,
+  CircleOff,
   Code,
   FolderClosed,
+  Grid,
+  Grid2x2,
   LayoutDashboard,
   ReceiptText,
   ShieldCheck,
   UserRoundCog,
+  Image as ImageIcon,
 } from 'lucide-react';
 
 const EMPTY_PATH = '#';
@@ -53,23 +56,29 @@ const ROUTES: Record<string, TRouteDTO> = {
     path: '/dashboard',
     icon: <LayoutDashboard />,
   },
-  DEPOSITORY: {
-    name: 'depository',
-    label: 'depository',
-    path: '/depository',
-    icon: <Banknote />,
-  },
   FILES: {
     name: 'files',
     label: 'files',
     path: '/files',
     icon: <FolderClosed />,
   },
+  ILLUSTRATIONS: {
+    name: 'illustrations',
+    label: 'illustrations',
+    path: '/illustrations',
+    icon: <ImageIcon />,
+  },
   DEBUG: {
     name: 'debug',
     label: 'debug',
     path: '/debug',
     icon: <Code />,
+  },
+  XXX: {
+    name: 'xxx',
+    label: 'xxx',
+    path: '/xxx',
+    icon: <CircleOff />,
   },
 };
 

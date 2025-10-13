@@ -13,7 +13,7 @@ import { ROUTES } from '@/lib/settings/routes';
 import { handleDialogClose, isDialogOpen } from '@/components/atoms/dialog-handlers';
 import { useMemo } from 'react';
 import { WidgetContent } from '@/components/molecules/widget';
-import { FormSettings } from '@/components/auth/form-settings';
+import { FormSettings } from '@/components/organisms/auth/form-settings';
 
 export const DialogProfile = () => {
   const searchParams = useSearchParams();

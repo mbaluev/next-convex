@@ -10,7 +10,7 @@ import { Button } from '@/components/atoms/button';
 import { AlertSuccess, AlertError } from '@/components/atoms/alert';
 import { useState, useTransition } from 'react';
 import { reset } from '@/auth/actions/reset';
-import { ButtonBack } from '@/components/auth/button-back';
+import { ButtonBack } from '@/components/organisms/auth/button-back';
 import { Spinner } from '@/components/atoms/spinner';
 
 export const FormReset = () => {

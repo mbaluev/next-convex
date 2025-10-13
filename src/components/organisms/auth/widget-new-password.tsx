@@ -1,6 +1,6 @@
 import { Widget, WidgetContent, WidgetHeader } from '@/components/molecules/widget';
-import { WidgetHeaderContent } from '@/components/auth/widget-header-content';
-import { FormNewPassword } from '@/components/auth/form-new-password';
+import { WidgetHeaderContent } from '@/components/organisms/auth/widget-header-content';
+import { FormNewPassword } from '@/components/organisms/auth/form-new-password';
 
 export const WidgetNewPassword = () => {
   return (

@@ -1,8 +1,8 @@
 'use client';
 
 import { useIsAuth } from '@/auth/hooks/use-is-auth';
-import { SvgLogo } from '@/components/svg/components/logo';
-import { ButtonLogin } from '@/components/auth/button-login';
+import { SvgLogo } from '@/components/icons/components/logo';
+import { ButtonLogin } from '@/components/organisms/auth/button-login';
 import { Dot } from 'lucide-react';
 
 export default function Home() {

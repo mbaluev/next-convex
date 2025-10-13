@@ -1,4 +1,4 @@
-import { WidgetNewPassword } from '@/components/auth/widget-new-password';
+import { WidgetNewPassword } from '@/components/organisms/auth/widget-new-password';
 
 const NewVerificationPage = () => {
   return <WidgetNewPassword />;

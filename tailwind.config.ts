@@ -94,6 +94,7 @@ const config = {
   },
   plugins: [
     require('tailwindcss-animate'),
+    require('@tailwindcss/container-queries'),
     plugin(function ({ addBase }) {
       addBase({
         html: { fontSize: '12px' },

@@ -1,13 +1,13 @@
 import { Button } from '@/components/atoms/button';
+import { useSidebarRight } from '@/components/molecules/sidebar-right';
+import { useSidebarLeft } from '@/components/molecules/sidebar-left';
 import {
   ArrowLeftFromLine,
   ArrowLeftToLine,
   ArrowRightFromLine,
   ArrowRightToLine,
-  Code,
-  Ellipsis,
+  Menu,
 } from 'lucide-react';
-import { TooltipText } from '@/components/atoms/tooltip';
 import {
   Widget,
   WidgetContent,
@@ -16,13 +16,6 @@ import {
   WidgetProps,
   WidgetTitle,
 } from '@/components/molecules/widget';
-import {
-  DropdownMenu,
-  DropdownMenuContent,
-  DropdownMenuTrigger,
-} from '@/components/atoms/dropdown-menu';
-import { useSidebarRight } from '@/components/molecules/sidebar-right';
-import { useSidebarLeft } from '@/components/molecules/sidebar-left';
 
 export const WidgetSidebars = (props: WidgetProps) => {
   const {
@@ -42,7 +35,7 @@ export const WidgetSidebars = (props: WidgetProps) => {
     <Widget {...props}>
       <WidgetHeader variant="background">
         <WidgetIcon>
-          <Code />
+          <Menu />
         </WidgetIcon>
         <WidgetTitle>sidebars</WidgetTitle>
       </WidgetHeader>
@@ -60,20 +53,6 @@ export const WidgetSidebars = (props: WidgetProps) => {
           </Button>
         </div>
       </WidgetContent>
-      <WidgetHeader variant="background" className="justify-end">
-        <TooltipText title="more actions" side="left">
-          <DropdownMenu>
-            <DropdownMenuTrigger asChild>
-              <Button variant="ghost" size="icon">
-                <Ellipsis />
-              </Button>
-            </DropdownMenuTrigger>
-            <DropdownMenuContent align="start" side="bottom" className="min-w-[300px]">
-              ...
-            </DropdownMenuContent>
-          </DropdownMenu>
-        </TooltipText>
-      </WidgetHeader>
     </Widget>
   );
 };

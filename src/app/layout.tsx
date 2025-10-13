@@ -12,7 +12,9 @@ import { Check, Info, OctagonX, TriangleAlert } from 'lucide-react';
 import { CookiesProvider } from 'next-client-cookies/server';
 import { ConvexClientProvider } from '@/lib/providers/convex-client-provider';
 import { ConvexAuthNextjsServerProvider } from '@convex-dev/auth/nextjs/server';
-import { ProfileDialog } from '@/components/organisms/profile';
+import { DialogProfile } from '@/components/organisms/dialog-profile';
+import { DialogPrivacyPolicy } from '@/components/organisms/dialog-privacy-policy';
+import { DialogTermsConditions } from '@/components/organisms/dialog-terms-conditions';
 import './globals.css';
 
 const font = JetBrains_Mono({ subsets: ['latin'] });
@@ -46,7 +48,9 @@ export default async function RootLayout({ children }: { children: ReactNode }) 
               <ConvexClientProvider>
                 <ThemeProvider attribute="class" defaultTheme="system" enableSystem>
                   <Layout>{children}</Layout>
-                  <ProfileDialog />
+                  <DialogProfile />
+                  <DialogPrivacyPolicy />
+                  <DialogTermsConditions />
                   <Toaster
                     visibleToasts={5}
                     position="bottom-right"

@@ -57,7 +57,7 @@ const DialogContent = React.forwardRef<
     >
       <div
         className={cn(
-          'bg-background rounded-lg space-y-4',
+          'relative bg-background rounded-lg space-y-4',
           'flex flex-col overflow-hidden max-h-full'
         )}
       >
@@ -123,8 +123,8 @@ DialogDescription.displayName = DialogPrimitive.Description.displayName;
 
 interface DialogToolbarProps extends React.HTMLAttributes<HTMLDivElement> {
   close?: boolean;
-  buttons?: React.ReactElement;
-  icon?: React.ReactElement;
+  buttons?: React.ReactNode;
+  icon?: React.ReactNode;
 }
 const DialogToolbar = ({
   className,

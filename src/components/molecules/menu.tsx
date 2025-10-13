@@ -7,7 +7,7 @@ import { SvgLogo } from '@/components/svg/components/logo';
 import {
   ChevronRight,
   BookOpen,
-  UserRoundCog,
+  Ellipsis,
   LogOut,
   User,
   ArrowRightToLine,
@@ -292,9 +292,9 @@ const MenuLeftUserInfo = () => {
           logout
         </SidebarLeftButton>
         <SidebarLeftButton variant="ghost" onClick={handleProfile}>
-          <UserRoundCog />
-          <p className="flex-1 text-left">profile</p>
-          <BookOpen />
+          {ROUTES.PROFILE.icon}
+          <p className="flex-1 text-left">{ROUTES.PROFILE.label}</p>
+          {ROUTES.PROFILE.dialog && <Ellipsis />}
         </SidebarLeftButton>
       </div>
     </div>

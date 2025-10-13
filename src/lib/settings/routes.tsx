@@ -5,7 +5,7 @@ import {
   FolderClosed,
   LayoutDashboard,
   ReceiptText,
-  Shield,
+  ShieldCheck,
   UserRoundCog,
 } from 'lucide-react';
 
@@ -37,7 +37,7 @@ const ROUTES: Record<string, TRouteDTO> = {
     name: 'privacy-policy',
     label: 'privacy policy',
     path: EMPTY_PATH,
-    icon: <Shield />,
+    icon: <ShieldCheck />,
     dialog: true,
   },
   TERMS_CONDITIONS: {

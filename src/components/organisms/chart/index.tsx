@@ -45,9 +45,10 @@ export const Chart = (props: WidgetProps) => {
   const loading = false;
   const id = `widget-chart-${v4()}`;
 
+  // load data
   const dashboard = useQuery(api.dashboard.get);
   const data = useMemo(() => dashboard ?? [], [dashboard]);
-  // const data = MOCK_CHART_DATA;
+  const dataLegend = MOCK_CHART_LEGEND;
 
   // create chart
   const formatValue = (value: number) => {
@@ -59,10 +60,10 @@ export const Chart = (props: WidgetProps) => {
   };
   const create = useCallback(() => {
     if (ref.current) {
-      const obj = ChartCreate(ref, id, data, MOCK_CHART_LEGEND, type, formatValue);
+      const obj = ChartCreate(ref, id, data, dataLegend, type, formatValue);
       setChart(obj);
     }
-  }, [ref, type, data, id]);
+  }, [ref, type, data, dataLegend, id]);
 
   // update
   const handleChange = (type: EChartType) => {

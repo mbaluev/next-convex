@@ -4,6 +4,8 @@ import { Widget, WidgetContent, WidgetProps } from '@/components/molecules/widge
 import { ErrorBlock } from '@/components/molecules/error-block';
 import { SvgTrash } from '@/components/icons/components/trash';
 import { SvgFiles } from '@/components/icons/components/files';
+import { SvgSpam } from '@/components/icons/components/spam';
+import { SvgSync } from '@/components/icons/components/sync';
 
 export const WidgetIllustrations = (props: WidgetProps) => {
   return (
@@ -20,6 +22,8 @@ export const WidgetIllustrations = (props: WidgetProps) => {
             code="files"
             name="designed to store, organize, manage, and track your files efficiently"
           />
+          <ErrorBlock icon={<SvgSpam />} code="spam" name="..." />
+          <ErrorBlock icon={<SvgSync />} code="sync" name="..." />
         </div>
       </WidgetContent>
     </Widget>

@@ -11,7 +11,7 @@ const ErrorBlock = forwardRef<HTMLDivElement, ErrorBlockProps>((props, ref) => {
   const { icon, code, name, ...rest } = props;
   return (
     <div ref={ref} className="flex flex-col gap-6 items-center w-full" {...rest}>
-      {icon && <p className="text-[10rem]">{icon}</p>}
+      {icon && <p className="text-[11rem]">{icon}</p>}
       <div className="flex flex-col gap-4 items-center">
         {code && <p className="text-3xl font-medium text-center">{code}</p>}
         {name && <p className="text-center">{name}</p>}

@@ -1,6 +1,21 @@
 import type { Config } from 'tailwindcss';
 import plugin from 'tailwindcss/plugin';
 
+const breakpoints = {
+  xs: '26rem', // 312px
+  sm: '34rem', // 384px
+  md: '42rem', // 444px
+  lg: '50rem', // 504px
+  xl: '58rem', // 576px
+  '2xl': '66rem', // 672px
+  '3xl': '74rem', // 768px
+  '4xl': '82rem', // 896px
+  '5xl': '90rem', // 1024px
+  '6xl': '98rem', // 1152px
+  '7xl': '106rem', // 1280px
+  '8xl': '114rem', // 1368px
+};
+
 const config = {
   darkMode: ['class'],
   content: [
@@ -11,13 +26,7 @@ const config = {
   ],
   prefix: '',
   theme: {
-    container: {
-      center: true,
-      padding: '2rem',
-      screens: {
-        '2xl': '1400px',
-      },
-    },
+    screens: breakpoints,
     extend: {
       colors: {
         border: 'hsl(var(--border))',
@@ -90,6 +99,7 @@ const config = {
         'accordion-down': 'accordion-down 0.2s ease-out',
         'accordion-up': 'accordion-up 0.2s ease-out',
       },
+      containers: breakpoints,
     },
   },
   plugins: [

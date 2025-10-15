@@ -14,8 +14,9 @@ export const WidgetIllustrations = (props: WidgetProps) => {
       <WidgetContent className="@container/illustrations">
         <div
           className={cn(
-            'w-full p-10 grid gap-10 grid-cols-1',
-            '@xl/illustrations:grid-cols-2 @4xl/illustrations:grid-cols-3 @7xl/illustrations:grid-cols-4'
+            'w-full p-10 grid gap-10',
+            'grid-cols-1 @md/illustrations:grid-cols-2 @2xl/illustrations:grid-cols-3',
+            '@5xl/illustrations:grid-cols-4 @8xl/illustrations:grid-cols-5'
           )}
         >
           <ErrorBlock

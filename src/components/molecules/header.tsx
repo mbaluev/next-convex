@@ -9,10 +9,30 @@ import { Moon, Sun } from 'lucide-react';
 import { usePathname } from 'next/navigation';
 import { BREAD_CRUMBS } from '@/lib/settings/bread-crumbs';
 import { BreadCrumbs } from '@/components/molecules/bread-crumbs';
+import { useCallback, useEffect } from 'react';
+
+const THEME_KEYBOARD_SHORTCUT = 't';
 
 const HeaderThemeBtn = () => {
   const { setTheme, theme } = useTheme();
-  const handleChangeTheme = () => setTheme(theme === 'dark' ? 'light' : 'dark');
+  const handleChangeTheme = useCallback(
+    () => setTheme(theme === 'dark' ? 'light' : 'dark'),
+    [theme, setTheme]
+  );
+
+  // keyboard shortcut to toggle/hide the sidebar.
+  useEffect(() => {
+    const handleKeyDown = (event: KeyboardEvent) => {
+      // && (event.metaKey || event.ctrlKey)
+      if (event.key === THEME_KEYBOARD_SHORTCUT) {
+        event.preventDefault();
+        handleChangeTheme();
+      }
+    };
+    window.addEventListener('keydown', handleKeyDown);
+    return () => window.removeEventListener('keydown', handleKeyDown);
+  }, [handleChangeTheme]);
+
   return (
     <TooltipText title="switch theme" side="left">
       <Button variant="ghost" size="icon" onClick={handleChangeTheme} className="flex-grow-0">

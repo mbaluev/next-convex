@@ -44,7 +44,7 @@ const SvgSpam = (props: SVGProps<any>) => {
       />
       <path
         d="M766.88 315.81c-94.85 46.55-96.43 47.27-96.43 47.27l-8.6-47.73s-81-1.55-103.05.27c-26.61 72.82-116.66 3.57-124.28-1.81 27.62 141.32 229.62 222.81 332.36 2z"
-        className="fill-destructive stroke-black"
+        className="fill-skin stroke-black"
         // fill="#DBA77F"
         // stroke="#1F1F1F"
         strokeWidth="4.5"
@@ -53,7 +53,7 @@ const SvgSpam = (props: SVGProps<any>) => {
       />
       <path
         d="M994.52 555.36c-10.08-25.667-22.053-53.333-35.92-83-19.45-.45-41.72 2.4-64.66 8.93-23.92 6.79-45.12 16.57-61.75 27.73l17.78 88.42 1.14 5.68-133.58-84.57c-14-6-32.34-106.82-40.28-119.83-18.25-29.88-48.09-20.66-54.85 5l10.4.18c23.08.34-63.08 89.89 3.87 160 7.67 6.4 96 79.52 96 79.52 44.26 36.28 95.76 77.9 133.85 106.92 149.87 114.13 225.06 52.18 128-194.98z"
-        className="fill-destructive stroke-black"
+        className="fill-skin stroke-black"
         // fill="#DBA77F"
         // stroke="#1F1F1F"
         strokeWidth="4.5"
@@ -62,7 +62,7 @@ const SvgSpam = (props: SVGProps<any>) => {
       />
       <path
         d="M622.4 403.71c2.69-10.23 9.06-17.83 16.89-21.39 0 0-18.5-12.35-31.47-2.24a29.835 29.835 0 0 0-11.83 23.23l26.41.4z"
-        className="fill-destructive stroke-black"
+        className="fill-skin stroke-black"
         // fill="#DBA77F"
         // stroke="#1F1F1F"
         strokeWidth="4.5"
@@ -71,7 +71,7 @@ const SvgSpam = (props: SVGProps<any>) => {
       />
       <path
         d="M605.94 381.64c-5.11-1.7-11.93-2.55-17.48 1.77a24.553 24.553 0 0 0-9.32 19.62l16.86.26a29.827 29.827 0 0 1 9.94-21.65z"
-        className="fill-destructive stroke-black"
+        className="fill-skin stroke-black"
         // fill="#DBA77F"
         // stroke="#1F1F1F"
         strokeWidth="4.5"
@@ -126,7 +126,7 @@ const SvgSpam = (props: SVGProps<any>) => {
       />
       <path
         d="M513.53 208.02c-5.84 10.64-4.56 32.85 21.82 57.84 17.04-14.14 15.6-63.84-21.82-57.84zM723.91 214.07c-24.49-12.68-57.46 40.25-29.83 61.86 24.3-8.05 55.79-51.81 29.83-61.86z"
-        className="fill-destructive stroke-black"
+        className="fill-skin stroke-black"
         // fill="#DBA77F"
         // stroke="#1F1F1F"
         strokeWidth="4.5"
@@ -135,7 +135,7 @@ const SvgSpam = (props: SVGProps<any>) => {
       />
       <path
         d="M617.65 130.62c-71.46-2-92.61 77.4-87.53 103.67 10.49 121.93 115.55 158.25 172.59 23.2 19.61-46.39 19.06-123.92-85.06-126.87z"
-        className="fill-destructive stroke-black"
+        className="fill-skin stroke-black"
         // fill="#DBA77F"
         // stroke="#1F1F1F"
         strokeWidth="4.5"
@@ -168,7 +168,7 @@ const SvgSpam = (props: SVGProps<any>) => {
       />
       <path
         d="M370.27 355.93c-22.19 12.88-187.26 119.73-187.26 119.73-2.43-3.85-5.7-8.77-8.48-12.56-17.45-23.91-38.29-41.8-57.69-51.23C49.52 507.07 6.51 620.98 82.6 643.38c66.24 19.51 158.67-83.7 257.13-185.27 6.19 5.22 24.65 1 40.26-7 7.3-.62 16.9-3.77 26.07-8.33 21.71 1.32 54.15-22.05 57.9-41.34 7.72-.05 42.42.68 69.25 1 19.86-20.74-134.69-62.88-162.94-46.51z"
-        className="fill-destructive stroke-black"
+        className="fill-skin stroke-black"
         // fill="#DBA77F"
         // stroke="#1F1F1F"
         strokeWidth="4.5"

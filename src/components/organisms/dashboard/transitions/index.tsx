@@ -1,13 +1,12 @@
 'use client';
 
-import Link from 'next/link';
 import { useCallback, useEffect, useMemo, useRef, useState } from 'react';
-import { DashboardCreate } from '@/components/organisms/dashboard/create';
+import { TransitionsCreate } from '@/components/organisms/dashboard/transitions/create';
 import {
   EChartType,
   MOCK_CHART_LEGEND,
   DEFAULT_CHART_TYPE,
-} from '@/components/organisms/dashboard/mock';
+} from '@/components/organisms/dashboard/chart/mock';
 import {
   Widget,
   WidgetContent,
@@ -32,16 +31,22 @@ import { useResizeObserver } from '@/lib/hooks/use-resize-observer';
 import { v4 } from 'uuid';
 import { TooltipText } from '@/components/atoms/tooltip';
 import { ROUTES } from '@/lib/settings/routes';
-import { ChartColors } from '@/components/organisms/dashboard/colors';
+import { ChartColors } from '@/components/organisms/dashboard/chart/colors';
 import { useQuery } from 'convex/react';
-import { api } from '../../../../convex/_generated/api';
+import { api } from '../../../../../convex/_generated/api';
+import { useQueryString } from '@/lib/hooks/use-query-string';
 
-export const Dashboard = (props: WidgetProps) => {
+interface ITransitionsChartProps extends WidgetProps {
+  name?: string;
+}
+
+export const TransitionsChart = (props: ITransitionsChartProps) => {
   const ref = useRef<any>(null);
   const [chart, setChart] = useState<any>();
   const router = useRouter();
   const params = useSearchParams();
-  const type = params.get('type') ?? DEFAULT_CHART_TYPE;
+  const typeName = props.name ?? 'type';
+  const type = params.get(typeName) ?? DEFAULT_CHART_TYPE;
   const loading = false;
   const id = `widget-chart-${v4()}`;
 
@@ -60,15 +65,23 @@ export const Dashboard = (props: WidgetProps) => {
   };
   const create = useCallback(() => {
     if (ref.current) {
-      const obj = DashboardCreate(ref, id, data, dataLegend, type, formatValue);
+      const obj = TransitionsCreate(ref, id, data, dataLegend, type, formatValue);
       setChart(obj);
     }
   }, [ref, type, data, dataLegend, id]);
 
   // update
+  const searchParams = useSearchParams();
+  const { addParam, removeParam } = useQueryString(searchParams);
   const handleChange = (type: EChartType) => {
+    const queryString = addParam(typeName, type);
     const path = ROUTES.DASHBOARD.path;
-    router.push(`${path}?type=${type}`);
+    router.push(`${path}?${queryString}`);
+  };
+  const handleReset = () => {
+    const queryString = removeParam(typeName);
+    const path = ROUTES.DASHBOARD.path;
+    router.push(`${path}?${queryString}`);
   };
   useEffect(() => {
     if (chart) chart.update(data, type);
@@ -125,10 +138,8 @@ export const Dashboard = (props: WidgetProps) => {
               <ChartArea />
             </Button>
           </TooltipText>
-          <Button variant="ghost" size="icon" asChild>
-            <Link href={ROUTES.DASHBOARD.path}>
-              <RefreshCw />
-            </Link>
+          <Button variant="ghost" size="icon" onClick={handleReset}>
+            <RefreshCw />
           </Button>
         </WidgetButtons>
       </WidgetHeader>

@@ -137,7 +137,7 @@ export const FormLogin = () => {
                 )}
               />
               <Button variant="link" className="px-0 py-0 h-auto" asChild>
-                <Link href="/src/auth/reset">forgot password?</Link>
+                <Link href="/auth/reset">forgot password?</Link>
               </Button>
             </Fragment>
           )}

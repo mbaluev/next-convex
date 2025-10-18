@@ -234,7 +234,7 @@ const MenuLeftContent = () => {
         </Button>
       </div>
       <Separator />
-      <MenuLeftUserInfo />
+      <MenuUserInfo />
       <Separator />
       <div className="p-4 flex flex-col space-y-2">
         {data
@@ -249,7 +249,7 @@ const MenuLeftContent = () => {
 };
 MenuLeftContent.displayName = 'MenuLeftContent';
 
-const MenuLeftUserInfo = () => {
+const MenuUserInfo = () => {
   const user = useCurrentUser();
   const searchParams = useSearchParams();
   const pathname = usePathname();
@@ -300,7 +300,7 @@ const MenuLeftUserInfo = () => {
     </div>
   );
 };
-MenuLeftUserInfo.displayName = 'MenuLeftUserInfo';
+MenuUserInfo.displayName = 'MenuUserInfo';
 
 // menu-right
 

@@ -30,13 +30,13 @@ const SvgFiles = (props: SVGProps<any>) => {
         />
         <path
           d="M534.48 365.92l-27.95-57.5a23.525 23.525 0 0 0-21.14-13.23H257.24a23.5 23.5 0 0 0-23.5 23.5v515.92a23.268 23.268 0 0 0 23.28 23.27h676.44a23.27 23.27 0 0 0 23.26-23.27V389.19a23.269 23.269 0 0 0-23.27-23.27H534.48z"
-          className="fill-primary stroke-foreground"
+          className="fill-info stroke-foreground"
           // fill="#C2E7FF"
           // stroke="#191C1E"
         />
         <path
           d="M502.51 339.4l-28-57.5a23.525 23.525 0 0 0-21.14-13.23h-228.1a23.5 23.5 0 0 0-23.5 23.5v515.92a23.269 23.269 0 0 0 23.27 23.27h676.45a23.273 23.273 0 0 0 23.23-23.27V362.67a23.269 23.269 0 0 0-23.27-23.27H502.51z"
-          className="fill-primary stroke-foreground"
+          className="fill-info stroke-foreground"
           // fill="#C2E7FF"
           // stroke="#191C1E"
         />
@@ -60,7 +60,7 @@ const SvgFiles = (props: SVGProps<any>) => {
         />
         <path
           d="M819.46 803.09H458.95v-89.57l276.37-47.63c31.18 27.87 72.03 87.95 84.14 137.2z"
-          className="fill-primary stroke-primary"
+          className="fill-info stroke-info"
           // fill="#C2E7FF"
           // stroke="#C2E7FF"
         />

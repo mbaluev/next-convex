@@ -44,7 +44,7 @@ const SvgSync = (props: SVGProps<any>) => {
       />
       <path
         d="M714.69 925.96h98.76s100.76-305.27 117.72-375.1c16.96-69.83-50.2-121-109.74-99.77-58.86 20.95-128.69 43.9-128.69 43.9l21.95 430.97z"
-        className="fill-primary stroke-primary"
+        className="fill-info stroke-info"
         // fill="#C2E7FF"
         // stroke="#C2E7FF"
         strokeWidth="4.5"
@@ -53,7 +53,7 @@ const SvgSync = (props: SVGProps<any>) => {
       />
       <path
         d="M709.691 489c-101.76 29.93-261.38 97.77-261.38 97.77l-5-60.85c-1.41.33-194.79 35-268.35 58.85-11.89 3.86-22.44 7.67-31.78 11.51-12.52 62.48-34.59 141.06-6.13 198 29.93 59.85 99.77 97.76 187.56 85.79 87.79-11.97 239.43-113.73 239.43-113.73l-83.8 179.57c14-18.95 62.81-19.95 120.71-19.95h120.74s101.76-283.32 111.73-341.19c9.97-57.87-21.97-125.7-123.73-95.77z"
-        className="fill-primary stroke-primary"
+        className="fill-info stroke-info"
         // fill="#C2E7FF"
         // stroke="#C2E7FF"
         strokeWidth="4.5"

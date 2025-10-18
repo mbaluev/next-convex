@@ -77,7 +77,7 @@ export const WidgetAlerts = (props: WidgetProps) => {
             </Button>
           </div>
           <div>
-            <Button variant="default" onClick={info}>
+            <Button variant="info" onClick={info}>
               click to info
             </Button>
           </div>

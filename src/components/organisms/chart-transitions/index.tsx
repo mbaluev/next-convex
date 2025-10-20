@@ -1,12 +1,12 @@
 'use client';
 
 import { useCallback, useEffect, useMemo, useRef, useState } from 'react';
-import { TransitionsChartCreate } from '@/components/organisms/dashboard/transitions/create';
+import { ChartTransitionsCreate } from '@/components/organisms/chart-transitions/create';
 import {
-  ETransitionsChartType,
-  MOCK_TRANSITIONS_CHART_LEGEND,
-  DEFAULT_TRANSITIONS_CHART_TYPE,
-} from '@/components/organisms/dashboard/transitions/mock';
+  EChartTransitionsType,
+  MOCK_CHART_TRANSITIONS_LEGEND,
+  DEFAULT_CHART_TRANSITIONS_TYPE,
+} from '@/components/organisms/chart-transitions/mock';
 import {
   Widget,
   WidgetContent,
@@ -31,29 +31,32 @@ import { useResizeObserver } from '@/lib/hooks/use-resize-observer';
 import { v4 } from 'uuid';
 import { TooltipText } from '@/components/atoms/tooltip';
 import { ROUTES } from '@/lib/settings/routes';
-import { TransitionsChartColors } from '@/components/organisms/dashboard/transitions/colors';
+import { ChartTransitionsColors } from '@/components/organisms/chart-transitions/colors';
 import { useQuery } from 'convex/react';
-import { api } from '../../../../../convex/_generated/api';
+import { api } from '../../../../convex/_generated/api';
 import { useQueryString } from '@/lib/hooks/use-query-string';
 
-interface ITransitionsChartProps extends WidgetProps {
+interface IChartTransitionsProps extends WidgetProps {
   name?: string;
 }
 
-export const TransitionsChart = (props: ITransitionsChartProps) => {
-  const ref = useRef<any>(null);
-  const [chart, setChart] = useState<any>(null);
-  const router = useRouter();
-  const params = useSearchParams();
-  const typeName = props.name ?? 'type';
-  const type = params.get(typeName) ?? DEFAULT_TRANSITIONS_CHART_TYPE;
-  const id = `widget-chart-${v4()}`;
+export const ChartTransitions = (props: IChartTransitionsProps) => {
+  const { name } = props;
 
   // load data
   const dashboard = useQuery(api.dashboard.get);
   const data = useMemo(() => dashboard ?? [], [dashboard]);
-  const dataLegend = MOCK_TRANSITIONS_CHART_LEGEND;
+  const legend = MOCK_CHART_TRANSITIONS_LEGEND;
   const loading = !dashboard;
+
+  // props
+  const ref = useRef<any>(null);
+  const [chart, setChart] = useState<any>(null);
+  const router = useRouter();
+  const params = useSearchParams();
+  const typeName = name ?? 'type';
+  const type = params.get(typeName) ?? DEFAULT_CHART_TRANSITIONS_TYPE;
+  const id = `widget-chart-${v4()}`;
 
   // helpers
   const formatValue = (value: number) => {
@@ -67,7 +70,7 @@ export const TransitionsChart = (props: ITransitionsChartProps) => {
   // change type, reset
   const searchParams = useSearchParams();
   const { addParam, removeParam } = useQueryString(searchParams);
-  const handleChange = (type: ETransitionsChartType) => {
+  const handleChange = (type: EChartTransitionsType) => {
     const queryString = addParam(typeName, type);
     const path = ROUTES.DASHBOARD.path;
     router.push(`${path}?${queryString}`);
@@ -82,10 +85,10 @@ export const TransitionsChart = (props: ITransitionsChartProps) => {
   const { width, height, start } = useResizeObserver(ref, 100);
   const create = useCallback(() => {
     if (ref.current) {
-      const obj = TransitionsChartCreate(ref, id, data, dataLegend, type, formatValue);
+      const obj = ChartTransitionsCreate(ref, id, data ?? [], legend ?? [], type, formatValue);
       setChart(obj);
     }
-  }, [ref, id, type, data, dataLegend]);
+  }, [ref, id, type, data, legend]);
   useEffect(() => {
     if (ref.current && chart && width > 0 && height > 0 && start) {
       chart?.remove();
@@ -114,37 +117,37 @@ export const TransitionsChart = (props: ITransitionsChartProps) => {
           <TooltipText title="stacked bar chart" side="top">
             <Button
               variant={
-                !type || type === ETransitionsChartType.stackedBarChart ? 'default' : 'ghost'
+                !type || type === EChartTransitionsType.stackedBarChart ? 'default' : 'ghost'
               }
               size="icon"
-              onClick={() => handleChange(ETransitionsChartType.stackedBarChart)}
+              onClick={() => handleChange(EChartTransitionsType.stackedBarChart)}
             >
               <ChartColumnStacked />
             </Button>
           </TooltipText>
           <TooltipText title="grouped bar chart" side="top">
             <Button
-              variant={type === ETransitionsChartType.groupedBarChart ? 'default' : 'ghost'}
+              variant={type === EChartTransitionsType.groupedBarChart ? 'default' : 'ghost'}
               size="icon"
-              onClick={() => handleChange(ETransitionsChartType.groupedBarChart)}
+              onClick={() => handleChange(EChartTransitionsType.groupedBarChart)}
             >
               <ChartColumn />
             </Button>
           </TooltipText>
           <TooltipText title="area bar chart" side="top">
             <Button
-              variant={type === ETransitionsChartType.areaChart ? 'default' : 'ghost'}
+              variant={type === EChartTransitionsType.areaChart ? 'default' : 'ghost'}
               size="icon"
-              onClick={() => handleChange(ETransitionsChartType.areaChart)}
+              onClick={() => handleChange(EChartTransitionsType.areaChart)}
             >
               <ChartSpline />
             </Button>
           </TooltipText>
           <TooltipText title="stacked area chart" side="top">
             <Button
-              variant={type === ETransitionsChartType.stackedAreaChart ? 'default' : 'ghost'}
+              variant={type === EChartTransitionsType.stackedAreaChart ? 'default' : 'ghost'}
               size="icon"
-              onClick={() => handleChange(ETransitionsChartType.stackedAreaChart)}
+              onClick={() => handleChange(EChartTransitionsType.stackedAreaChart)}
             >
               <ChartArea />
             </Button>
@@ -163,7 +166,7 @@ export const TransitionsChart = (props: ITransitionsChartProps) => {
           )}
         </div>
       </WidgetContent>
-      <TransitionsChartColors />
+      <ChartTransitionsColors />
     </Widget>
   );
 };

@@ -8,9 +8,6 @@ const DashboardPage = () => {
       <div className="h-[300px] w-full grid gap-4 grid-cols-1">
         <ChartTransitions name="d1" />
       </div>
-      <div className="h-[300px] w-full grid gap-4 grid-cols-1">
-        <ChartTransitions name="d2" />
-      </div>
     </div>
   );
 };

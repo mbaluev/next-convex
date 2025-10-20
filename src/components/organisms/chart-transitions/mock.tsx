@@ -23,7 +23,7 @@ export interface IChartTransitionsLegend {
 
 const length = 50;
 
-export const DEFAULT_CHART_TRANSITIONS_TYPE = EChartTransitionsType.groupedBarChart;
+export const DEFAULT_CHART_TRANSITIONS_TYPE = EChartTransitionsType.stackedBarChart;
 
 export const MOCK_CHART_TRANSITIONS_DATA: IChartTransitionsItem[] = Array.from({ length }).map(
   (_, i) => {

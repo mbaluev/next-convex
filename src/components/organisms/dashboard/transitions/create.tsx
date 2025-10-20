@@ -2,16 +2,19 @@ import * as d3 from 'd3';
 import moment from 'moment/moment';
 import { MutableRefObject } from 'react';
 import {
-  EChartType,
+  ETransitionsChartType,
   IChartItem,
   IChartLegendItem,
-} from '@/components/organisms/dashboard/chart/mock';
+} from '@/components/organisms/dashboard/transitions/mock';
 import { JetBrains_Mono } from 'next/font/google';
-import { getFillColor, getStrokeColor } from '@/components/organisms/dashboard/chart/colors';
+import {
+  get_transitions_chart_fill_color,
+  get_transitions_chart_stroke_color,
+} from '@/components/organisms/dashboard/transitions/colors';
 
 const font = JetBrains_Mono({ subsets: ['latin'] });
 
-export const TransitionsCreate = (
+export const TransitionsChartCreate = (
   ref: MutableRefObject<any>,
   id: string,
   data: IChartItem[],
@@ -161,7 +164,10 @@ export const TransitionsCreate = (
     // declare the y (vertical position) scale.
     let y_min = y_min_grouped;
     let y_max = y_max_grouped;
-    if (type === EChartType.stackedBarChart || type === EChartType.stackedAreaChart) {
+    if (
+      type === ETransitionsChartType.stackedBarChart ||
+      type === ETransitionsChartType.stackedAreaChart
+    ) {
       y_min = y_min_stacked;
       y_max = y_max_stacked;
     }
@@ -191,7 +197,10 @@ export const TransitionsCreate = (
     xaxis = svg.append('g').attr('transform', `translate(0, ${y(0)})`);
 
     let y_min = y_min_grouped;
-    if (type === EChartType.stackedBarChart || type === EChartType.stackedAreaChart)
+    if (
+      type === ETransitionsChartType.stackedBarChart ||
+      type === ETransitionsChartType.stackedAreaChart
+    )
       y_min = y_min_stacked;
 
     xticks = xaxis.call(xscale);
@@ -207,7 +216,10 @@ export const TransitionsCreate = (
       .transition()
       .duration(duration)
       .attr('transform', `translate(0, ${y(0)})`);
-    if (layout === EChartType.stackedBarChart || layout === EChartType.stackedAreaChart) {
+    if (
+      layout === ETransitionsChartType.stackedBarChart ||
+      layout === ETransitionsChartType.stackedAreaChart
+    ) {
       xticks
         .selectAll('text')
         .transition()
@@ -215,9 +227,9 @@ export const TransitionsCreate = (
         .attr('transform', `translate(0,${Math.abs(y(0) - y(y_min_stacked) + xTickPadding)})`);
     }
     if (
-      layout === EChartType.groupedBarChart ||
-      layout === EChartType.areaChart ||
-      layout === EChartType.lineChart
+      layout === ETransitionsChartType.groupedBarChart ||
+      layout === ETransitionsChartType.areaChart ||
+      layout === ETransitionsChartType.lineChart
     ) {
       xticks
         .selectAll('text')
@@ -230,13 +242,16 @@ export const TransitionsCreate = (
 
   // y-axis
   function updateYAxis(layout: string) {
-    if (layout === EChartType.stackedBarChart || layout === EChartType.stackedAreaChart) {
+    if (
+      layout === ETransitionsChartType.stackedBarChart ||
+      layout === ETransitionsChartType.stackedAreaChart
+    ) {
       y.domain([y_min_stacked, y_max_stacked]);
     }
     if (
-      layout === EChartType.groupedBarChart ||
-      layout === EChartType.areaChart ||
-      layout === EChartType.lineChart
+      layout === ETransitionsChartType.groupedBarChart ||
+      layout === ETransitionsChartType.areaChart ||
+      layout === ETransitionsChartType.lineChart
     ) {
       y.domain([y_min_grouped, y_max_grouped]);
     }
@@ -251,7 +266,7 @@ export const TransitionsCreate = (
       .selectAll('g')
       .data(_stacked)
       .join('g')
-      .attr('class', (d: any) => `group ${getFillColor(z(d.key))}`);
+      .attr('class', (d: any) => `group ${get_transitions_chart_fill_color(z(d.key))}`);
   }
   function updateGroups() {
     group.data(_stacked);
@@ -294,12 +309,12 @@ export const TransitionsCreate = (
       .join('rect')
       .attr('opacity', 1e-6);
     // .attr('y', y(0))
-    if (layout === EChartType.groupedBarChart) {
+    if (layout === ETransitionsChartType.groupedBarChart) {
       rect.attr('y', yGrouped).attr('height', heightBar);
       rect.attr('x', xGrouped).attr('width', widthGrouped());
       rect.transition().duration(duration).attr('opacity', opacityRect);
     }
-    if (layout === EChartType.stackedBarChart) {
+    if (layout === ETransitionsChartType.stackedBarChart) {
       rect.attr('y', yStacked).attr('height', heightBar);
       rect.attr('x', xStacked).attr('width', widthStacked());
       rect.transition().duration(duration).attr('opacity', opacityRect);
@@ -364,8 +379,8 @@ export const TransitionsCreate = (
     areaFunc = d3.area().curve(d3.curveBumpX).x(xCurve);
   }
   function drawArea(layout: string) {
-    const isAreaGrouped = layout === EChartType.areaChart;
-    const isAreaStacked = layout === EChartType.stackedAreaChart;
+    const isAreaGrouped = layout === ETransitionsChartType.areaChart;
+    const isAreaStacked = layout === ETransitionsChartType.stackedAreaChart;
     const isArea = isAreaGrouped || isAreaStacked;
     if (isArea) {
       areaFunc.y0(y(0)).y1(y(0));
@@ -375,14 +390,14 @@ export const TransitionsCreate = (
         .selectAll('path')
         .data(_area_1)
         .join('path')
-        .attr('class', (d: any) => getFillColor(z(d.key)))
+        .attr('class', (d: any) => get_transitions_chart_fill_color(z(d.key)))
         .attr('opacity', 1e-6)
         .attr('d', areaFunc);
       areaPaths2 = areas2
         .selectAll('path')
         .data(_area_2)
         .join('path')
-        .attr('class', (d: any) => getFillColor(z(d.key)))
+        .attr('class', (d: any) => get_transitions_chart_fill_color(z(d.key)))
         .attr('opacity', 1e-6)
         .attr('d', areaFunc);
       areaPaths1.transition().duration(duration).attr('opacity', opacityArea);
@@ -417,14 +432,14 @@ export const TransitionsCreate = (
     line = d3.line().curve(d3.curveBumpX).x(xCurve).y(yCurve);
   }
   function drawLine(layout: string) {
-    const isLineGrouped = layout == EChartType.lineChart;
+    const isLineGrouped = layout == ETransitionsChartType.lineChart;
     line.y(y(0));
     line.y(yCurve);
     linePaths = lines
       .selectAll('path')
       .data(_line)
       .join('path')
-      .attr('class', (d: any) => getStrokeColor(z(d.key)))
+      .attr('class', (d: any) => get_transitions_chart_stroke_color(z(d.key)))
       .attr('stroke-width', strokeWidth)
       .attr('fill', 'none')
       .attr('opacity', 1e-6)
@@ -456,7 +471,7 @@ export const TransitionsCreate = (
     _dots = [];
     _keys.forEach((_key: any, _i: number, _arr: any[]) => {
       let _value = item[_key];
-      if (type === EChartType.stackedAreaChart) {
+      if (type === ETransitionsChartType.stackedAreaChart) {
         const _k = item[_key] < 0 ? -1 : 1;
         _value = _arr.reduce(
           (prev: number, curr: any, i: number) =>
@@ -489,11 +504,11 @@ export const TransitionsCreate = (
 
   function drawDotLine(item: any) {
     dotLine.attr('opacity', 1);
-    if (type === EChartType.areaChart || type === EChartType.lineChart) {
+    if (type === ETransitionsChartType.areaChart || type === ETransitionsChartType.lineChart) {
       dotLine.attr('y1', y(y_min_grouped));
       dotLine.attr('y2', y(y_max_grouped));
     }
-    if (type === EChartType.stackedAreaChart) {
+    if (type === ETransitionsChartType.stackedAreaChart) {
       dotLine.attr('y1', y(y_min_stacked));
       dotLine.attr('y2', y(y_max_stacked));
     }
@@ -510,42 +525,42 @@ export const TransitionsCreate = (
   let prevType = type;
   function changeBarStacked(layout: string, prevLayout: string) {
     switch (prevLayout) {
-      case EChartType.stackedBarChart:
+      case ETransitionsChartType.stackedBarChart:
         updateRectStackedY();
         break;
-      case EChartType.groupedBarChart:
+      case ETransitionsChartType.groupedBarChart:
         updateRectStacked();
         break;
-      case EChartType.stackedAreaChart:
+      case ETransitionsChartType.stackedAreaChart:
         removeArea();
         drawRect(layout);
         break;
-      case EChartType.areaChart:
+      case ETransitionsChartType.areaChart:
         removeArea();
         drawRect(layout);
         break;
-      case EChartType.lineChart:
+      case ETransitionsChartType.lineChart:
         removeLine();
         drawRect(layout);
     }
   }
   function changeBarGrouped(layout: string, prevLayout: string) {
     switch (prevLayout) {
-      case EChartType.stackedBarChart:
+      case ETransitionsChartType.stackedBarChart:
         updateRectGrouped();
         break;
-      case EChartType.groupedBarChart:
+      case ETransitionsChartType.groupedBarChart:
         updateRectGroupedY();
         break;
-      case EChartType.stackedAreaChart:
+      case ETransitionsChartType.stackedAreaChart:
         removeArea();
         drawRect(layout);
         break;
-      case EChartType.areaChart:
+      case ETransitionsChartType.areaChart:
         removeArea();
         drawRect(layout);
         break;
-      case EChartType.lineChart:
+      case ETransitionsChartType.lineChart:
         removeLine();
         drawRect(layout);
         break;
@@ -553,43 +568,43 @@ export const TransitionsCreate = (
   }
   function changeAreaStacked(layout: string, prevLayout: string) {
     switch (prevLayout) {
-      case EChartType.stackedBarChart:
+      case ETransitionsChartType.stackedBarChart:
         removeRect();
         drawArea(layout);
         break;
-      case EChartType.groupedBarChart:
+      case ETransitionsChartType.groupedBarChart:
         removeRect();
         drawArea(layout);
         break;
-      case EChartType.stackedAreaChart:
+      case ETransitionsChartType.stackedAreaChart:
         updateAreaStacked();
         break;
-      case EChartType.areaChart:
+      case ETransitionsChartType.areaChart:
         updateAreaStacked();
         break;
-      case EChartType.lineChart:
+      case ETransitionsChartType.lineChart:
         removeLine();
-        drawArea(EChartType.stackedAreaChart);
+        drawArea(ETransitionsChartType.stackedAreaChart);
         break;
     }
   }
   function changeAreaGrouped(layout: string, prevLayout: string) {
     switch (prevLayout) {
-      case EChartType.stackedBarChart:
+      case ETransitionsChartType.stackedBarChart:
         removeRect();
         drawArea(layout);
         break;
-      case EChartType.groupedBarChart:
+      case ETransitionsChartType.groupedBarChart:
         removeRect();
         drawArea(layout);
         break;
-      case EChartType.stackedAreaChart:
+      case ETransitionsChartType.stackedAreaChart:
         updateAreaGrouped();
         break;
-      case EChartType.areaChart:
+      case ETransitionsChartType.areaChart:
         updateAreaGrouped();
         break;
-      case EChartType.lineChart:
+      case ETransitionsChartType.lineChart:
         removeLine();
         drawArea(layout);
         break;
@@ -597,23 +612,23 @@ export const TransitionsCreate = (
   }
   function changeLine(layout: string, prevLayout: string) {
     switch (prevLayout) {
-      case EChartType.stackedBarChart:
+      case ETransitionsChartType.stackedBarChart:
         removeRect();
         drawLine(layout);
         break;
-      case EChartType.groupedBarChart:
+      case ETransitionsChartType.groupedBarChart:
         removeRect();
         drawLine(layout);
         break;
-      case EChartType.stackedAreaChart:
+      case ETransitionsChartType.stackedAreaChart:
         removeArea();
         drawLine(layout);
         break;
-      case EChartType.areaChart:
+      case ETransitionsChartType.areaChart:
         removeArea();
         drawLine(layout);
         break;
-      case EChartType.lineChart:
+      case ETransitionsChartType.lineChart:
         updateLineGrouped();
         break;
     }
@@ -621,19 +636,19 @@ export const TransitionsCreate = (
   function change(layout: string, prevLayout: string) {
     type = layout;
     switch (layout) {
-      case EChartType.stackedBarChart:
+      case ETransitionsChartType.stackedBarChart:
         changeBarStacked(layout, prevLayout);
         break;
-      case EChartType.groupedBarChart:
+      case ETransitionsChartType.groupedBarChart:
         changeBarGrouped(layout, prevLayout);
         break;
-      case EChartType.stackedAreaChart:
+      case ETransitionsChartType.stackedAreaChart:
         changeAreaStacked(layout, prevLayout);
         break;
-      case EChartType.areaChart:
+      case ETransitionsChartType.areaChart:
         changeAreaGrouped(layout, prevLayout);
         break;
-      case EChartType.lineChart:
+      case ETransitionsChartType.lineChart:
         changeLine(layout, prevLayout);
         break;
     }
@@ -697,9 +712,9 @@ export const TransitionsCreate = (
     }
   }
   function highlight(item?: any) {
-    const isArea = type === EChartType.areaChart;
-    const isAreaStacked = type === EChartType.stackedAreaChart;
-    const isLine = type === EChartType.lineChart;
+    const isArea = type === ETransitionsChartType.areaChart;
+    const isAreaStacked = type === ETransitionsChartType.stackedAreaChart;
+    const isLine = type === ETransitionsChartType.lineChart;
     if (item) {
       rect.attr('opacity', (d: any) => (d.data.date === item.date ? opacityHover : opacityRect));
       if (isArea || isLine || isAreaStacked) drawDotLine(item);

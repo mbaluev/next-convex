@@ -1,7 +1,7 @@
 import { randomInt } from '@/lib/utils/random';
 import moment from 'moment';
 
-export enum EChartType {
+export enum ETransitionsChartType {
   stackedBarChart = 'bar-stacked',
   groupedBarChart = 'bar-grouped',
   areaChart = 'area',
@@ -23,9 +23,9 @@ export interface IChartLegendItem {
 
 const length = 50;
 
-export const DEFAULT_CHART_TYPE = EChartType.stackedBarChart;
+export const DEFAULT_TRANSITIONS_CHART_TYPE = ETransitionsChartType.stackedBarChart;
 
-export const MOCK_CHART_DATA: IChartItem[] = Array.from({ length }).map((_, i) => {
+export const MOCK_TRANSITIONS_CHART_DATA: IChartItem[] = Array.from({ length }).map((_, i) => {
   return {
     a: randomInt(-100000, 100000),
     b: randomInt(-100000, 100000),
@@ -43,7 +43,7 @@ export const MOCK_CHART_DATA: IChartItem[] = Array.from({ length }).map((_, i) =
   };
 });
 
-export const MOCK_CHART_LEGEND: IChartLegendItem[] = [
+export const MOCK_TRANSITIONS_CHART_LEGEND: IChartLegendItem[] = [
   {
     key: 'a',
     color: 'chart-1',

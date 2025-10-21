@@ -9,10 +9,10 @@ const schema = defineSchema({
     isCompleted: v.optional(v.boolean()),
   }),
   transitions: defineTable({
-    a: v.optional(v.number()),
-    b: v.optional(v.number()),
-    c: v.optional(v.number()),
-    date: v.optional(v.string()),
+    a: v.number(),
+    b: v.number(),
+    c: v.number(),
+    date: v.string(),
   }),
 });
 

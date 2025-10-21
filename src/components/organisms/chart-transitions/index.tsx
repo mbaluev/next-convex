@@ -81,7 +81,7 @@ export const ChartTransitions = (props: IChartTransitionsProps) => {
     router.push(`${path}?${queryString}`);
   };
 
-  // create, resize
+  // create
   const { width, height, start } = useResizeObserver(ref, 100);
   const create = useCallback(() => {
     if (ref.current) {
@@ -89,16 +89,16 @@ export const ChartTransitions = (props: IChartTransitionsProps) => {
       setChart(obj);
     }
   }, [ref, id, type, data, legend]);
+  // resize
   useEffect(() => {
     if (ref.current && chart && width > 0 && height > 0 && start) {
       chart?.remove();
       setChart(null);
     }
-    if (ref.current && width > 0 && height > 0 && !start) {
+    if (ref.current && data && width > 0 && height > 0 && !start) {
       create();
     }
-  }, [ref, start, width, height]);
-
+  }, [ref, start, width, height, data]);
   // update
   useEffect(() => {
     if (ref.current && chart) {

@@ -110,3 +110,9 @@ docker compose up --biild -d
 
 ## misc
 `env` - list of system environment variables
+
+## convex
+`npx convex data tasks` - show table data
+`npx convex deploy` - deploy changes to db
+`npx convex dev` - run dev env
+`npx convex import --table <tablename> convex/tablename.jsonl` - push data

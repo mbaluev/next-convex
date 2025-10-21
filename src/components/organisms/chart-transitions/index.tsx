@@ -44,10 +44,10 @@ export const ChartTransitions = (props: IChartTransitionsProps) => {
   const { name } = props;
 
   // load data
-  const dashboard = useQuery(api.dashboard.get);
-  const data = useMemo(() => dashboard ?? [], [dashboard]);
+  const transitions = useQuery(api.transitions.get);
+  const data = useMemo(() => transitions ?? [], [transitions]);
   const legend = MOCK_CHART_TRANSITIONS_LEGEND;
-  const loading = !dashboard;
+  const loading = !transitions;
 
   // props
   const ref = useRef<any>(null);
@@ -112,7 +112,7 @@ export const ChartTransitions = (props: IChartTransitionsProps) => {
         <WidgetIcon>
           <LayoutDashboard />
         </WidgetIcon>
-        <WidgetTitle>dashboard</WidgetTitle>
+        <WidgetTitle>transitions</WidgetTitle>
         <WidgetButtons>
           <TooltipText title="stacked bar chart" side="top">
             <Button

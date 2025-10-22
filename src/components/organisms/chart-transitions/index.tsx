@@ -134,7 +134,7 @@ export const ChartTransitions = (props: IChartTransitionsProps) => {
               <ChartColumn />
             </Button>
           </TooltipText>
-          <TooltipText title="area bar chart" side="top">
+          <TooltipText title="area chart" side="top">
             <Button
               variant={type === EChartTransitionsType.areaChart ? 'default' : 'ghost'}
               size="icon"

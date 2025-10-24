@@ -92,7 +92,8 @@ export const ChartTransitions = (props: IChartTransitionsProps) => {
   // resize
   useEffect(() => {
     if (ref.current && chart && width > 0 && height > 0 && start) {
-      chart?.remove();
+      // chart?.remove();
+      ref.current.replaceChildren();
       setChart(null);
     }
     if (ref.current && data && width > 0 && height > 0 && !start) {

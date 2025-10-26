@@ -56,7 +56,7 @@ export const ChartTransitions = (props: IChartTransitionsProps) => {
   const params = useSearchParams();
   const typeName = name ?? 'type';
   const type = params.get(typeName) ?? DEFAULT_CHART_TRANSITIONS_TYPE;
-  const id = `widget-chart-${v4()}`;
+  const id = useMemo(() => `widget-chart-${v4()}`, []);
 
   // helpers
   const formatValue = (value: number) => {
@@ -91,10 +91,10 @@ export const ChartTransitions = (props: IChartTransitionsProps) => {
   }, [ref, id, type, data, legend]);
   // resize
   useEffect(() => {
-    if (ref.current && chart && width > 0 && height > 0 && start) {
-      // chart?.remove();
-      ref.current.replaceChildren();
+    if (ref.current && width > 0 && height > 0 && start) {
+      chart?.remove();
       setChart(null);
+      // ref.current.replaceChildren();
     }
     if (ref.current && data && width > 0 && height > 0 && !start) {
       create();

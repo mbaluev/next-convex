@@ -7,8 +7,9 @@ const buttonVariants = cva(
   cn(
     'inline-flex items-center justify-center gap-4',
     'whitespace-nowrap rounded-md font-medium cursor-pointer',
-    'focus-visible:outline-none',
-    'disabled:pointer-events-none disabled:opacity-50'
+    'disabled:pointer-events-none disabled:cursor-not-allowed disabled:opacity-50',
+    'focus-visible:outline-none focus-visible:ring-2 focus:ring-ring',
+    'focus-visible:ring-offset-background focus-visible:ring-offset-2'
   ),
   {
     variants: {
@@ -20,13 +21,13 @@ const buttonVariants = cva(
         warning: 'bg-warning text-warning-foreground hover:bg-warning/90',
         success: 'bg-success text-success-foreground hover:bg-success/90',
         info: 'bg-info text-info-foreground hover:bg-info/90',
-        ghost: 'hover:bg-secondary hover:text-secondary-foreground',
-        'ghost-primary': 'hover:bg-secondary text-primary',
-        'ghost-destructive': 'hover:bg-secondary text-destructive',
-        'ghost-warning': 'hover:bg-secondary text-warning',
-        'ghost-success': 'hover:bg-secondary text-success',
-        link: 'text-primary underline-offset-4 hover:underline',
-        static: 'text-foreground cursor-default',
+        ghost: 'hover:bg-secondary hover:text-secondary-foreground focus-visible:ring-offset-0',
+        'ghost-primary': 'hover:bg-secondary text-primary focus-visible:ring-offset-0',
+        'ghost-destructive': 'hover:bg-secondary text-destructive focus-visible:ring-offset-0',
+        'ghost-warning': 'hover:bg-secondary text-warning focus-visible:ring-offset-0',
+        'ghost-success': 'hover:bg-secondary text-success focus-visible:ring-offset-0',
+        link: 'text-primary rounded-sm underline-offset-4 hover:underline focus-visible:ring-offset-0',
+        static: 'text-foreground cursor-default focus-visible:ring-0 focus-visible:ring-offset-0',
       },
       size: {
         default: 'h-11 px-3',
@@ -56,7 +57,7 @@ interface ButtonProps
 
 const Button = React.forwardRef<HTMLButtonElement, ButtonProps>(
   ({ className, variant, size, asChild = false, ...props }, ref) => {
-    const Comp = asChild ? Slot : 'button';
+    const Comp = asChild ? Slot : variant === 'static' ? 'span' : 'button';
     return (
       <Comp className={cn(buttonVariants({ variant, size, className }))} ref={ref} {...props} />
     );

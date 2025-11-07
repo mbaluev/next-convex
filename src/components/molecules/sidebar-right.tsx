@@ -109,8 +109,7 @@ const SidebarRightProvider = forwardRef<HTMLDivElement, SidebarRightProviderProp
   // keyboard shortcut to toggle/hide the sidebar.
   useEffect(() => {
     const handleKeyDown = (event: KeyboardEvent) => {
-      // && (event.metaKey || event.ctrlKey)
-      if (event.key === SIDEBAR_KEYBOARD_SHORTCUT) {
+      if (event.key === SIDEBAR_KEYBOARD_SHORTCUT && (event.metaKey || event.ctrlKey)) {
         event.preventDefault();
         toggleSidebar();
       }

@@ -26,7 +26,7 @@ const buttonVariants = cva(
         'ghost-destructive': 'hover:bg-secondary text-destructive focus-visible:ring-offset-0',
         'ghost-warning': 'hover:bg-secondary text-warning focus-visible:ring-offset-0',
         'ghost-success': 'hover:bg-secondary text-success focus-visible:ring-offset-0',
-        link: 'text-primary rounded-sm underline-offset-4 hover:underline focus-visible:ring-offset-0',
+        link: 'text-primary rounded-sm underline-offset-4 hover:underline focus-visible:underline focus-visible:ring-0 focus-visible:ring-offset-0',
         static: 'text-foreground cursor-default focus-visible:ring-0 focus-visible:ring-offset-0',
       },
       size: {

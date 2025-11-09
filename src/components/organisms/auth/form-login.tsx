@@ -25,7 +25,6 @@ import { ButtonsSocial } from '@/components/organisms/auth/buttons-social';
 import { ButtonBack } from '@/components/organisms/auth/button-back';
 import { Spinner } from '@/components/atoms/spinner';
 import { useAuthActions } from '@convex-dev/auth/react';
-import { toast } from 'sonner';
 
 export const FormLogin = () => {
   const searchParams = useSearchParams();
@@ -63,13 +62,11 @@ export const FormLogin = () => {
       setSuccess(undefined);
       startTransition(() => {
         signIn('password', formData)
-          .then((data) => {
-            console.log(data);
+          .then(() => {
             form.reset();
             setSuccess('success');
           })
           .catch((error) => {
-            console.log(error);
             setError(String(error));
           });
       });

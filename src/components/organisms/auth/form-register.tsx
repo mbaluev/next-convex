@@ -45,13 +45,11 @@ export const FormRegister = () => {
       setSuccess(undefined);
       startTransition(() => {
         signIn('password', formData)
-          .then((data) => {
-            console.log(data);
+          .then(() => {
             form.reset();
             setSuccess('success');
           })
           .catch((error) => {
-            console.log(error);
             setError(String(error));
           });
       });

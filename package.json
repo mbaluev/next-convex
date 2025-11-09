@@ -5,9 +5,12 @@
   "scripts": {
     "dev": "next dev --turbopack -p 3001",
     "build": "next build",
-    "start": "next start",
+    "start": "next start -p 3001",
     "lint": "next lint",
-    "convex-dev": "npx convex dev --env-file .env.development.local"
+    "convex-env": "npx convex env --env-file .env.development.local",
+    "convex-dev": "npx convex dev --env-file .env.development.local",
+    "convex-deploy": "npx convex deploy --env-file .env.development.local",
+    "convex-import": "npx convex import --env-file .env.development.local"
   },
   "dependencies": {
     "@auth/core": "0.37.0",

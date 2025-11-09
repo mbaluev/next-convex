@@ -5,6 +5,8 @@ services:
     image: ghcr.io/get-convex/convex-backend:33cef775a8a6228cbacee4a09ac2c4073d62ed13
     stop_grace_period: 10s
     stop_signal: SIGINT
+    env_file:
+      - ./.env.production.local
     ports:
       - "${PORT:-3210}:3210"
       - "${SITE_PROXY_PORT:-3211}:3211"
@@ -48,6 +50,8 @@ services:
     image: ghcr.io/get-convex/convex-dashboard:33cef775a8a6228cbacee4a09ac2c4073d62ed13
     stop_grace_period: 10s
     stop_signal: SIGINT
+    env_file:
+      - ./.env.production.local
     ports:
       - "${DASHBOARD_PORT:-6791}:6791"
     environment:

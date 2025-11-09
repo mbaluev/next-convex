@@ -9,7 +9,8 @@
     "lint": "next lint",
     "convex-env": "npx convex env --env-file .env.development.local",
     "convex-dev": "npx convex dev --env-file .env.development.local",
-    "convex-deploy": "npx convex deploy --env-file .env.development.local",
+    "convex-deploy-dev": "npx convex deploy --env-file .env.development.local",
+    "convex-deploy-prod": "npx convex deploy --env-file .env.production.local",
     "convex-import": "npx convex import --env-file .env.development.local"
   },
   "dependencies": {

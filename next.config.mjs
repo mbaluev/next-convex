@@ -8,7 +8,7 @@ const nextConfig = {
   },
   env: {
     APP_NAME: process.env.APP_NAME,
-    APP_URL: process.env.APP_URL,
+    NEXT_PUBLIC_SITE_URL: process.env.NEXT_PUBLIC_SITE_URL,
     NEXT_PUBLIC_CONVEX_URL: process.env.NEXT_PUBLIC_CONVEX_URL,
     CONVEX_SELF_HOSTED_URL: process.env.CONVEX_SELF_HOSTED_URL,
     CONVEX_SELF_HOSTED_ADMIN_KEY: process.env.CONVEX_SELF_HOSTED_ADMIN_KEY,

@@ -15,10 +15,11 @@ export default convexAuthNextjsMiddleware(async (request, { convexAuth }) => {
     return;
   }
   if (!(await convexAuth.isAuthenticated()) && !isPublicRoute(request)) {
-    const { nextUrl } = request;
-    let callbackUrl = nextUrl.pathname;
-    if (nextUrl.search) callbackUrl += nextUrl.search;
-    return nextjsMiddlewareRedirect(request, `/auth/login?callbackUrl=${callbackUrl}`);
+    return nextjsMiddlewareRedirect(request, '/auth/login');
+    // const { nextUrl } = request;
+    // let callbackUrl = nextUrl.pathname;
+    // if (nextUrl.search) callbackUrl += nextUrl.search;
+    // return nextjsMiddlewareRedirect(request, `/auth/login?callbackUrl=${callbackUrl}`);
   }
 });
 

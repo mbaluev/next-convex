@@ -34,17 +34,16 @@ export const FormRegister = () => {
       setError('invalid fields');
     } else {
       const { name, email, password } = validatedFields.data;
-
-      const formData = new FormData();
-      formData.append('flow', 'signUp');
-      formData.append('name', name);
-      formData.append('email', email);
-      formData.append('password', password);
-
+      const body: Record<string, any> = {
+        flow: 'signUp',
+        name: name,
+        email: email,
+        password: password,
+      };
       setError(undefined);
       setSuccess(undefined);
       startTransition(() => {
-        signIn('password', formData)
+        signIn('password', body)
           .then(() => {
             form.reset();
             setSuccess('success');

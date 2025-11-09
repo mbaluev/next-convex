@@ -25,6 +25,7 @@ import { ButtonsSocial } from '@/components/organisms/auth/buttons-social';
 import { ButtonBack } from '@/components/organisms/auth/button-back';
 import { Spinner } from '@/components/atoms/spinner';
 import { useAuthActions } from '@convex-dev/auth/react';
+import { DEFAULT_LOGIN_REDIRECT } from '@/auth/routes';
 
 export const FormLogin = () => {
   const searchParams = useSearchParams();
@@ -50,18 +51,19 @@ export const FormLogin = () => {
     if (!validatedFields.success) {
       setError('invalid fields');
     } else {
+      // const callback = new URL(callbackUrl || DEFAULT_LOGIN_REDIRECT, window.location.href).href;
+      // const callback = callbackUrl || DEFAULT_LOGIN_REDIRECT;
       const { email, password, code } = validatedFields.data;
-
-      const formData = new FormData();
-      formData.append('flow', 'signIn');
-      formData.append('email', email);
-      formData.append('password', password);
-      if (code) formData.append('code', code);
-
+      const body: Record<string, any> = {
+        flow: 'signIn',
+        email: email,
+        password: password,
+        code: code,
+      };
       setError(undefined);
       setSuccess(undefined);
       startTransition(() => {
-        signIn('password', formData)
+        signIn('password', body)
           .then(() => {
             form.reset();
             setSuccess('success');

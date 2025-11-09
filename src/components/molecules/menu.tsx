@@ -2,7 +2,6 @@
 
 import Link from 'next/link';
 import { Button } from '@/components/atoms/button';
-import { useCurrentUser } from '@/auth/hooks/use-current-user';
 import { SvgLogo } from '@/components/icons/components/logo';
 import {
   ChevronRight,
@@ -36,9 +35,9 @@ import { handleDialogOpen } from '@/components/atoms/dialog-handlers';
 import { usePathname, useRouter, useSearchParams } from 'next/navigation';
 import { menuLeft } from '@/lib/settings/menu';
 import { Avatar, AvatarFallback, AvatarImage } from '@/components/atoms/avatar';
-import { useIsAuth } from '@/auth/hooks/use-is-auth';
-import { Authenticated } from 'convex/react';
+import { useCurrentUser } from '@/auth/hooks/use-current-user';
 import { useAuthActions } from '@convex-dev/auth/react';
+import { Authenticated } from 'convex/react';
 
 const MENU_PADDING_ITEM = 15;
 const MENU_TRANSITION_DURATION = 100;
@@ -214,9 +213,7 @@ const MenuLeft = (props: IMenuProps) => {
 MenuLeft.displayName = 'MenuLeft';
 
 const MenuLeftContent = () => {
-  const is_auth = useIsAuth();
   const { toggleSidebar, data } = useSidebarLeft();
-  if (!is_auth) return null;
   return (
     <div className="flex flex-col">
       <div className="p-4 flex space-x-4 justify-between">
@@ -303,25 +300,22 @@ MenuUserInfo.displayName = 'MenuUserInfo';
 
 const MenuRight = (props: IMenuProps) => {
   const { children } = props;
-  const user = useCurrentUser();
   return (
     <SidebarRightProvider name="menu-right" collapsed defaultOpen={false}>
       {children}
-      {user && (
+      <Authenticated>
         <SidebarRight className="z-10 group/sidebar-right">
           <SidebarRightResize className="group-hover/sidebar-right:opacity-100 group-active/sidebar-right:opacity-100" />
           <MenuRightContent />
         </SidebarRight>
-      )}
+      </Authenticated>
     </SidebarRightProvider>
   );
 };
 MenuRight.displayName = 'MenuRight';
 
 const MenuRightContent = () => {
-  const user = useCurrentUser();
   const { toggleSidebar, data } = useSidebarRight();
-  if (!user) return null;
   return (
     <div className="flex flex-col">
       <div className="p-4 flex gap-4 justify-between items-center">

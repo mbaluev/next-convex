@@ -1,12 +1,11 @@
 'use client';
 
-import { useIsAuth } from '@/auth/hooks/use-is-auth';
+import { Dot } from 'lucide-react';
 import { SvgLogo } from '@/components/icons/components/logo';
 import { ButtonLogin } from '@/components/organisms/auth/button-login';
-import { Dot } from 'lucide-react';
+import { Unauthenticated } from 'convex/react';
 
 export default function Home() {
-  const auth = useIsAuth();
   return (
     <div className="space-y-10 text-center">
       <div className="flex gap-8 flex-col items-center justify-center">
@@ -29,7 +28,7 @@ export default function Home() {
         </div>
         <p>d3.js charts</p>
       </div>
-      {!auth && (
+      <Unauthenticated>
         <div className="grid grid-cols-1 gap-6">
           <ButtonLogin variant="default" mode="redirect">
             sign in
@@ -38,7 +37,7 @@ export default function Home() {
             sign in dialog
           </ButtonLogin>
         </div>
-      )}
+      </Unauthenticated>
     </div>
   );
 }

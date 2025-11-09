@@ -10,6 +10,7 @@ import { usePathname } from 'next/navigation';
 import { BREAD_CRUMBS } from '@/lib/settings/bread-crumbs';
 import { BreadCrumbs } from '@/components/molecules/bread-crumbs';
 import { useCallback, useEffect } from 'react';
+import { Authenticated } from 'convex/react';
 
 const THEME_KEYBOARD_SHORTCUT = 't';
 
@@ -48,7 +49,9 @@ const HeaderRight = () => {
     <nav className="flex-grow-0 flex gap-4">
       <HeaderThemeBtn />
       {/*<HeaderUserBtn />*/}
-      <SidebarRightTrigger />
+      <Authenticated>
+        <SidebarRightTrigger />
+      </Authenticated>
     </nav>
   );
 };
@@ -58,22 +61,21 @@ const HeaderLeft = () => {
   const breadCrumbs = BREAD_CRUMBS[pathname];
   return (
     <div className="flex-grow flex flex-wrap gap-4">
-      <SidebarLeftTrigger />
+      <Authenticated>
+        <SidebarLeftTrigger />
+      </Authenticated>
       <BreadCrumbs breadCrumbs={breadCrumbs} home />
     </div>
   );
 };
 
 const Header = () => {
-  // const scrolled = useScrollTop();
-  // const user = useCurrentUser();
   return (
     <header className="flex flex-col w-full z-[8] sticky top-0">
       <div className="flex gap-4 justify-end items-start p-4 w-full bg-background">
         <HeaderLeft />
         <HeaderRight />
       </div>
-      {/*{user && <Separator />}*/}
     </header>
   );
 };

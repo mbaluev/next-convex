@@ -18,7 +18,6 @@ import { cn } from '@/lib/utils/cn';
 import { MEDIA_MD, useMatchMedia } from '@/lib/hooks/use-match-media';
 import { Button } from '@/components/atoms/button';
 import { ArrowLeftToLine, ArrowRightFromLine } from 'lucide-react';
-import { useCurrentUser } from '@/auth/hooks/use-current-user';
 import { useCookies } from 'next-client-cookies';
 import { CTree, TTreeDTO } from '@/lib/utils/tree';
 import { usePathname } from 'next/navigation';
@@ -226,8 +225,7 @@ const SidebarLeftTrigger = forwardRef<ElementRef<typeof Button>, SidebarLeftTrig
   (props, ref) => {
     const { onClick, ..._props } = props;
     const { toggleSidebar, open, isMobile, openMobile } = useSidebarLeft();
-    const user = useCurrentUser();
-    if (!user || (!isMobile && open)) return null;
+    if (!isMobile && open) return null;
     return (
       <Button
         ref={ref}
@@ -272,9 +270,6 @@ const SidebarLeft = forwardRef<HTMLDivElement, SidebarLeftProps>((props, ref) =>
   const { isMobile, open, openMobile, toggleSidebar } = useSidebarLeft();
   const { width, resizing } = useSidebarLeft();
   const isDesktop = useMemo(() => !isMobile, [isMobile]);
-
-  const user = useCurrentUser();
-  if (!user) return null;
 
   const classNavDesktop = cn('h-full flex-grow-0 flex-shrink-0 flex-basis-auto static'); // 'w-[280px]', !open && 'ml-[-280px]'
   const classNavMobile = cn(

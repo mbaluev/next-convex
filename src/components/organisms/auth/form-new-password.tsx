@@ -9,7 +9,6 @@ import { Button } from '@/components/atoms/button';
 import { AlertSuccess, AlertError } from '@/components/atoms/alert';
 import { useState, useTransition } from 'react';
 import { useSearchParams } from 'next/navigation';
-import { newPassword } from '@/auth/actions/new-password';
 import { InputPassword } from '@/components/atoms/input-password';
 import { ButtonBack } from '@/components/organisms/auth/button-back';
 import { Spinner } from '@/components/atoms/spinner';
@@ -31,12 +30,12 @@ export const FormNewPassword = () => {
   const onSubmit = async (values: z.infer<typeof newPasswordSchema>) => {
     setError(undefined);
     setSuccess(undefined);
-    startTransition(() => {
-      newPassword(values, token).then((data) => {
-        setError(data?.error);
-        setSuccess(data?.success);
-      });
-    });
+    // startTransition(() => {
+    // newPassword(values, token).then((data) => {
+    //   setError(data?.error);
+    //   setSuccess(data?.success);
+    // });
+    // });
   };
 
   return (

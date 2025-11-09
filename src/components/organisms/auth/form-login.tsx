@@ -15,7 +15,6 @@ import {
 } from '@/components/atoms/form';
 import { Button } from '@/components/atoms/button';
 import { AlertSuccess, AlertError } from '@/components/atoms/alert';
-import { login } from '@/auth/actions/login';
 import { Fragment, useState, useTransition } from 'react';
 import { useSearchParams } from 'next/navigation';
 import { InputPassword } from '@/components/atoms/input-password';
@@ -25,6 +24,8 @@ import { REGEXP_ONLY_DIGITS } from 'input-otp';
 import { ButtonsSocial } from '@/components/organisms/auth/buttons-social';
 import { ButtonBack } from '@/components/organisms/auth/button-back';
 import { Spinner } from '@/components/atoms/spinner';
+import { useAuthActions } from '@convex-dev/auth/react';
+import { toast } from 'sonner';
 
 export const FormLogin = () => {
   const searchParams = useSearchParams();
@@ -37,6 +38,7 @@ export const FormLogin = () => {
   const [success, setSuccess] = useState<string | undefined>();
   const [error, setError] = useState<string | undefined>();
 
+  const { signIn } = useAuthActions();
   const form = useForm<z.infer<typeof loginSchema>>({
     resolver: zodResolver(loginSchema),
     defaultValues: {
@@ -45,25 +47,33 @@ export const FormLogin = () => {
     },
   });
   const onSubmit = async (values: z.infer<typeof loginSchema>) => {
-    setError(undefined);
-    setSuccess(undefined);
-    startTransition(() => {
-      login(values, callbackUrl)
-        .then((data) => {
-          if (data?.error) {
+    const validatedFields = loginSchema.safeParse(values);
+    if (!validatedFields.success) {
+      setError('invalid fields');
+    } else {
+      const { email, password, code } = validatedFields.data;
+
+      const formData = new FormData();
+      formData.append('flow', 'signIn');
+      formData.append('email', email);
+      formData.append('password', password);
+      if (code) formData.append('code', code);
+
+      setError(undefined);
+      setSuccess(undefined);
+      startTransition(() => {
+        signIn('password', formData)
+          .then((data) => {
+            console.log(data);
             form.reset();
-            setError(data?.error);
-          }
-          if (data?.success) {
-            form.reset();
-            setSuccess(data?.success);
-          }
-          if (data?.twoFactor) {
-            setShowTwoFactor(true);
-          }
-        })
-        .catch(() => setError('something went wrong'));
-    });
+            setSuccess('success');
+          })
+          .catch((error) => {
+            console.log(error);
+            setError(String(error));
+          });
+      });
+    }
   };
 
   return (

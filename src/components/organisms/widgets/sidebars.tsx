@@ -32,20 +32,22 @@ export const WidgetSidebars = (props: WidgetProps) => {
   } = useSidebarRight();
 
   return (
-    <Widget {...props}>
-      <WidgetHeader variant="background">
+    <Widget variant="background" {...props}>
+      <WidgetHeader variant="padding">
         <WidgetIcon>
           <Menu />
         </WidgetIcon>
         <WidgetTitle>sidebars</WidgetTitle>
       </WidgetHeader>
-      <WidgetContent variant="background" className="flex">
-        <div className="flex flex-col space-y-6 items-start">
+      <WidgetContent variant="padding" className="space-y-4 pb-8">
+        <div>
           <Button variant="outline" onClick={toggleLeft}>
             {!(isMobileLeft ? openMobileLeft : openLeft) && <ArrowRightFromLine />}
             {(isMobileLeft ? openMobileLeft : openLeft) && <ArrowLeftToLine />}
             sidebar left
           </Button>
+        </div>
+        <div>
           <Button variant="outline" onClick={toggleRight}>
             {!(isMobileRight ? openMobileRight : openRight) && <ArrowLeftFromLine />}
             {(isMobileRight ? openMobileRight : openRight) && <ArrowRightToLine />}

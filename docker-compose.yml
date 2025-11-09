@@ -58,24 +58,6 @@ services:
     networks:
       - node-network
 
-  postgres:
-    container_name: convex-postgres
-    image: postgres:16
-    restart: always
-    tty: true
-    env_file:
-      - ./.env.production.local
-    expose:
-      - "5434"
-    ports:
-      - "5434:5434"
-    volumes:
-      - ./backups:/home/postgres
-      - ./postgres:/var/lib/postgresql/data
-    command: -p 5434
-    networks:
-      - node-network
-
   frontend:
     container_name: convex-frontend
     platform: linux/x86_64
@@ -102,7 +84,6 @@ services:
     depends_on:
       - backend
       - dashboard
-      - postgres
       - frontend
 
 networks:

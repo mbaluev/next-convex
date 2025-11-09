@@ -4,7 +4,6 @@ import * as z from 'zod';
 import { useForm } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { Button } from '@/components/atoms/button';
-import { settings } from '@/auth/actions/settings';
 import { Fragment, useTransition } from 'react';
 import { useSession } from 'next-auth/react';
 import { settingsSchema } from '@/auth/schemas';
@@ -18,22 +17,13 @@ import {
 } from '@/components/atoms/form';
 import { Input } from '@/components/atoms/input';
 import { useCurrentUser } from '@/auth/hooks/use-current-user';
-import {
-  Select,
-  SelectContent,
-  SelectItem,
-  SelectTrigger,
-  SelectValue,
-} from '@/components/atoms/select';
-import { UserRole } from '@prisma/client';
 import { Switch } from '@/components/atoms/switch';
 import { InputPassword } from '@/components/atoms/input-password';
-import { toast } from 'sonner';
 import { Spinner } from '@/components/atoms/spinner';
 
 export const FormSettings = () => {
   const user = useCurrentUser();
-  const { update } = useSession();
+  // const { update } = useSession();
   const [isPending, startTransition] = useTransition();
 
   const form = useForm<z.infer<typeof settingsSchema>>({
@@ -43,19 +33,19 @@ export const FormSettings = () => {
       newPassword: undefined,
       name: user?.name || undefined,
       email: user?.email || undefined,
-      role: user?.role || undefined,
-      isTwoFactorEnabled: user?.isTwoFactorEnabled || undefined,
+      // role: user?.role || undefined,
+      // isTwoFactorEnabled: user?.isTwoFactorEnabled || undefined,
     },
   });
   const onSubmit = (values: z.infer<typeof settingsSchema>) => {
-    startTransition(() => {
-      settings(values)
-        .then((data) => {
-          if (data.error) toast.error(data.error);
-          if (data.success) update().then(() => toast.success(data.success));
-        })
-        .catch(() => toast.error('something went wrong'));
-    });
+    // startTransition(() => {
+    //   settings(values)
+    //     .then((data) => {
+    //       if (data.error) toast.error(data.error);
+    //       if (data.success) update().then(() => toast.success(data.success));
+    //     })
+    //     .catch(() => toast.error('something went wrong'));
+    // });
   };
 
   const _formItem = 'grid gap-x-6 gap-y-4 grid-cols-1 sm:grid-cols-2 md:grid-cols-3 space-y-0';
@@ -71,7 +61,7 @@ export const FormSettings = () => {
           <FormItem className={_formItem}>
             <FormLabel className={_formLabel}>id</FormLabel>
             <FormControl className={_formControl}>
-              <p>{user?.id}</p>
+              <p>{user?._id}</p>
             </FormControl>
             <FormMessage className={_formMessage} />
           </FormItem>
@@ -88,6 +78,7 @@ export const FormSettings = () => {
               </FormItem>
             )}
           />
+          {/*
           <FormField
             control={form.control}
             name="role"
@@ -113,6 +104,8 @@ export const FormSettings = () => {
               </FormItem>
             )}
           />
+          */}
+          {/*
           {!user?.isOAuth && (
             <Fragment>
               <FormField
@@ -183,6 +176,7 @@ export const FormSettings = () => {
               />
             </Fragment>
           )}
+          */}
         </div>
         <div className={_formItem}>
           <Button type="submit" className={_buttonSubmit} disabled={isPending}>

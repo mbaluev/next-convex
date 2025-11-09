@@ -9,7 +9,6 @@ import { Form, FormControl, FormField, FormItem, FormMessage } from '@/component
 import { Button } from '@/components/atoms/button';
 import { AlertSuccess, AlertError } from '@/components/atoms/alert';
 import { useState, useTransition } from 'react';
-import { reset } from '@/auth/actions/reset';
 import { ButtonBack } from '@/components/organisms/auth/button-back';
 import { Spinner } from '@/components/atoms/spinner';
 
@@ -27,12 +26,12 @@ export const FormReset = () => {
   const onSubmit = async (values: z.infer<typeof resetSchema>) => {
     setError(undefined);
     setSuccess(undefined);
-    startTransition(() => {
-      reset(values).then((data) => {
-        setError(data?.error);
-        setSuccess(data?.success);
-      });
-    });
+    // startTransition(() => {
+    //   reset(values).then((data) => {
+    //     setError(data?.error);
+    //     setSuccess(data?.success);
+    //   });
+    // });
   };
 
   return (

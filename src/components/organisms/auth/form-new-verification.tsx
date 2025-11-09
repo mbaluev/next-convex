@@ -2,7 +2,6 @@
 
 import { useSearchParams } from 'next/navigation';
 import { useCallback, useEffect, useState } from 'react';
-import { newVerification } from '@/auth/actions/new-verification';
 import { AlertSuccess, AlertError, AlertInfo } from '@/components/atoms/alert';
 import { router } from 'next/client';
 import { ButtonBack } from '@/components/organisms/auth/button-back';
@@ -19,19 +18,19 @@ export const FormNewVerification = () => {
       setError('missing token');
       return;
     }
-    newVerification(token)
-      .then((data) => {
-        if (data.success) {
-          setSuccess(data.success);
-          router.push('/auth/login');
-        }
-        if (data.error) {
-          setError(data.error);
-        }
-      })
-      .catch(() => {
-        setError('something went wrong');
-      });
+    // newVerification(token)
+    //   .then((data) => {
+    //     if (data.success) {
+    //       setSuccess(data.success);
+    //       router.push('/auth/login');
+    //     }
+    //     if (data.error) {
+    //       setError(data.error);
+    //     }
+    //   })
+    //   .catch(() => {
+    //     setError('something went wrong');
+    //   });
   }, [token]);
   useEffect(() => {
     onSubmit();

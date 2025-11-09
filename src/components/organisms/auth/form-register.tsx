@@ -9,16 +9,17 @@ import { Form, FormControl, FormField, FormItem, FormMessage } from '@/component
 import { Button } from '@/components/atoms/button';
 import { AlertSuccess, AlertError } from '@/components/atoms/alert';
 import { useState, useTransition } from 'react';
-import { register } from '@/auth/actions/register';
 import { InputPassword } from '@/components/atoms/input-password';
 import { ButtonBack } from '@/components/organisms/auth/button-back';
 import { Spinner } from '@/components/atoms/spinner';
+import { useAuthActions } from '@convex-dev/auth/react';
 
 export const FormRegister = () => {
   const [error, setError] = useState<string | undefined>();
   const [success, setSuccess] = useState<string | undefined>();
   const [isPending, startTransition] = useTransition();
 
+  const { signIn } = useAuthActions();
   const form = useForm<z.infer<typeof registerSchema>>({
     resolver: zodResolver(registerSchema),
     defaultValues: {
@@ -28,14 +29,33 @@ export const FormRegister = () => {
     },
   });
   const onSubmit = async (values: z.infer<typeof registerSchema>) => {
-    setError(undefined);
-    setSuccess(undefined);
-    startTransition(() => {
-      register(values).then((data) => {
-        setError(data.error);
-        setSuccess(data.success);
+    const validatedFields = registerSchema.safeParse(values);
+    if (!validatedFields.success) {
+      setError('invalid fields');
+    } else {
+      const { name, email, password } = validatedFields.data;
+
+      const formData = new FormData();
+      formData.append('flow', 'signUp');
+      formData.append('name', name);
+      formData.append('email', email);
+      formData.append('password', password);
+
+      setError(undefined);
+      setSuccess(undefined);
+      startTransition(() => {
+        signIn('password', formData)
+          .then((data) => {
+            console.log(data);
+            form.reset();
+            setSuccess('success');
+          })
+          .catch((error) => {
+            console.log(error);
+            setError(String(error));
+          });
       });
-    });
+    }
   };
 
   return (

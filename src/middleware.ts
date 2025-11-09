@@ -1,52 +1,29 @@
-import authConfig from '@/auth/auth.config';
-import NextAuth from 'next-auth';
-import { apiAuthPrefix, authRoutes, publicRoutes, DEFAULT_LOGIN_REDIRECT } from '@/auth/routes';
-import { NextResponse } from 'next/server';
+import {
+  convexAuthNextjsMiddleware,
+  createRouteMatcher,
+  nextjsMiddlewareRedirect,
+} from '@convex-dev/auth/nextjs/server';
+import { authRoutes, DEFAULT_LOGIN_REDIRECT, publicRoutes } from '@/auth/routes';
 
-const { auth } = NextAuth(authConfig);
+const isAuthRoute = createRouteMatcher(authRoutes);
+const isPublicRoute = createRouteMatcher(publicRoutes);
 
-export default auth((req) => {
-  const { nextUrl } = req;
-  const isLoggedIn = !!req.auth;
-  const isApiAuthRoute = nextUrl.pathname.startsWith(apiAuthPrefix);
-  const isPublicRoute = publicRoutes.includes(nextUrl.pathname);
-  const isAuthRoute = authRoutes.includes(nextUrl.pathname);
-
-  if (isApiAuthRoute) return;
-
-  if (isAuthRoute) {
-    if (isLoggedIn) return NextResponse.redirect(new URL(DEFAULT_LOGIN_REDIRECT, nextUrl.origin));
+export default convexAuthNextjsMiddleware(async (request, { convexAuth }) => {
+  if (isAuthRoute(request)) {
+    if (await convexAuth.isAuthenticated())
+      return nextjsMiddlewareRedirect(request, DEFAULT_LOGIN_REDIRECT);
     return;
   }
-
-  if (!isLoggedIn && !isPublicRoute) {
+  if (!(await convexAuth.isAuthenticated()) && !isPublicRoute(request)) {
+    const { nextUrl } = request;
     let callbackUrl = nextUrl.pathname;
     if (nextUrl.search) callbackUrl += nextUrl.search;
-    const encodedCallbackUrl = encodeURIComponent(callbackUrl);
-    const loginCallbackUrl = `/auth/login?callbackUrl=${encodedCallbackUrl}`;
-    return NextResponse.redirect(new URL(loginCallbackUrl, nextUrl.origin));
+    return nextjsMiddlewareRedirect(request, `/auth/login?callbackUrl=${callbackUrl}`);
   }
-
-  return;
 });
 
 export const config = {
-  matcher: [
-    /*
-     * Match all request paths except for the ones starting with:
-     * - api (API routes)
-     * - _next/static (static files)
-     * - _next/image (image optimization files)
-     * - favicon.ico, sitemap.xml, robots.txt (metadata files)
-     */
-    '/((?!api|_next/static|_next/image|assets|favicon.ico|sitemap.xml|robots.txt).*)',
-  ],
+  // The following matcher runs middleware on all routes
+  // except static assets.
+  matcher: ['/((?!.*\\..*|_next).*)', '/', '/(api|trpc)(.*)'],
 };
-
-// import { convexAuthNextjsMiddleware } from '@convex-dev/auth/nextjs/server';
-// export default convexAuthNextjsMiddleware();
-// export const config = {
-//   // The following matcher runs middleware on all routes
-//   // except static assets.
-//   matcher: ['/((?!.*\\..*|_next).*)', '/', '/(api|trpc)(.*)'],
-// };

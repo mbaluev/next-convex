@@ -1,8 +1,4 @@
 import { toast } from 'sonner';
-import { admin } from '@/auth/actions/admin';
-import { RoleGate } from '@/components/organisms/auth/role-gate';
-import { UserRole } from '@prisma/client';
-import { AlertSuccess } from '@/components/atoms/alert';
 import { Button } from '@/components/atoms/button';
 import { Bell } from 'lucide-react';
 import {
@@ -15,72 +11,38 @@ import {
 } from '@/components/molecules/widget';
 
 export const WidgetAlerts = (props: WidgetProps) => {
-  const onApiRouteClick = () => {
-    fetch('/api/admin').then((response) => {
-      if (response.ok) {
-        toast.success('allowed api route', { duration: 10000 });
-      } else {
-        toast.error('forbidden api route', { duration: 10000 });
-      }
-    });
-  };
-  const onServerActionClick = () => {
-    admin().then((data) => {
-      if (data.error) {
-        toast.error(data.error);
-      }
-      if (data.success) {
-        toast.success(data.success);
-      }
-    });
-  };
   const success = () => toast.success('success');
   const warning = () => toast.warning('warning');
   const error = () => toast.error('error');
   const info = () => toast.info('info');
   return (
-    <Widget {...props}>
-      <WidgetHeader variant="background">
+    <Widget variant="background" {...props}>
+      <WidgetHeader variant="padding">
         <WidgetIcon>
           <Bell />
         </WidgetIcon>
         <WidgetTitle>alerts</WidgetTitle>
       </WidgetHeader>
-      <WidgetContent variant="background" className="space-y-4 pb-10">
-        <RoleGate allowedRole={UserRole.ADMIN}>
-          <AlertSuccess message="you are allowed to see this content" />
-        </RoleGate>
-        <div className="space-y-4">
-          <div className="flex flex-row items-center justify-between rounded-md p-4 gap-4 border-2">
-            <p>admin-only api route</p>
-            <Button onClick={onApiRouteClick}>click to test</Button>
-          </div>
-          <div className="flex flex-row items-center justify-between rounded-md p-4 gap-4 border-2">
-            <p>admin-only server action</p>
-            <Button onClick={onServerActionClick}>click to test</Button>
-          </div>
+      <WidgetContent variant="padding" className="space-y-4 pb-8">
+        <div>
+          <Button variant="destructive" onClick={error}>
+            click to error
+          </Button>
         </div>
-        <div className="space-y-4">
-          <div>
-            <Button variant="destructive" onClick={error}>
-              click to error
-            </Button>
-          </div>
-          <div>
-            <Button variant="warning" onClick={warning}>
-              click to warning
-            </Button>
-          </div>
-          <div>
-            <Button variant="success" onClick={success}>
-              click to success
-            </Button>
-          </div>
-          <div>
-            <Button variant="info" onClick={info}>
-              click to info
-            </Button>
-          </div>
+        <div>
+          <Button variant="warning" onClick={warning}>
+            click to warning
+          </Button>
+        </div>
+        <div>
+          <Button variant="success" onClick={success}>
+            click to success
+          </Button>
+        </div>
+        <div>
+          <Button variant="info" onClick={info}>
+            click to info
+          </Button>
         </div>
       </WidgetContent>
     </Widget>

@@ -1,6 +1,6 @@
-import { useSession } from 'next-auth/react';
+import { useQuery } from 'convex/react';
+import { api } from '../../../convex/_generated/api';
 
 export const useCurrentUser = () => {
-  const session = useSession();
-  return session.data?.user;
+  return useQuery(api.session.currentUser);
 };

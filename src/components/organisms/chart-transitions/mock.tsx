@@ -21,7 +21,7 @@ export interface IChartTransitionsLegend {
   color: string;
 }
 
-const length = 50;
+const length = 75;
 
 export const DEFAULT_CHART_TRANSITIONS_TYPE = EChartTransitionsType.stackedBarChart;
 
@@ -44,6 +44,8 @@ export const MOCK_CHART_TRANSITIONS_DATA: IChartTransitionsItem[] = Array.from({
     };
   }
 );
+
+console.log(MOCK_CHART_TRANSITIONS_DATA);
 
 export const MOCK_CHART_TRANSITIONS_LEGEND: IChartTransitionsLegend[] = [
   {

@@ -35,11 +35,10 @@ import { Separator } from '@/components/atoms/separator';
 import { handleDialogOpen } from '@/components/atoms/dialog-handlers';
 import { usePathname, useRouter, useSearchParams } from 'next/navigation';
 import { menuLeft } from '@/lib/settings/menu';
-import { logout } from '@/auth/actions/logout';
-import { signOut } from 'next-auth/react';
 import { Avatar, AvatarFallback, AvatarImage } from '@/components/atoms/avatar';
-import { UserRole } from '@prisma/client';
-import { Badge } from '@/components/atoms/badge';
+import { useIsAuth } from '@/auth/hooks/use-is-auth';
+import { Authenticated } from 'convex/react';
+import { useAuthActions } from '@convex-dev/auth/react';
 
 const MENU_PADDING_ITEM = 15;
 const MENU_TRANSITION_DURATION = 100;
@@ -200,15 +199,14 @@ interface IMenuProps {
 }
 const MenuLeft = (props: IMenuProps) => {
   const { children } = props;
-  const user = useCurrentUser();
   return (
     <SidebarLeftProvider data={menuLeft} name="menu-left" collapsed>
-      {user && (
+      <Authenticated>
         <SidebarLeft className="z-20 group/sidebar-left">
           <MenuLeftContent />
           <SidebarLeftResize className="group-hover/sidebar-left:opacity-100 group-active/sidebar-left:opacity-100" />
         </SidebarLeft>
-      )}
+      </Authenticated>
       {children}
     </SidebarLeftProvider>
   );
@@ -216,9 +214,9 @@ const MenuLeft = (props: IMenuProps) => {
 MenuLeft.displayName = 'MenuLeft';
 
 const MenuLeftContent = () => {
-  const user = useCurrentUser();
+  const is_auth = useIsAuth();
   const { toggleSidebar, data } = useSidebarLeft();
-  if (!user) return null;
+  if (!is_auth) return null;
   return (
     <div className="flex flex-col">
       <div className="p-4 flex space-x-4 justify-between">
@@ -253,10 +251,10 @@ const MenuUserInfo = () => {
   const searchParams = useSearchParams();
   const pathname = usePathname();
   const router = useRouter();
+  const { signOut } = useAuthActions();
 
   // handlers
   const handleLogout = async () => {
-    await logout();
     await signOut();
   };
   const handleProfile = () => {
@@ -279,9 +277,9 @@ const MenuUserInfo = () => {
         <div className="space-y-3 overflow-hidden flex-1">
           <p className="overflow-hidden text-ellipsis">{user?.email}</p>
           <div className="flex space-x-4">
-            {user.role === UserRole.USER && <Badge variant="default">user</Badge>}
-            {user.role === UserRole.ADMIN && <Badge variant="success">admin</Badge>}
-            <p className="overflow-hidden text-ellipsis">{user?.name}</p>
+            {/*{user.role === UserRole.USER && <Badge variant="default">user</Badge>}*/}
+            {/*{user.role === UserRole.ADMIN && <Badge variant="success">admin</Badge>}*/}
+            <p className="overflow-hidden text-ellipsis">{user?._id}</p>
           </div>
         </div>
       </div>

@@ -39,12 +39,6 @@ This is a [Next.js](https://nextjs.org/) project bootstrapped with [`create-next
 2. `psql -h localhost -p 5434 -d convex -U sa -W` - connect to db
 3. `SELECT * FROM pg_catalog.pg_tables WHERE schemaname = 'public';` - select table names
 
-### prisma
-1. `npx prisma studio` - open prisma studio
-2. `npx prisma generate --schema=./prisma/schema.prisma` - generate client
-3. `npx prisma migrate dev --name init` - create the first migration
-4. `npx prisma migrate deploy --schema=./prisma/schema.prisma` - deploy migrations
-
 ### shadcn/ui
 1. `npx shadcn-ui@latest add dialog` - add dialog to library
 
@@ -84,14 +78,6 @@ sudo docker run hello-world
 `sudo growpart /dev/nvme0n1 1` - resize partition to max
 `sudo resize2fs /dev/nvme0n1p1` - resize file system to max
 
-## postgres services
-```
-brew uninstall postgresql
-brew install postgresql@16 #I wanted 16 version
-brew services start postgresql@16 #start the postgres service
-brew link postgresql@16 --force #this will make 16 your default version
-```
-
 ## update packages
 ```
 yarn upgrade-interactive --latest
@@ -116,3 +102,5 @@ docker compose up --biild -d
 `npx convex deploy` - deploy changes to db
 `npx convex dev` - run dev env
 `npx convex import --table <tablename> convex/tablename.jsonl` - push data
+`npx convex import --replace --table <tablename> convex/tablename.jsonl` - replace data
+`npx convex import --append --table <tablename> convex/tablename.jsonl` - append data

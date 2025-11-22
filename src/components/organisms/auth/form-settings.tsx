@@ -29,7 +29,7 @@ export const FormSettings = (props: IProps) => {
   const { onClose } = props;
   const user = useCurrentUser();
   // const { update } = useSession();
-  const [isPending, startTransition] = useTransition();
+  const [pending, startTransition] = useTransition();
 
   const form = useForm<z.infer<typeof settingsSchema>>({
     resolver: zodResolver(settingsSchema),
@@ -83,7 +83,7 @@ export const FormSettings = (props: IProps) => {
                 <FormItem className={_formItem}>
                   <FormLabel className={_formLabel}>email</FormLabel>
                   <FormControl className={_formControl}>
-                    <Input {...field} placeholder="email" type="email" disabled={isPending} />
+                    <Input {...field} placeholder="email" type="email" disabled={pending} />
                   </FormControl>
                   <FormMessage className={_formMessage} />
                 </FormItem>
@@ -96,7 +96,7 @@ export const FormSettings = (props: IProps) => {
                 <FormItem className={_formItem}>
                   <FormLabel className={_formLabel}>name</FormLabel>
                   <FormControl className={_formControl}>
-                    <Input {...field} placeholder="name" disabled={isPending} />
+                    <Input {...field} placeholder="name" disabled={pending} />
                   </FormControl>
                   <FormMessage className={_formMessage} />
                 </FormItem>
@@ -105,8 +105,8 @@ export const FormSettings = (props: IProps) => {
           </div>
         </div>
         <div className={_formItem}>
-          <Button type="submit" className={_buttonSubmit} disabled={isPending}>
-            {isPending && <Spinner />}
+          <Button type="submit" className={_buttonSubmit} disabled={pending}>
+            {pending && <Spinner />}
             save
           </Button>
         </div>

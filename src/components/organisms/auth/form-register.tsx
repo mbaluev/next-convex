@@ -17,7 +17,7 @@ import { useAuthActions } from '@convex-dev/auth/react';
 export const FormRegister = () => {
   const [error, setError] = useState<string | undefined>();
   const [success, setSuccess] = useState<string | undefined>();
-  const [isPending, startTransition] = useTransition();
+  const [pending, startTransition] = useTransition();
 
   const { signIn } = useAuthActions();
   const form = useForm<z.infer<typeof registerSchema>>({
@@ -67,7 +67,7 @@ export const FormRegister = () => {
                 <FormControl>
                   <Input
                     {...field}
-                    disabled={isPending}
+                    disabled={pending}
                     placeholder="enter name"
                     autoComplete="new-password"
                   />
@@ -84,7 +84,7 @@ export const FormRegister = () => {
                 <FormControl>
                   <Input
                     {...field}
-                    disabled={isPending}
+                    disabled={pending}
                     placeholder="enter email"
                     type="email"
                     autoComplete="new-password"
@@ -102,7 +102,7 @@ export const FormRegister = () => {
                 <FormControl>
                   <InputPassword
                     {...field}
-                    disabled={isPending}
+                    disabled={pending}
                     placeholder="enter password"
                     autoComplete="new-password"
                   />
@@ -114,8 +114,8 @@ export const FormRegister = () => {
         </div>
         <AlertError message={error} />
         <AlertSuccess message={success} />
-        <Button type="submit" className="w-full" disabled={isPending}>
-          {isPending && <Spinner />}
+        <Button type="submit" className="w-full" disabled={pending}>
+          {pending && <Spinner />}
           create an account
         </Button>
         <ButtonBack href="/auth/login" label="already have an account?" />

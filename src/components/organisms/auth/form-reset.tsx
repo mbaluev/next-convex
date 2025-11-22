@@ -15,7 +15,7 @@ import { Spinner } from '@/components/atoms/spinner';
 export const FormReset = () => {
   const [error, setError] = useState<string | undefined>();
   const [success, setSuccess] = useState<string | undefined>();
-  const [isPending, startTransition] = useTransition();
+  const [pending, startTransition] = useTransition();
 
   const form = useForm<z.infer<typeof resetSchema>>({
     resolver: zodResolver(resetSchema),
@@ -46,7 +46,7 @@ export const FormReset = () => {
                 <FormControl>
                   <Input
                     {...field}
-                    disabled={isPending}
+                    disabled={pending}
                     placeholder="enter email"
                     type="email"
                     autoComplete="new-password"
@@ -59,8 +59,8 @@ export const FormReset = () => {
         </div>
         <AlertError message={error} />
         <AlertSuccess message={success} />
-        <Button type="submit" className="w-full" disabled={isPending}>
-          {isPending && <Spinner />}
+        <Button type="submit" className="w-full" disabled={pending}>
+          {pending && <Spinner />}
           send reset email
         </Button>
         <ButtonBack href="/auth/login" label="back to login" />

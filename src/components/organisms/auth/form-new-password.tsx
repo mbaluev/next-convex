@@ -19,7 +19,7 @@ export const FormNewPassword = () => {
 
   const [error, setError] = useState<string | undefined>();
   const [success, setSuccess] = useState<string | undefined>();
-  const [isPending, startTransition] = useTransition();
+  const [pending, startTransition] = useTransition();
 
   const form = useForm<z.infer<typeof newPasswordSchema>>({
     resolver: zodResolver(newPasswordSchema),
@@ -50,7 +50,7 @@ export const FormNewPassword = () => {
                 <FormControl>
                   <InputPassword
                     {...field}
-                    disabled={isPending}
+                    disabled={pending}
                     placeholder="enter password"
                     autoComplete="new-password"
                   />
@@ -62,8 +62,8 @@ export const FormNewPassword = () => {
         </div>
         <AlertError message={error} />
         <AlertSuccess message={success} />
-        <Button type="submit" className="w-full" disabled={isPending}>
-          {isPending && <Spinner />}
+        <Button type="submit" className="w-full" disabled={pending}>
+          {pending && <Spinner />}
           reset password
         </Button>
         <ButtonBack href="/auth/login" label="back to login" />

@@ -35,7 +35,7 @@ export const FormLogin = () => {
   const urlError = isAuthError ? 'email already in use with different provider' : '';
 
   const [showTwoFactor, setShowTwoFactor] = useState<boolean>(false);
-  const [isPending, startTransition] = useTransition();
+  const [pending, startTransition] = useTransition();
   const [error, setError] = useState<string | undefined>();
 
   const { signIn } = useAuthActions();
@@ -83,7 +83,7 @@ export const FormLogin = () => {
                   <FormControl>
                     <InputOTP
                       {...field}
-                      disabled={isPending}
+                      disabled={pending}
                       maxLength={6}
                       pattern={REGEXP_ONLY_DIGITS}
                     >
@@ -113,7 +113,7 @@ export const FormLogin = () => {
                     <FormControl>
                       <Input
                         {...field}
-                        disabled={isPending}
+                        disabled={pending}
                         placeholder="enter email"
                         type="email"
                         autoComplete="new-password"
@@ -131,7 +131,7 @@ export const FormLogin = () => {
                     <FormControl>
                       <InputPassword
                         {...field}
-                        disabled={isPending}
+                        disabled={pending}
                         placeholder="enter password"
                         autoComplete="new-password"
                       />
@@ -147,8 +147,8 @@ export const FormLogin = () => {
           )}
         </div>
         <AlertError message={error || urlError} />
-        <Button type="submit" className="w-full" disabled={isPending}>
-          {isPending && <Spinner />}
+        <Button type="submit" className="w-full" disabled={pending}>
+          {pending && <Spinner />}
           {showTwoFactor ? 'confirm code' : 'login'}
         </Button>
         <div className="flex items-center w-full gap-x-6">
@@ -156,7 +156,7 @@ export const FormLogin = () => {
             className="w-full"
             variant="outline"
             onClick={(e) => handleSignIn(e, 'google')}
-            disabled={isPending}
+            disabled={pending}
           >
             <FcGoogle className="h-8 w-8" />
           </Button>
@@ -164,7 +164,7 @@ export const FormLogin = () => {
             className="w-full"
             variant="outline"
             onClick={(e) => handleSignIn(e, 'github')}
-            disabled={isPending}
+            disabled={pending}
           >
             <FaGithub className="h-8 w-8" />
           </Button>

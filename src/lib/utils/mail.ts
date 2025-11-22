@@ -12,7 +12,7 @@ export const sendTwoFactorTokenEmail = async (email: string, token: string) => {
 };
 
 export const sendPasswordResetEmail = async (email: string, token: string) => {
-  const confirmLink = `${process.env.NEXT_PUBLIC_SITE_URL}/auth/new-password?token=${token}`;
+  const confirmLink = `${process.env.APP_URL}/auth/new-password?token=${token}`;
   await resend.emails.send({
     from: `onboarding@${process.env.RESEND_DOMAIN}`,
     to: email,
@@ -22,7 +22,7 @@ export const sendPasswordResetEmail = async (email: string, token: string) => {
 };
 
 export const sendVerificationEmail = async (email: string, token: string) => {
-  const confirmLink = `${process.env.NEXT_PUBLIC_SITE_URL}/auth/new-verification?token=${token}`;
+  const confirmLink = `${process.env.APP_URL}/auth/new-verification?token=${token}`;
   await resend.emails.send({
     from: `onboarding@${process.env.RESEND_DOMAIN}`,
     to: email,

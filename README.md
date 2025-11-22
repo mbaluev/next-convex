@@ -58,7 +58,7 @@ docker compose exec backend ./generate_admin_key.sh
 psql postgres -c "CREATE DATABASE convex_self_hosted"
 export POSTGRES_URL='postgresql://<your-username>@host.docker.internal:5434'
 export DO_NOT_REQUIRE_SSL=1
-docker compose up --biild -d
+docker compose up --build -d
 ```
 
 `npx convex data tasks` - show table data
@@ -68,3 +68,20 @@ docker compose up --biild -d
 `npx convex import --replace --table <tablename> convex/tablename.jsonl` - replace data
 `npx convex import --append --table <tablename> convex/tablename.jsonl` - append data
 `npx convex env list` - list of env variables
+
+
+---
+
+start frontend locally
+1. `yarn`
+2. `yarn dev`
+
+start convex backend locally
+1. `yarn add convex`
+2. `npx convex dev`
+
+start convex dashboard locally
+1. `docker compose up --build -d`
+
+convex auth
+1. `yarn add @convex-dev/auth @auth/core@0.37.0`

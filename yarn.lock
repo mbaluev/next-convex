@@ -1737,10 +1737,10 @@ console-control-strings@^1.0.0, console-control-strings@^1.1.0:
   resolved "https://registry.npmjs.org/console-control-strings/-/console-control-strings-1.1.0.tgz"
   integrity sha512-ty/fTekppD2fIwRvnZAVdeOiGd1c7YXEixbgJTNzqcxJWKQnjJ/V1bNEEE6hygpM3WjwHFUVK6HTjWSzV4a8sQ==
 
-convex@^1.27.5:
-  version "1.27.5"
-  resolved "https://registry.yarnpkg.com/convex/-/convex-1.27.5.tgz#c539f9f34d4c954380e7369993ba358eb5ffdcae"
-  integrity sha512-6YU/AVPnoNdAaJABKBI9c5IqRSKsow/c4yo/ntaOWtd8Dff2P2zaImA/ougICfPgTuTvjKRbgkxk6lJhODzb4g==
+convex@^1.29.3:
+  version "1.29.3"
+  resolved "https://registry.yarnpkg.com/convex/-/convex-1.29.3.tgz#11ccbcb0d48d2d3800fd0ef7c0aa665141842641"
+  integrity sha512-tg5TXzMjpNk9m50YRtdp6US+t7ckxE4E+7DNKUCjJ2MupQs2RBSPF/z5SNN4GUmQLSfg0eMILDySzdAvjTrhnw==
   dependencies:
     esbuild "0.25.4"
     prettier "^3.0.0"

@@ -6,12 +6,7 @@
     "dev": "next dev --turbopack -p 3001",
     "build": "next build",
     "start": "next start -p 3001",
-    "lint": "next lint",
-    "convex-env": "npx convex env --env-file .env.development.local",
-    "convex-dev": "npx convex dev --env-file .env.development.local",
-    "convex-deploy-dev": "npx convex deploy --env-file .env.development.local",
-    "convex-deploy-prod": "npx convex deploy --env-file .env.production.local",
-    "convex-import": "npx convex import --env-file .env.development.local"
+    "lint": "next lint"
   },
   "dependencies": {
     "@auth/core": "0.37.0",
@@ -31,7 +26,7 @@
     "bcryptjs": "^2.4.3",
     "class-variance-authority": "^0.7.1",
     "clsx": "^2.1.1",
-    "convex": "^1.27.5",
+    "convex": "^1.29.3",
     "d3": "^7.9.0",
     "input-otp": "^1.4.2",
     "lucide-react": "^0.515.0",

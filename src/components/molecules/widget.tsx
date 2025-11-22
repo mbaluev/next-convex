@@ -81,7 +81,7 @@ const widgetContentVariants = cva('flex-auto', {
       default: '',
       padding: 'p-4',
       background: 'p-4 bg-sidebar',
-      dialog: 'p-6',
+      dialog: 'p-6 pt-2',
     },
   },
   defaultVariants: {

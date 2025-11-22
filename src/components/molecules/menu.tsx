@@ -265,7 +265,7 @@ const MenuUserInfo = () => {
   return (
     <div className="p-4 flex flex-col space-y-4">
       <div className="flex space-x-4 items-center">
-        <Avatar className="w-20 h-20 bg-secondary">
+        <Avatar className="w-20 h-20 bg-secondary rounded-md">
           <AvatarImage src={user?.image || ''} />
           <AvatarFallback className="bg-secondary">
             <User className="text-xl" />

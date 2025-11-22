@@ -276,7 +276,7 @@ const MenuUserInfo = () => {
           <div className="flex space-x-4">
             {/*{user.role === UserRole.USER && <Badge variant="default">user</Badge>}*/}
             {/*{user.role === UserRole.ADMIN && <Badge variant="success">admin</Badge>}*/}
-            <p className="overflow-hidden text-ellipsis">{user?._id}</p>
+            <p className="overflow-hidden text-ellipsis">{user?.name}</p>
           </div>
         </div>
       </div>

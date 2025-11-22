@@ -1,25 +1,20 @@
+import { authRoutes, DEFAULT_LOGIN_REDIRECT, publicRoutes } from '@/auth/routes';
 import {
   convexAuthNextjsMiddleware,
   createRouteMatcher,
   nextjsMiddlewareRedirect,
 } from '@convex-dev/auth/nextjs/server';
-import { authRoutes, DEFAULT_LOGIN_REDIRECT, publicRoutes } from '@/auth/routes';
 
-const isAuthRoute = createRouteMatcher(authRoutes);
-const isPublicRoute = createRouteMatcher(publicRoutes);
+const isAuthRoute = createRouteMatcher([...authRoutes]);
+const isPublicRoute = createRouteMatcher([...authRoutes, ...publicRoutes]);
 
 export default convexAuthNextjsMiddleware(async (request, { convexAuth }) => {
-  if (isAuthRoute(request)) {
-    if (await convexAuth.isAuthenticated())
-      return nextjsMiddlewareRedirect(request, DEFAULT_LOGIN_REDIRECT);
-    return;
+  const is_auth = await convexAuth.isAuthenticated();
+  if (isAuthRoute(request) && is_auth) {
+    return nextjsMiddlewareRedirect(request, DEFAULT_LOGIN_REDIRECT);
   }
-  if (!(await convexAuth.isAuthenticated()) && !isPublicRoute(request)) {
+  if (!isPublicRoute(request) && !is_auth) {
     return nextjsMiddlewareRedirect(request, '/auth/login');
-    // const { nextUrl } = request;
-    // let callbackUrl = nextUrl.pathname;
-    // if (nextUrl.search) callbackUrl += nextUrl.search;
-    // return nextjsMiddlewareRedirect(request, `/auth/login?callbackUrl=${callbackUrl}`);
   }
 });
 

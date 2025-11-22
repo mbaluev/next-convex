@@ -26,20 +26,8 @@ export const newPasswordSchema = z.object({
     .min(6, { message: 'minimum 6 characters required' }),
 });
 
-export const settingsSchema = z
-  .object({
-    name: z.optional(z.string()),
-    email: z.optional(z.string().email({ message: 'invalid email' })),
-    password: z.optional(z.string().min(6, { message: 'minimum 6 characters required' })),
-    newPassword: z.optional(z.string().min(6, { message: 'minimum 6 characters required' })),
-    isTwoFactorEnabled: z.optional(z.boolean()),
-    // role: z.enum([UserRole.ADMIN, UserRole.USER]),
-  })
-  .refine((data) => !(data.newPassword && !data.password), {
-    message: 'password is required',
-    path: ['password'],
-  })
-  .refine((data) => !(data.password && !data.newPassword), {
-    message: 'new password is required',
-    path: ['newPassword'],
-  });
+export const settingsSchema = z.object({
+  name: z.optional(z.string()),
+  email: z.optional(z.string().email({ message: 'invalid email' })),
+  image: z.optional(z.string()),
+});

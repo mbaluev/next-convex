@@ -1,3 +1,3 @@
-{"text": "Buy groceries", "isCompleted": true}
-{"text": "Go for a swim", "isCompleted": true}
-{"text": "Integrate Convex", "isCompleted": false}
+{"text": "Buy groceries", "completed": true}
+{"text": "Go for a swim", "completed": true}
+{"text": "Integrate Convex", "completed": false}

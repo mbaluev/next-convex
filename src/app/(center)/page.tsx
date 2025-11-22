@@ -3,18 +3,11 @@
 import { Dot } from 'lucide-react';
 import { SvgLogo } from '@/components/icons/components/logo';
 import { ButtonLogin } from '@/components/organisms/auth/button-login';
-import { Unauthenticated, useQuery } from 'convex/react';
-import { api } from '../../../convex/_generated/api';
+import { Unauthenticated } from 'convex/react';
 
 export default function Home() {
-  const tasks = useQuery(api.tasks.get);
   return (
     <div className="space-y-10 text-center">
-      <div className="flex gap-1 flex-col items-center text-muted-foreground">
-        {tasks?.map(({ _id, text }) => (
-          <div key={_id}>{text}</div>
-        ))}
-      </div>
       <div className="flex gap-8 flex-col items-center justify-center">
         <SvgLogo className="text-5xl" />
         <h1 className="text-5xl font-semibold">{process.env.APP_NAME}</h1>

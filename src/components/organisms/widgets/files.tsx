@@ -10,7 +10,7 @@ import {
   WidgetProps,
 } from '@/components/molecules/widget';
 import { useQuery } from 'convex/react';
-import { api } from '../../../../_convex/_generated/api';
+import { api } from '../../../../convex/_generated/api';
 
 export const WidgetFiles = (props: WidgetProps) => {
   const tasks = useQuery(api.tasks.get);

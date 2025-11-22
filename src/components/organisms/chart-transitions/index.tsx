@@ -33,7 +33,7 @@ import { TooltipText } from '@/components/atoms/tooltip';
 import { ROUTES } from '@/lib/settings/routes';
 import { ChartTransitionsColors } from '@/components/organisms/chart-transitions/colors';
 import { useQuery } from 'convex/react';
-import { api } from '../../../../_convex/_generated/api';
+import { api } from '../../../../convex/_generated/api';
 import { useQueryString } from '@/lib/hooks/use-query-string';
 
 interface IChartTransitionsProps extends WidgetProps {

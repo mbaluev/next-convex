@@ -7,6 +7,10 @@ export const currentUser = query({
     const userId = await getAuthUserId(ctx);
     if (userId === null) return null;
     return await ctx.db.get(userId);
+    // const account = await ctx.db
+    //   .query('authAccounts')
+    //   .withIndex('userIdAndProvider', (q) => q.eq('userId', userId))
+    //   .first();
   },
 });
 

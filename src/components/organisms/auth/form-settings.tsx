@@ -5,7 +5,7 @@ import { useForm } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { Button } from '@/components/atoms/button';
 import { useTransition } from 'react';
-import { settingsSchema } from '@/auth/schemas';
+import { settingsSchema } from '@/auth/schema';
 import {
   Form,
   FormField,
@@ -15,23 +15,28 @@ import {
   FormMessage,
 } from '@/components/atoms/form';
 import { Input } from '@/components/atoms/input';
-import { useCurrentUser } from '@/auth/hooks/use-current-user';
+import { useCurrentUser } from '@/auth/use-current-user';
 import { Spinner } from '@/components/atoms/spinner';
 import { Avatar, AvatarFallback, AvatarImage } from '@/components/atoms/avatar';
 import { User } from 'lucide-react';
+import { useCurrentSession } from '@/auth/use-current-session';
 
-export const FormSettings = () => {
+interface IProps {
+  onClose?: () => void;
+}
+
+export const FormSettings = (props: IProps) => {
+  const { onClose } = props;
   const user = useCurrentUser();
   // const { update } = useSession();
-  const [loading, startTransition] = useTransition();
-  const disabled = true;
+  const [isPending, startTransition] = useTransition();
 
   const form = useForm<z.infer<typeof settingsSchema>>({
     resolver: zodResolver(settingsSchema),
     defaultValues: {
+      _id: user?._id || undefined,
       name: user?.name || undefined,
       email: user?.email || undefined,
-      image: user?.image || undefined,
     },
   });
   const onSubmit = (values: z.infer<typeof settingsSchema>) => {
@@ -44,6 +49,7 @@ export const FormSettings = () => {
     //     })
     //     .catch(() => toast.error('something went wrong'));
     // });
+    if (onClose) onClose();
   };
 
   const _formItem = 'grid gap-x-6 gap-y-4 grid-cols-1 sm:grid-cols-3 space-y-0';
@@ -72,12 +78,12 @@ export const FormSettings = () => {
             </FormItem>
             <FormField
               control={form.control}
-              name="name"
+              name="email"
               render={({ field }) => (
                 <FormItem className={_formItem}>
-                  <FormLabel className={_formLabel}>name</FormLabel>
+                  <FormLabel className={_formLabel}>email</FormLabel>
                   <FormControl className={_formControl}>
-                    <Input {...field} placeholder="name" disabled={disabled} />
+                    <Input {...field} placeholder="email" type="email" disabled={isPending} />
                   </FormControl>
                   <FormMessage className={_formMessage} />
                 </FormItem>
@@ -85,12 +91,12 @@ export const FormSettings = () => {
             />
             <FormField
               control={form.control}
-              name="email"
+              name="name"
               render={({ field }) => (
                 <FormItem className={_formItem}>
-                  <FormLabel className={_formLabel}>email</FormLabel>
+                  <FormLabel className={_formLabel}>name</FormLabel>
                   <FormControl className={_formControl}>
-                    <Input {...field} placeholder="email" type="email" disabled={disabled} />
+                    <Input {...field} placeholder="name" disabled={isPending} />
                   </FormControl>
                   <FormMessage className={_formMessage} />
                 </FormItem>
@@ -99,8 +105,8 @@ export const FormSettings = () => {
           </div>
         </div>
         <div className={_formItem}>
-          <Button type="submit" className={_buttonSubmit} disabled={disabled}>
-            {loading && <Spinner />}
+          <Button type="submit" className={_buttonSubmit} disabled={isPending}>
+            {isPending && <Spinner />}
             save
           </Button>
         </div>

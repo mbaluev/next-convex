@@ -3,7 +3,7 @@
 import * as z from 'zod';
 import { useForm } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
-import { registerSchema } from '@/auth/schemas';
+import { registerSchema } from '@/auth/schema';
 import { Input } from '@/components/atoms/input';
 import { Form, FormControl, FormField, FormItem, FormMessage } from '@/components/atoms/form';
 import { Button } from '@/components/atoms/button';

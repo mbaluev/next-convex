@@ -21,12 +21,12 @@ export const DialogProfile = () => {
   const router = useRouter();
   const _open = useMemo(() => isDialogOpen(searchParams, ROUTES.PROFILE.name), [searchParams]);
 
-  function handleClose() {
+  const handleClose = () => {
     const params = new URLSearchParams(searchParams.toString());
     const _params = handleDialogClose(params, ROUTES.PROFILE.name);
     const _pathname = _params.size > 0 ? `${pathname}?${_params.toString()}` : pathname;
     router.replace(_pathname);
-  }
+  };
 
   return (
     <Dialog open={_open} onOpenChange={handleClose}>
@@ -41,7 +41,7 @@ export const DialogProfile = () => {
           </DialogDescription>
         </DialogHeader>
         <WidgetContent variant="dialog" className="overflow-y-auto">
-          <FormSettings />
+          <FormSettings onClose={handleClose} />
         </WidgetContent>
       </DialogContent>
     </Dialog>

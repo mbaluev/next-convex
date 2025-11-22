@@ -27,7 +27,7 @@ export const newPasswordSchema = z.object({
 });
 
 export const settingsSchema = z.object({
+  _id: z.optional(z.string()),
   name: z.optional(z.string()),
   email: z.optional(z.string().email({ message: 'invalid email' })),
-  image: z.optional(z.string()),
 });

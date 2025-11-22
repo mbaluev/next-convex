@@ -1,10 +1,7 @@
 'use client';
 
 import * as z from 'zod';
-import { useForm } from 'react-hook-form';
-import { zodResolver } from '@hookform/resolvers/zod';
-import { loginSchema } from '@/auth/schemas';
-import { Input } from '@/components/atoms/input';
+import Link from 'next/link';
 import {
   Form,
   FormControl,
@@ -13,29 +10,32 @@ import {
   FormItem,
   FormMessage,
 } from '@/components/atoms/form';
+import { useForm } from 'react-hook-form';
+import { zodResolver } from '@hookform/resolvers/zod';
+import { loginSchema } from '@/auth/schema';
+import { Input } from '@/components/atoms/input';
 import { Button } from '@/components/atoms/button';
 import { AlertSuccess, AlertError } from '@/components/atoms/alert';
-import { Fragment, useState, useTransition } from 'react';
+import { Fragment, MouseEvent, useState, useTransition } from 'react';
 import { useSearchParams } from 'next/navigation';
 import { InputPassword } from '@/components/atoms/input-password';
-import Link from 'next/link';
 import { InputOTP, InputOTPGroup, InputOTPSlot } from '@/components/atoms/input-otp';
 import { REGEXP_ONLY_DIGITS } from 'input-otp';
-import { ButtonsSocial } from '@/components/organisms/auth/buttons-social';
 import { ButtonBack } from '@/components/organisms/auth/button-back';
 import { Spinner } from '@/components/atoms/spinner';
 import { useAuthActions } from '@convex-dev/auth/react';
 import { DEFAULT_LOGIN_REDIRECT } from '@/auth/routes';
+import { FcGoogle } from 'react-icons/fc';
+import { FaGithub } from 'react-icons/fa';
 
 export const FormLogin = () => {
   const searchParams = useSearchParams();
-  const callbackUrl = searchParams.get('callbackUrl');
+  const callback = searchParams.get('callback');
   const isAuthError = searchParams.get('error') === 'OAuthAccountNotLinked';
   const urlError = isAuthError ? 'email already in use with different provider' : '';
 
   const [showTwoFactor, setShowTwoFactor] = useState<boolean>(false);
   const [isPending, startTransition] = useTransition();
-  const [success, setSuccess] = useState<string | undefined>();
   const [error, setError] = useState<string | undefined>();
 
   const { signIn } = useAuthActions();
@@ -46,38 +46,33 @@ export const FormLogin = () => {
       password: '',
     },
   });
-  const onSubmit = async (values: z.infer<typeof loginSchema>) => {
+  const handleSuccess = async () => {
+    form.reset();
+  };
+  const handleError = async (error: any) => {
+    setError(String(error));
+  };
+  const handlePassword = async (values: z.infer<typeof loginSchema>) => {
     const validatedFields = loginSchema.safeParse(values);
     if (!validatedFields.success) {
       setError('invalid fields');
     } else {
-      // const callback = new URL(callbackUrl || DEFAULT_LOGIN_REDIRECT, window.location.href).href;
-      // const callback = callbackUrl || DEFAULT_LOGIN_REDIRECT;
+      const callbackUrl = new URL(callback || DEFAULT_LOGIN_REDIRECT, window.location.href).href;
       const { email, password, code } = validatedFields.data;
-      const body: Record<string, any> = {
-        flow: 'signIn',
-        email: email,
-        password: password,
-        code: code,
-      };
+      const body: Record<string, any> = { flow: 'signIn', email, password, code, callbackUrl };
       setError(undefined);
-      setSuccess(undefined);
-      startTransition(() => {
-        signIn('password', body)
-          .then(() => {
-            form.reset();
-            setSuccess('success');
-          })
-          .catch((error) => {
-            setError(String(error));
-          });
-      });
+      startTransition(() => signIn('password', body).then(handleSuccess).catch(handleError));
     }
+  };
+  const handleSignIn = async (e: MouseEvent<HTMLButtonElement>, provider: 'google' | 'github') => {
+    e.preventDefault();
+    const callbackUrl = new URL(callback || DEFAULT_LOGIN_REDIRECT, window.location.href).href;
+    startTransition(() => signIn(provider, { callbackUrl }).then(handleSuccess).catch(handleError));
   };
 
   return (
     <Form {...form}>
-      <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-6">
+      <form onSubmit={form.handleSubmit(handlePassword)} className="space-y-6">
         <div className="space-y-6">
           {showTwoFactor && (
             <FormField
@@ -152,12 +147,28 @@ export const FormLogin = () => {
           )}
         </div>
         <AlertError message={error || urlError} />
-        <AlertSuccess message={success} />
         <Button type="submit" className="w-full" disabled={isPending}>
           {isPending && <Spinner />}
           {showTwoFactor ? 'confirm code' : 'login'}
         </Button>
-        <ButtonsSocial />
+        <div className="flex items-center w-full gap-x-6">
+          <Button
+            className="w-full"
+            variant="outline"
+            onClick={(e) => handleSignIn(e, 'google')}
+            disabled={isPending}
+          >
+            <FcGoogle className="h-8 w-8" />
+          </Button>
+          <Button
+            className="w-full"
+            variant="outline"
+            onClick={(e) => handleSignIn(e, 'github')}
+            disabled={isPending}
+          >
+            <FaGithub className="h-8 w-8" />
+          </Button>
+        </div>
         <ButtonBack href="/auth/register" label="don't have an account?" />
       </form>
     </Form>

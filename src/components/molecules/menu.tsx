@@ -35,7 +35,7 @@ import { handleDialogOpen } from '@/components/atoms/dialog-handlers';
 import { usePathname, useRouter, useSearchParams } from 'next/navigation';
 import { menuLeft } from '@/lib/settings/menu';
 import { Avatar, AvatarFallback, AvatarImage } from '@/components/atoms/avatar';
-import { useCurrentUser } from '@/auth/hooks/use-current-user';
+import { useCurrentUser } from '@/auth/use-current-user';
 import { useAuthActions } from '@convex-dev/auth/react';
 import { Authenticated } from 'convex/react';
 
@@ -271,13 +271,9 @@ const MenuUserInfo = () => {
             <User className="text-xl" />
           </AvatarFallback>
         </Avatar>
-        <div className="space-y-3 overflow-hidden flex-1">
-          <p className="overflow-hidden text-ellipsis">{user?.email}</p>
-          <div className="flex space-x-4">
-            {/*{user.role === UserRole.USER && <Badge variant="default">user</Badge>}*/}
-            {/*{user.role === UserRole.ADMIN && <Badge variant="success">admin</Badge>}*/}
-            <p className="overflow-hidden text-ellipsis">{user?.name}</p>
-          </div>
+        <div className="space-y-2 overflow-hidden flex-1">
+          <p className="overflow-hidden text-ellipsis">{user?.email ?? '-'}</p>
+          <p className="overflow-hidden text-ellipsis">{user?.name ?? '-'}</p>
         </div>
       </div>
       <div className="flex flex-col space-y-2 ">

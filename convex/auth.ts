@@ -1,10 +1,12 @@
 import { convexAuth } from '@convex-dev/auth/server';
 import { DataModel } from './_generated/dataModel';
 import { Password } from '@convex-dev/auth/providers/Password';
+import { ResendOtp } from './resend_otp';
 import GitHub from '@auth/core/providers/github';
 import Google from '@auth/core/providers/google';
 
 const CustomPassword = Password<DataModel>({
+  reset: ResendOtp,
   profile(params, ctx) {
     return {
       email: params.email as string,

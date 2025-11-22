@@ -4,7 +4,7 @@ import * as z from 'zod';
 import { useForm } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { Button } from '@/components/atoms/button';
-import { useTransition } from 'react';
+import { useEffect, useTransition } from 'react';
 import { settingsSchema } from '@/auth/schema';
 import {
   Form,
@@ -30,14 +30,18 @@ export const FormSettings = (props: IProps) => {
   const [pending, startTransition] = useTransition();
   // const { update } = useSession();
 
+  const values = (user: any) => ({
+    _id: user?._id || undefined,
+    name: user?.name || undefined,
+    email: user?.email || undefined,
+  });
   const form = useForm<z.infer<typeof settingsSchema>>({
     resolver: zodResolver(settingsSchema),
-    defaultValues: {
-      _id: user?._id || undefined,
-      name: user?.name || undefined,
-      email: user?.email || undefined,
-    },
+    defaultValues: values(user),
   });
+  useEffect(() => {
+    form.reset(values(user));
+  }, [form, user]);
   const onSubmit = (values: z.infer<typeof settingsSchema>) => {
     console.log(values);
     startTransition(() => {
@@ -89,7 +93,12 @@ export const FormSettings = (props: IProps) => {
                 <FormItem className={_formItem}>
                   <FormLabel className={_formLabel}>name</FormLabel>
                   <FormControl className={_formControl}>
-                    <Input {...field} placeholder="name" disabled={pending} />
+                    <Input
+                      {...field}
+                      value={field.value ?? ''}
+                      placeholder="name"
+                      disabled={pending}
+                    />
                   </FormControl>
                   <FormMessage className={_formMessage} />
                 </FormItem>

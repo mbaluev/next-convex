@@ -29,11 +29,6 @@ import { FcGoogle } from 'react-icons/fc';
 import { FaGithub } from 'react-icons/fa';
 
 export const FormLogin = () => {
-  const searchParams = useSearchParams();
-  const callback = searchParams.get('callback');
-  const isAuthError = searchParams.get('error') === 'OAuthAccountNotLinked';
-  const urlError = isAuthError ? 'email already in use with different provider' : '';
-
   const [showTwoFactor, setShowTwoFactor] = useState<boolean>(false);
   const [pending, startTransition] = useTransition();
   const [error, setError] = useState<string | undefined>();
@@ -57,16 +52,15 @@ export const FormLogin = () => {
     if (!validatedFields.success) {
       setError('invalid fields');
     } else {
-      const callbackUrl = new URL(callback || DEFAULT_LOGIN_REDIRECT, window.location.href).href;
       const { email, password, code } = validatedFields.data;
-      const body: Record<string, any> = { flow: 'signIn', email, password, code, callbackUrl };
+      const body: Record<string, any> = { flow: 'signIn', email, password, code };
       setError(undefined);
       startTransition(() => signIn('password', body).then(handleSuccess).catch(handleError));
     }
   };
   const handleSignIn = async (e: MouseEvent<HTMLButtonElement>, provider: 'google' | 'github') => {
     e.preventDefault();
-    const callbackUrl = new URL(callback || DEFAULT_LOGIN_REDIRECT, window.location.href).href;
+    const callbackUrl = new URL(DEFAULT_LOGIN_REDIRECT, window.location.href).href;
     startTransition(() => signIn(provider, { callbackUrl }).then(handleSuccess).catch(handleError));
   };
 
@@ -146,7 +140,7 @@ export const FormLogin = () => {
             </Fragment>
           )}
         </div>
-        <AlertError message={error || urlError} />
+        <AlertError message={error} />
         <Button type="submit" className="w-full" disabled={pending}>
           {pending && <Spinner />}
           {showTwoFactor ? 'confirm code' : 'login'}

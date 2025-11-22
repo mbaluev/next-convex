@@ -19,7 +19,6 @@ import { useCurrentUser } from '@/auth/use-current-user';
 import { Spinner } from '@/components/atoms/spinner';
 import { Avatar, AvatarFallback, AvatarImage } from '@/components/atoms/avatar';
 import { User } from 'lucide-react';
-import { useCurrentSession } from '@/auth/use-current-session';
 
 interface IProps {
   onClose?: () => void;
@@ -27,9 +26,9 @@ interface IProps {
 
 export const FormSettings = (props: IProps) => {
   const { onClose } = props;
-  const user = useCurrentUser();
-  // const { update } = useSession();
+  const { user } = useCurrentUser();
   const [pending, startTransition] = useTransition();
+  // const { update } = useSession();
 
   const form = useForm<z.infer<typeof settingsSchema>>({
     resolver: zodResolver(settingsSchema),
@@ -41,14 +40,14 @@ export const FormSettings = (props: IProps) => {
   });
   const onSubmit = (values: z.infer<typeof settingsSchema>) => {
     console.log(values);
-    // startTransition(() => {
-    //   settings(values)
-    //     .then((data) => {
-    //       if (data.error) toast.error(data.error);
-    //       if (data.success) update().then(() => toast.success(data.success));
-    //     })
-    //     .catch(() => toast.error('something went wrong'));
-    // });
+    startTransition(() => {
+      // settings(values)
+      //   .then((data) => {
+      //     if (data.error) toast.error(data.error);
+      //     if (data.success) update().then(() => toast.success(data.success));
+      //   })
+      //   .catch(() => toast.error('something went wrong'));
+    });
     if (onClose) onClose();
   };
 
@@ -76,19 +75,13 @@ export const FormSettings = (props: IProps) => {
               </FormControl>
               <FormMessage className={_formMessage} />
             </FormItem>
-            <FormField
-              control={form.control}
-              name="email"
-              render={({ field }) => (
-                <FormItem className={_formItem}>
-                  <FormLabel className={_formLabel}>email</FormLabel>
-                  <FormControl className={_formControl}>
-                    <Input {...field} placeholder="email" type="email" disabled={pending} />
-                  </FormControl>
-                  <FormMessage className={_formMessage} />
-                </FormItem>
-              )}
-            />
+            <FormItem className={_formItem}>
+              <FormLabel className={_formLabel}>email</FormLabel>
+              <FormControl className={_formControl}>
+                <p className="text-ellipsis">{user?.email}</p>
+              </FormControl>
+              <FormMessage className={_formMessage} />
+            </FormItem>
             <FormField
               control={form.control}
               name="name"

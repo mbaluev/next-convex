@@ -244,10 +244,10 @@ const MenuLeftContent = () => {
 MenuLeftContent.displayName = 'MenuLeftContent';
 
 const MenuUserInfo = () => {
-  const user = useCurrentUser();
   const searchParams = useSearchParams();
   const pathname = usePathname();
   const router = useRouter();
+  const { user, pending } = useCurrentUser();
   const { signOut } = useAuthActions();
 
   // handlers
@@ -261,6 +261,35 @@ const MenuUserInfo = () => {
     router.replace(_pathname);
   };
 
+  if (pending) {
+    return (
+      <div className="p-4 flex flex-col space-y-4">
+        <div className="flex space-x-4 items-center">
+          <Avatar className="w-20 h-20 bg-secondary rounded-md">
+            <AvatarImage src={user?.image || ''} />
+            <AvatarFallback className="bg-secondary">
+              <User className="text-xl" />
+            </AvatarFallback>
+          </Avatar>
+          <div className="space-y-2 overflow-hidden flex-1">
+            <p className="overflow-hidden text-ellipsis">{user?.email ?? '-'}</p>
+            <p className="overflow-hidden text-ellipsis">{user?.name ?? '-'}</p>
+          </div>
+        </div>
+        <div className="flex flex-col space-y-2 ">
+          <SidebarLeftButton variant="ghost" onClick={handleLogout}>
+            <LogOut />
+            logout
+          </SidebarLeftButton>
+          <SidebarLeftButton variant="ghost" onClick={handleProfile}>
+            {ROUTES.PROFILE.icon}
+            <p className="flex-1 text-left">{ROUTES.PROFILE.label}</p>
+            {ROUTES.PROFILE.dialog && <BookOpen />}
+          </SidebarLeftButton>
+        </div>
+      </div>
+    );
+  }
   if (!user) return null;
   return (
     <div className="p-4 flex flex-col space-y-4">

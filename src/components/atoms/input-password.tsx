@@ -1,6 +1,6 @@
 import { Input, InputProps } from '@/components/atoms/input';
 import { Button } from '@/components/atoms/button';
-import { cn } from '@/lib/utils/cn';
+import { cn } from '@/utils/cn';
 import { Eye, EyeOff } from 'lucide-react';
 import { forwardRef, useState } from 'react';
 import { className } from 'postcss-selector-parser';

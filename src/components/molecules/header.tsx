@@ -7,7 +7,7 @@ import { useTheme } from 'next-themes';
 import { TooltipText } from '@/components/atoms/tooltip';
 import { Moon, Sun } from 'lucide-react';
 import { usePathname } from 'next/navigation';
-import { BREAD_CRUMBS } from '@/lib/settings/bread-crumbs';
+import { BREAD_CRUMBS } from '@/settings/bread-crumbs';
 import { BreadCrumbs } from '@/components/molecules/bread-crumbs';
 import { useCallback, useEffect } from 'react';
 import { Authenticated } from 'convex/react';

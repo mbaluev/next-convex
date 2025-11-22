@@ -6,7 +6,7 @@ import { SvgTrash } from '@/components/icons/components/trash';
 import { SvgFiles } from '@/components/icons/components/files';
 import { SvgSpam } from '@/components/icons/components/spam';
 import { SvgSync } from '@/components/icons/components/sync';
-import { cn } from '@/lib/utils/cn';
+import { cn } from '@/utils/cn';
 
 export const WidgetIllustrations = (props: WidgetProps) => {
   return (

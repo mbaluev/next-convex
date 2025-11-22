@@ -56,7 +56,7 @@ export const FormSettings = (props: IProps) => {
   const _formLabel = 'flex items-center md:justify-end text-muted-foreground';
   const _formControl = 'sm:col-span-2 overflow-hidden';
   const _formMessage = 'sm:col-span-2 sm:col-start-2';
-  const _buttonSubmit = 'sm:col-start-2 sm:col-span-2 md:col-start-3 md:col-span-1';
+  const _buttonSubmit = 'sm:col-start-2 sm:col-span-2 md:col-start-3';
 
   return (
     <Form {...form}>

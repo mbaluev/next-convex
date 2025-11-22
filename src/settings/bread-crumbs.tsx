@@ -1,6 +1,6 @@
 'use client';
 
-import { TRouteDTO, ROUTES } from '@/lib/settings/routes';
+import { TRouteDTO, ROUTES } from '@/settings/routes';
 
 const BREAD_CRUMBS: Record<string, TRouteDTO[]> = {};
 BREAD_CRUMBS[ROUTES.HOME.path] = [];

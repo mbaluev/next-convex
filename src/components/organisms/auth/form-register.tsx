@@ -23,9 +23,9 @@ export const FormRegister = () => {
   const form = useForm<z.infer<typeof registerSchema>>({
     resolver: zodResolver(registerSchema),
     defaultValues: {
+      name: '',
       email: '',
       password: '',
-      name: '',
     },
   });
   const onSubmit = async (values: z.infer<typeof registerSchema>) => {
@@ -68,7 +68,7 @@ export const FormRegister = () => {
                   <Input
                     {...field}
                     disabled={pending}
-                    placeholder="enter name"
+                    placeholder="enter full name"
                     autoComplete="new-password"
                   />
                 </FormControl>

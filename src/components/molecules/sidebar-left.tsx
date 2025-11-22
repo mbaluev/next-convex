@@ -14,14 +14,14 @@ import React, {
   useRef,
   useState,
 } from 'react';
-import { cn } from '@/lib/utils/cn';
-import { MEDIA_MD, useMatchMedia } from '@/lib/hooks/use-match-media';
+import { cn } from '@/utils/cn';
+import { MEDIA_MD, useMatchMedia } from '@/hooks/use-match-media';
 import { Button } from '@/components/atoms/button';
 import { ArrowLeftToLine, ArrowRightFromLine } from 'lucide-react';
 import { useCookies } from 'next-client-cookies';
-import { CTree, TTreeDTO } from '@/lib/utils/tree';
+import { CTree, TTreeDTO } from '@/utils/tree';
 import { usePathname } from 'next/navigation';
-import { TRouteDTO } from '@/lib/settings/routes';
+import { TRouteDTO } from '@/settings/routes';
 
 const SIDEBAR_STORAGE_NAME = 'sidebar-left';
 const SIDEBAR_KEYBOARD_SHORTCUT = 'g';

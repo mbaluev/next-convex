@@ -12,10 +12,10 @@ import {
   SlidersHorizontal,
   ArrowLeftToLine,
 } from 'lucide-react';
-import { TTreeDTO } from '@/lib/utils/tree';
+import { TTreeDTO } from '@/utils/tree';
 import { Fragment, ReactNode } from 'react';
-import { cn } from '@/lib/utils/cn';
-import { TRouteDTO, IS_PATH, ROUTES } from '@/lib/settings/routes';
+import { cn } from '@/utils/cn';
+import { TRouteDTO, IS_PATH, ROUTES } from '@/settings/routes';
 import {
   SidebarLeft,
   SidebarLeftButton,
@@ -33,7 +33,7 @@ import {
 import { Separator } from '@/components/atoms/separator';
 import { handleDialogOpen } from '@/components/atoms/dialog-handlers';
 import { usePathname, useRouter, useSearchParams } from 'next/navigation';
-import { menuLeft } from '@/lib/settings/menu';
+import { menuLeft } from '@/settings/menu';
 import { Avatar, AvatarFallback, AvatarImage } from '@/components/atoms/avatar';
 import { useCurrentUser } from '@/auth/use-current-user';
 import { useAuthActions } from '@convex-dev/auth/react';

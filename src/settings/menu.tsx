@@ -1,5 +1,5 @@
-import { CTree } from '@/lib/utils/tree';
-import { TRouteDTO, ROUTES } from '@/lib/settings/routes';
+import { CTree } from '@/utils/tree';
+import { TRouteDTO, ROUTES } from '@/settings/routes';
 
 const menuLeft = new CTree<TRouteDTO>();
 menuLeft.insert(ROUTES.DASHBOARD.name, menuLeft.root.id, { ...ROUTES.DASHBOARD });

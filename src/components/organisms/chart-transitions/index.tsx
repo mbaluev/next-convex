@@ -27,14 +27,14 @@ import {
 } from 'lucide-react';
 import { useRouter, useSearchParams } from 'next/navigation';
 import { Spinner } from '@/components/atoms/spinner';
-import { useResizeObserver } from '@/lib/hooks/use-resize-observer';
+import { useResizeObserver } from '@/hooks/use-resize-observer';
 import { v4 } from 'uuid';
 import { TooltipText } from '@/components/atoms/tooltip';
-import { ROUTES } from '@/lib/settings/routes';
+import { ROUTES } from '@/settings/routes';
 import { ChartTransitionsColors } from '@/components/organisms/chart-transitions/colors';
 import { useQuery } from 'convex/react';
 import { api } from '../../../../convex/_generated/api';
-import { useQueryString } from '@/lib/hooks/use-query-string';
+import { useQueryString } from '@/hooks/use-query-string';
 
 interface IChartTransitionsProps extends WidgetProps {
   name?: string;

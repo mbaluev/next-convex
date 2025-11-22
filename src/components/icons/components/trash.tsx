@@ -1,7 +1,7 @@
 'use client';
 
 import { SVGProps } from 'react';
-import { cn } from '@/lib/utils/cn';
+import { cn } from '@/utils/cn';
 
 const SvgTrash = (props: SVGProps<any>) => {
   const { className, ...rest } = props;

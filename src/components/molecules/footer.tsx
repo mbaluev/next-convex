@@ -3,7 +3,7 @@
 import Link from 'next/link';
 import { Button } from '@/components/atoms/button';
 import { Copyright, Dot } from 'lucide-react';
-import { ROUTES } from '@/lib/settings/routes';
+import { ROUTES } from '@/settings/routes';
 import { handleDialogOpen } from '@/components/atoms/dialog-handlers';
 import { usePathname, useRouter, useSearchParams } from 'next/navigation';
 

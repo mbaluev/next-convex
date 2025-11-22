@@ -8,7 +8,7 @@ import {
   DialogToolbar,
 } from '@/components/atoms/dialog';
 import { useSearchParams, useRouter, usePathname } from 'next/navigation';
-import { ROUTES } from '@/lib/settings/routes';
+import { ROUTES } from '@/settings/routes';
 import { handleDialogClose, isDialogOpen } from '@/components/atoms/dialog-handlers';
 import { useMemo } from 'react';
 import { WidgetContent } from '@/components/molecules/widget';

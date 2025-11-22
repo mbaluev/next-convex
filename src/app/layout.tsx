@@ -8,7 +8,7 @@ import { Spinner } from '@/components/atoms/spinner';
 import { Layout } from '@/components/molecules/layout';
 import { Check, Info, OctagonX, TriangleAlert } from 'lucide-react';
 import { CookiesProvider } from 'next-client-cookies/server';
-import { ConvexClientProvider } from '@/lib/providers/convex-client-provider';
+import { ConvexClientProvider } from '@/providers/convex-client-provider';
 import { ConvexAuthNextjsServerProvider } from '@convex-dev/auth/nextjs/server';
 import { DialogProfile } from '@/components/organisms/dialog-profile';
 import { DialogPrivacyPolicy } from '@/components/organisms/dialog-privacy-policy';

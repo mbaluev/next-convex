@@ -3,7 +3,7 @@
 import { WidgetAlerts } from '@/components/organisms/widgets/alerts';
 import { WidgetSidebars } from '@/components/organisms/widgets/sidebars';
 import { WidgetEmpty } from '@/components/organisms/widgets/empty';
-import { cn } from '@/lib/utils/cn';
+import { cn } from '@/utils/cn';
 
 const DebugPage = () => {
   return (

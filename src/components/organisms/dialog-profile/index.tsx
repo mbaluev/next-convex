@@ -9,7 +9,7 @@ import {
 } from '@/components/atoms/dialog';
 import { UserRoundCog } from 'lucide-react';
 import { useSearchParams, useRouter, usePathname } from 'next/navigation';
-import { ROUTES } from '@/lib/settings/routes';
+import { ROUTES } from '@/settings/routes';
 import { handleDialogClose, isDialogOpen } from '@/components/atoms/dialog-handlers';
 import { useMemo } from 'react';
 import { WidgetContent } from '@/components/molecules/widget';

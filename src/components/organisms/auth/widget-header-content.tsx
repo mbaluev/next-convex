@@ -2,7 +2,7 @@ import Link from 'next/link';
 import { Spinner } from '@/components/atoms/spinner';
 import { Button } from '@/components/atoms/button';
 import { SvgLogo } from '@/components/icons/components/logo';
-import { ROUTES } from '@/lib/settings/routes';
+import { ROUTES } from '@/settings/routes';
 
 interface HeaderProps {
   label?: string;

@@ -19,6 +19,9 @@ import { useCurrentUser } from '@/auth/use-current-user';
 import { Spinner } from '@/components/atoms/spinner';
 import { Avatar, AvatarFallback, AvatarImage } from '@/components/atoms/avatar';
 import { User } from 'lucide-react';
+import { useMutation } from 'convex/react';
+import { api } from '../../../../convex/_generated/api';
+import { toast } from 'sonner';
 
 interface IProps {
   onClose?: () => void;
@@ -28,7 +31,7 @@ export const FormSettings = (props: IProps) => {
   const { onClose } = props;
   const { user } = useCurrentUser();
   const [pending, startTransition] = useTransition();
-  // const { update } = useSession();
+  const updateUser = useMutation(api.users.update);
 
   const values = (user: any) => ({
     _id: user?._id || undefined,
@@ -43,14 +46,11 @@ export const FormSettings = (props: IProps) => {
     form.reset(values(user));
   }, [form, user]);
   const onSubmit = (values: z.infer<typeof settingsSchema>) => {
-    console.log(values);
+    const { _id, name, email } = values;
     startTransition(() => {
-      // settings(values)
-      //   .then((data) => {
-      //     if (data.error) toast.error(data.error);
-      //     if (data.success) update().then(() => toast.success(data.success));
-      //   })
-      //   .catch(() => toast.error('something went wrong'));
+      updateUser({ id: _id as any, name })
+        .then(() => toast.success('user updated successfully'))
+        .catch(() => toast.error('something went wrong'));
     });
     if (onClose) onClose();
   };

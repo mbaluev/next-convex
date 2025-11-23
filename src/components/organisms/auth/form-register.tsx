@@ -18,8 +18,8 @@ export const FormRegister = () => {
   const [error, setError] = useState<string | undefined>();
   const [success, setSuccess] = useState<string | undefined>();
   const [pending, startTransition] = useTransition();
-
   const { signIn } = useAuthActions();
+
   const form = useForm<z.infer<typeof registerSchema>>({
     resolver: zodResolver(registerSchema),
     defaultValues: {
@@ -28,36 +28,29 @@ export const FormRegister = () => {
       password: '',
     },
   });
-  const onSubmit = async (values: z.infer<typeof registerSchema>) => {
+  const handleSuccess = async () => {
+    form.reset();
+    setSuccess('check you email');
+  };
+  const handleError = async () => {
+    setError('something went wrong');
+  };
+  const handleRegister = async (values: z.infer<typeof registerSchema>) => {
     const validatedFields = registerSchema.safeParse(values);
     if (!validatedFields.success) {
       setError('invalid fields');
     } else {
       const { name, email, password } = validatedFields.data;
-      const body: Record<string, any> = {
-        flow: 'signUp',
-        name: name,
-        email: email,
-        password: password,
-      };
+      const body: Record<string, any> = { flow: 'signUp', name, email, password };
       setError(undefined);
       setSuccess(undefined);
-      startTransition(() => {
-        signIn('password', body)
-          .then(() => {
-            form.reset();
-            setSuccess('success');
-          })
-          .catch((error) => {
-            setError(String(error));
-          });
-      });
+      startTransition(() => signIn('signin', body).then(handleSuccess).catch(handleError));
     }
   };
 
   return (
     <Form {...form}>
-      <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-6">
+      <form onSubmit={form.handleSubmit(handleRegister)} className="space-y-6">
         <div className="space-y-6">
           <FormField
             control={form.control}

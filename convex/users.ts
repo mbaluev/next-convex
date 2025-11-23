@@ -1,5 +1,7 @@
-import { getAuthSessionId, getAuthUserId } from '@convex-dev/auth/server';
+import { getAuthUserId } from '@convex-dev/auth/server';
 import { query } from './_generated/server';
+import { mutation } from './_generated/server';
+import { v } from 'convex/values';
 
 export const current = query({
   args: {},
@@ -7,9 +9,13 @@ export const current = query({
     const userId = await getAuthUserId(ctx);
     if (userId === null) return null;
     return await ctx.db.get(userId);
-    // const account = await ctx.db
-    //   .query('authAccounts')
-    //   .withIndex('userIdAndProvider', (q) => q.eq('userId', userId))
-    //   .first();
+  },
+});
+
+export const update = mutation({
+  args: { id: v.id('users'), name: v.string() },
+  handler: async (ctx, args) => {
+    const { id, name } = args;
+    await ctx.db.patch(id, { name });
   },
 });

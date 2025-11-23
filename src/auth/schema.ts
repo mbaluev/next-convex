@@ -3,7 +3,6 @@ import * as z from 'zod';
 export const loginSchema = z.object({
   email: z.string().min(1, { message: 'email is required' }).email({ message: 'invalid email' }),
   password: z.string().min(1, { message: 'password is required' }),
-  code: z.optional(z.string()),
 });
 
 export const registerSchema = z.object({
@@ -17,18 +16,18 @@ export const registerSchema = z.object({
 
 export const resetSchema = z.object({
   email: z.string().min(1, { message: 'email is required' }).email({ message: 'invalid email' }),
-  code: z.optional(z.string()),
 });
 
 export const newPasswordSchema = z.object({
-  password: z
+  code: z.string().min(6, { message: 'code is required' }),
+  newPassword: z
     .string()
-    .min(1, { message: 'password is required' })
+    .min(1, { message: 'new password is required' })
     .min(6, { message: 'minimum 6 characters required' }),
 });
 
 export const settingsSchema = z.object({
-  _id: z.optional(z.string()),
-  name: z.optional(z.string()),
-  email: z.optional(z.string().email({ message: 'invalid email' })),
+  _id: z.string(),
+  name: z.string(),
+  email: z.string().email({ message: 'invalid email' }),
 });

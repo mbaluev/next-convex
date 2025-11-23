@@ -57,7 +57,10 @@ export const FormReset = () => {
       setError(undefined);
       startTransition(() =>
         signIn('signin', body)
-          .then(() => setStep({ email }))
+          .then(() => {
+            setStep({ email });
+            setSuccess('check your inbox');
+          })
           .catch(handleError)
       );
     }
@@ -156,7 +159,6 @@ export const FormReset = () => {
                   </InputOTPGroup>
                 </InputOTP>
               </FormControl>
-              <FormDescription>check your email</FormDescription>
               <FormMessage />
             </FormItem>
           )}

@@ -10,9 +10,9 @@ export const ResetPassword = Email({
   async sendVerificationRequest({ identifier: email, provider, token }) {
     const resend = new Resend(provider.apiKey);
     const { error } = await resend.emails.send({
-      from: `${process.env.APP_NAME}<onboarding@${process.env.RESEND_DOMAIN}>`,
+      from: `${process.env.RESEND_APP_NAME}<onboarding@${process.env.RESEND_DOMAIN}>`,
       to: [email],
-      subject: `${process.env.APP_NAME} - reset password`,
+      subject: 'reset password',
       html: `<p>your verification code is <b>${token}</b></p>`,
     });
     if (error) throw new Error(JSON.stringify(error));

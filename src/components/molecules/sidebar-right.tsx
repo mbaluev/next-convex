@@ -23,6 +23,7 @@ import { TRouteDTO } from '@/settings/routes';
 import { useWindowResize } from '@/hooks/use-window-resize';
 import { CTree, TTreeDTO } from '@/utils/tree';
 import { usePathname } from 'next/navigation';
+import { useSidebarLeft } from '@/components/molecules/sidebar-left';
 
 const SIDEBAR_STORAGE_NAME = 'sidebar-right';
 const SIDEBAR_KEYBOARD_SHORTCUT = 'h';
@@ -322,11 +323,13 @@ type SidebarRightResizeProps = ComponentProps<'div'>;
 const SidebarRightResize = forwardRef<HTMLDivElement, SidebarRightResizeProps>((props, ref) => {
   const { className, children, ...rest } = props;
   const { handleResize } = useSidebarRight();
+  const { isMobile } = useSidebarLeft();
   const classResize = cn(
     'absolute top-0 left-0 bottom-0 w-1 opacity-0',
     'bg-secondary active:bg-primary z-1 cursor-col-resize',
     className
   );
+  if (isMobile) return null;
   return <div ref={ref} className={classResize} onMouseDown={handleResize} {...rest} />;
 });
 SidebarRightResize.displayName = 'SidebarRightResize';

@@ -45,12 +45,16 @@ export const FormSettings = (props: IProps) => {
   useEffect(() => {
     form.reset(values(user));
   }, [form, user]);
-  const onSubmit = (values: z.infer<typeof settingsSchema>) => {
+  const handleError = async (error: any) => {
+    console.log('-->', error);
+    toast.error(String(error));
+  };
+  const handleSettings = (values: z.infer<typeof settingsSchema>) => {
     const { _id, name, email } = values;
     startTransition(() => {
       updateUser({ id: _id as any, name })
         .then(() => toast.success('user updated successfully'))
-        .catch(() => toast.error('something went wrong'));
+        .catch(handleError);
     });
     if (onClose) onClose();
   };
@@ -63,7 +67,7 @@ export const FormSettings = (props: IProps) => {
 
   return (
     <Form {...form}>
-      <form className="space-y-12" onSubmit={form.handleSubmit(onSubmit)}>
+      <form className="space-y-12" onSubmit={form.handleSubmit(handleSettings)}>
         <div className="space-x-6 flex flex-row">
           <Avatar className="w-20 h-20 bg-secondary rounded-md">
             <AvatarImage src={user?.image || ''} />

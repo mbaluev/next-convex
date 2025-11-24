@@ -38,7 +38,7 @@ export const FormReset = () => {
   });
   const handleError = async (error: any) => {
     console.log('-->', error);
-    toast.error('something went wrong');
+    toast.error(String(error));
   };
   const handleReset = async (values: z.infer<typeof resetSchema>) => {
     const validatedFields = resetSchema.safeParse(values);

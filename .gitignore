@@ -19,6 +19,7 @@ client.key
 /convex/storage
 /convex/tmp
 /convex/db.sqlite3
+/convex-self-hosted/convex
 
 # debug
 npm-debug.log*

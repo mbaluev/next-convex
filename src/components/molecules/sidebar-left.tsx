@@ -318,11 +318,13 @@ type SidebarLeftResizeProps = ComponentProps<'div'>;
 const SidebarLeftResize = forwardRef<HTMLDivElement, SidebarLeftResizeProps>((props, ref) => {
   const { className, children, ...rest } = props;
   const { handleResize } = useSidebarLeft();
+  const { isMobile } = useSidebarLeft();
   const classResize = cn(
     'absolute top-0 right-0 bottom-0 w-1 opacity-0',
     'bg-secondary active:bg-primary z-1 cursor-col-resize',
     className
   );
+  if (isMobile) return null;
   return <div ref={ref} className={classResize} onMouseDown={handleResize} {...rest} />;
 });
 SidebarLeftResize.displayName = 'SidebarLeftResize';

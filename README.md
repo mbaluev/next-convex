@@ -27,6 +27,8 @@ This is a [Next.js](https://nextjs.org/) project bootstrapped with [`create-next
 ## docker
 `docker exec -it <container_id> sh` - run docker shell 
 `docker logs <container_id>` - logs
+`docker kill $(docker ps -aq) && docker rm $(docker ps -aq)` - Stop all running containers
+`docker system prune -af --volumes` - Free space
 
 ## commands
 `docker ps -a` - list of dockers
@@ -69,7 +71,6 @@ docker compose up --build -d
 `npx convex import --append --table <tablename> convex/tablename.jsonl` - append data
 `npx convex env list` - list of env variables
 
-
 ---
 
 start frontend locally
@@ -85,3 +86,7 @@ start convex dashboard locally
 
 convex auth
 1. `yarn add @convex-dev/auth @auth/core@0.37.0`
+
+build and start
+1. `docker network create convex-network`
+2. `docker compose up --build -d`

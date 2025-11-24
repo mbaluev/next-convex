@@ -36,7 +36,7 @@ export const FormLogin = () => {
   };
   const handleError = async (error: any) => {
     console.log('-->', error);
-    toast.error('something went wrong');
+    toast.error(String(error));
   };
   const handlePassword = async (values: z.infer<typeof loginSchema>) => {
     const validatedFields = loginSchema.safeParse(values);

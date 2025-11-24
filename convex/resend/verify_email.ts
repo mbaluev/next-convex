@@ -10,9 +10,9 @@ export const VerifyEmail = Email({
   async sendVerificationRequest({ identifier: email, provider, url }) {
     const resend = new Resend(provider.apiKey);
     const { error } = await resend.emails.send({
-      from: `${process.env.APP_NAME}<onboarding@${process.env.RESEND_DOMAIN}>`,
+      from: `${process.env.RESEND_APP_NAME}<onboarding@${process.env.RESEND_DOMAIN}>`,
       to: [email],
-      subject: `${process.env.APP_NAME} - confirm your email`,
+      subject: 'confirm your email',
       html: `<p>click <a href=${url}>here<a/> to confirm email</p>`,
     });
     if (error) throw new Error(JSON.stringify(error));

@@ -34,7 +34,7 @@ export const FormRegister = () => {
   };
   const handleError = async (error: any) => {
     console.log('-->', error);
-    toast.error('something went wrong');
+    toast.error(String(error));
   };
   const handleRegister = async (values: z.infer<typeof registerSchema>) => {
     const validatedFields = registerSchema.safeParse(values);

@@ -45,7 +45,7 @@ services:
       interval: 5s
       start_period: 10s
     networks:
-      - convex-network
+      - convex-self-hosted-network
 
   dashboard:
     container_name: convex-dashboard
@@ -59,41 +59,11 @@ services:
     environment:
       - NEXT_PUBLIC_DEPLOYMENT_URL=${NEXT_PUBLIC_DEPLOYMENT_URL:-http://127.0.0.1:${PORT:-3210}}
     networks:
-      - convex-network
+      - convex-self-hosted-network
     depends_on:
       backend:
         condition: service_healthy
-
-  frontend:
-    container_name: convex-frontend
-    env_file:
-      - ../.env.local
-    build:
-      context: ../
-      dockerfile: Dockerfile
-    restart: always
-    ports:
-      - 3000:3000
-    networks:
-      - convex-network
-    depends_on:
-      backend:
-        condition: service_healthy
-
-  nginx:
-    container_name: convex-nginx
-    build:
-      context: ../nginx
-    restart: always
-    tty: true
-    ports:
-      - "80:80"
-    networks:
-      - convex-network
-    depends_on:
-      frontend:
-        condition: service_started
 
 networks:
-  convex-network:
+  convex-self-hosted-network:
     external: true

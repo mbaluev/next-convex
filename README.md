@@ -10,7 +10,7 @@ This is a [Next.js](https://nextjs.org/) project bootstrapped with [`create-next
 
 1. Install dependencies: `yarn`
 2. Run the development server: `yarn dev`
-3. Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+3. Open [http://localhost:3001](http://localhost:3001) with your browser to see the result.
 
 ## docker compose
 `docker stop convex-frontend || true` - stop convex-frontend containers
@@ -21,8 +21,8 @@ This is a [Next.js](https://nextjs.org/) project bootstrapped with [`create-next
 `docker image prune -a` - remove all images without at least one container associated to them.
 
 ## docker build
-1. Build your container: `docker build -t next-auth-v5 .`
-2. Run your container: `docker run -p 80:3000 next-auth-v5`
+1. Build your container: `docker build -t next-convex .`
+2. Run your container: `docker run -p 80:3000 next-convex`
 
 ## docker
 `docker exec -it <container_id> sh` - run docker shell 

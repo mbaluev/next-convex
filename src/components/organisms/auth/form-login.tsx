@@ -17,6 +17,7 @@ import { useAuthActions } from '@convex-dev/auth/react';
 import { DEFAULT_LOGIN_REDIRECT } from '@/auth/routes';
 import { FcGoogle } from 'react-icons/fc';
 import { FaGithub } from 'react-icons/fa';
+import { toast } from 'sonner';
 
 export const FormLogin = () => {
   const [pending, startTransition] = useTransition();
@@ -33,8 +34,9 @@ export const FormLogin = () => {
   const handleSuccess = async () => {
     form.reset();
   };
-  const handleError = async () => {
-    setError('something went wrong');
+  const handleError = async (error: any) => {
+    console.log('-->', error);
+    toast.error('something went wrong');
   };
   const handlePassword = async (values: z.infer<typeof loginSchema>) => {
     const validatedFields = loginSchema.safeParse(values);

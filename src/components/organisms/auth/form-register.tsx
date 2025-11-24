@@ -7,17 +7,17 @@ import { registerSchema } from '@/auth/schema';
 import { Input } from '@/components/atoms/input';
 import { Form, FormControl, FormField, FormItem, FormMessage } from '@/components/atoms/form';
 import { Button } from '@/components/atoms/button';
-import { AlertSuccess, AlertError } from '@/components/atoms/alert';
+import { AlertError } from '@/components/atoms/alert';
 import { useState, useTransition } from 'react';
 import { InputPassword } from '@/components/atoms/input-password';
 import { ButtonBack } from '@/components/organisms/auth/button-back';
 import { Spinner } from '@/components/atoms/spinner';
 import { useAuthActions } from '@convex-dev/auth/react';
+import { toast } from 'sonner';
 
 export const FormRegister = () => {
-  const [error, setError] = useState<string | undefined>();
-  const [success, setSuccess] = useState<string | undefined>();
   const [pending, startTransition] = useTransition();
+  const [error, setError] = useState<string | undefined>();
   const { signIn } = useAuthActions();
 
   const form = useForm<z.infer<typeof registerSchema>>({
@@ -30,10 +30,11 @@ export const FormRegister = () => {
   });
   const handleSuccess = async () => {
     form.reset();
-    setSuccess('check you email');
+    toast.success('check you email');
   };
-  const handleError = async () => {
-    setError('something went wrong');
+  const handleError = async (error: any) => {
+    console.log('-->', error);
+    toast.error('something went wrong');
   };
   const handleRegister = async (values: z.infer<typeof registerSchema>) => {
     const validatedFields = registerSchema.safeParse(values);
@@ -43,7 +44,6 @@ export const FormRegister = () => {
       const { name, email, password } = validatedFields.data;
       const body: Record<string, any> = { flow: 'signUp', name, email, password };
       setError(undefined);
-      setSuccess(undefined);
       startTransition(() => signIn('signin', body).then(handleSuccess).catch(handleError));
     }
   };
@@ -106,7 +106,6 @@ export const FormRegister = () => {
           />
         </div>
         <AlertError message={error} />
-        <AlertSuccess message={success} />
         <Button type="submit" className="w-full" disabled={pending}>
           {pending && <Spinner />}
           create an account

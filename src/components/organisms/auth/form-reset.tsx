@@ -5,17 +5,9 @@ import { useForm } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { newPasswordSchema, resetSchema } from '@/auth/schema';
 import { Input } from '@/components/atoms/input';
-import {
-  Form,
-  FormControl,
-  FormDescription,
-  FormField,
-  FormItem,
-  FormLabel,
-  FormMessage,
-} from '@/components/atoms/form';
+import { Form, FormControl, FormField, FormItem, FormMessage } from '@/components/atoms/form';
 import { Button } from '@/components/atoms/button';
-import { AlertSuccess, AlertError } from '@/components/atoms/alert';
+import { AlertError } from '@/components/atoms/alert';
 import { useState, useTransition } from 'react';
 import { ButtonBack } from '@/components/organisms/auth/button-back';
 import { Spinner } from '@/components/atoms/spinner';
@@ -23,14 +15,14 @@ import { useAuthActions } from '@convex-dev/auth/react';
 import { InputOTP, InputOTPGroup, InputOTPSlot } from '@/components/atoms/input-otp';
 import { REGEXP_ONLY_DIGITS } from 'input-otp';
 import { InputPassword } from '@/components/atoms/input-password';
+import { toast } from 'sonner';
 
 export const FormReset = () => {
-  const [error, setError] = useState<string | undefined>();
-  const [success, setSuccess] = useState<string | undefined>();
   const [pending, startTransition] = useTransition();
+  const [error, setError] = useState<string | undefined>();
   const [step, setStep] = useState<'forgot' | { email: string }>('forgot');
-
   const { signIn } = useAuthActions();
+
   const formReset = useForm<z.infer<typeof resetSchema>>({
     resolver: zodResolver(resetSchema),
     defaultValues: {
@@ -44,8 +36,9 @@ export const FormReset = () => {
       code: '',
     },
   });
-  const handleError = async () => {
-    setError('something went wrong');
+  const handleError = async (error: any) => {
+    console.log('-->', error);
+    toast.error('something went wrong');
   };
   const handleReset = async (values: z.infer<typeof resetSchema>) => {
     const validatedFields = resetSchema.safeParse(values);
@@ -59,7 +52,7 @@ export const FormReset = () => {
         signIn('signin', body)
           .then(() => {
             setStep({ email });
-            setSuccess('check your inbox');
+            toast.success('check you inbox');
           })
           .catch(handleError)
       );
@@ -76,7 +69,9 @@ export const FormReset = () => {
       setError(undefined);
       startTransition(() =>
         signIn('signin', body)
-          .then(() => setSuccess('password updated'))
+          .then(() => {
+            toast.success('password updated');
+          })
           .catch(handleError)
       );
     }
@@ -164,7 +159,6 @@ export const FormReset = () => {
           )}
         />
         <AlertError message={error} />
-        <AlertSuccess message={success} />
         <Button type="submit" className="w-full" disabled={pending}>
           {pending && <Spinner />}
           update password

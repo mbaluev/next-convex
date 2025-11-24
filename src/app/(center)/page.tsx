@@ -4,10 +4,12 @@ import { Dot } from 'lucide-react';
 import { SvgLogo } from '@/components/icons/components/logo';
 import { ButtonLogin } from '@/components/organisms/auth/button-login';
 import { Unauthenticated } from 'convex/react';
+import { WidgetFiles } from '@/components/organisms/widgets/files';
 
 export default function Home() {
   return (
     <div className="space-y-10 text-center">
+      <WidgetFiles />
       <div className="flex gap-8 flex-col items-center justify-center">
         <SvgLogo className="text-5xl" />
         <h1 className="text-5xl font-semibold">{process.env.APP_NAME}</h1>
